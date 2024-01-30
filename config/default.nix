@@ -18,6 +18,8 @@ in
       colorcolumn = "120";
       cursorcolumn = false;
       expandtab = true;
+      number = true;
+      pumheight = 10;
       relativenumber = true;
       shiftwidth = 2;
       showtabline = 2;
@@ -33,6 +35,7 @@ in
 
     extraFiles = {
       "lua/icons.lua" = builtins.readFile ./lua/icons.lua;
+      "lua/lazygit.lua" = builtins.readFile ./lua/lazygit.lua;
       "lua/lualine-components.lua" = builtins.readFile ./lua/lualine-components.lua;
       "lua/nvimtree.lua" = builtins.readFile ./lua/nvimtree.lua;
     };

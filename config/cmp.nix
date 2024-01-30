@@ -3,16 +3,16 @@
     enable = true;
     sources = [
       { name = "nvim_lsp"; }
+      { name = "nvim_lua"; }
+      { name = "luasnip"; }
+      { name = "treesitter"; }
       { name = "path"; }
       { name = "buffer"; }
-      { name = "luasnip"; }
-      { name = "cmp_tabnine"; }
-      { name = "nvim_lua"; }
-      { name = "calc"; }
-      { name = "emoji"; }
-      { name = "treesitter"; }
-      { name = "crates"; }
-      { name = "tmux"; }
+      # { name = "cmp_tabnine"; }
+      # { name = "calc"; }
+      # { name = "emoji"; }
+      # { name = "crates"; }
+      # { name = "tmux"; }
     ];
 
     mapping = {

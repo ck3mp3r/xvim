@@ -23,7 +23,10 @@ in
       # ansiblels.enable = true;
       bashls.enable = true;
       # dockerls.enable = true;
-      gopls.enable = true;
+      gopls = {
+        enable = true;
+        installLanguageServer = false;
+      };
       jsonls.enable = true;
       kotlin-language-server = {
         enable = true;
@@ -31,6 +34,10 @@ in
       };
       lua-ls.enable = true;
       nixd.enable = true;
+      pyright = {
+        enable = true;
+        installLanguageServer = false;
+      };
       rust-analyzer = {
         enable = true;
         installCargo = false;

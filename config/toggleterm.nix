@@ -10,6 +10,7 @@ in
 {
   keymaps = keyInfo.bindings;
   plugins.toggleterm = {
+    floatOpts.border = "curved";
     enable = true;
   };
 

@@ -1,7 +1,7 @@
 let
   keys = (import ./util/keys.nix { });
   keyInfo = keys.convert [
-    # (keys.silent "<cmd>lua require 'lvim.core.terminal'.lazygit_toggle()<cr>" "gg" "Lazygit")
+    (keys.silent "<cmd>lua require 'lazygit'.toggle()<cr>" "<leader>gg" "Lazygit")
     (keys.silent "<cmd>lua require 'gitsigns'.next_hunk({navigation_message = false})<cr>" "<leader>gj" "Next Hunk")
     (keys.silent "<cmd>lua require 'gitsigns'.prev_hunk({navigation_message = false})<cr>" "<leader>gk" "Prev Hunk")
     (keys.silent "<cmd>lua require 'gitsigns'.blame_line()<cr>" "<leader>gl" "Blame")
