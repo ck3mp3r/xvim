@@ -47,6 +47,7 @@ in
     ./bufferline.nix
     ./cmp.nix
     ./git.nix
+    ./helm.nix
     ./keys.nix
     ./lsp.nix
     ./lualine.nix
