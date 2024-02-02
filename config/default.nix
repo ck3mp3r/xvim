@@ -44,6 +44,7 @@ in
   # Import all your configuration modules here
   imports = [
     ./alpha.nix
+    ./autocmd.nix
     ./bufferline.nix
     ./cmp.nix
     ./git.nix
