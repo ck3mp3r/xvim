@@ -18,6 +18,7 @@ in
       colorcolumn = "120";
       cursorcolumn = false;
       expandtab = true;
+      ignorecase = true;
       number = true;
       pumheight = 10;
       relativenumber = true;
@@ -58,5 +59,6 @@ in
     ./nvim-tree.nix
     ./toggleterm.nix
     ./treesitter.nix
+    ./zenmode.nix
   ];
 }

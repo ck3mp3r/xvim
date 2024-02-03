@@ -21,9 +21,6 @@
         nvim = nixvim'.makeNixvimWithModule {
           inherit pkgs;
           module = import ./config;
-          extraSpecialArgs = {
-            keys = (import ./util/keys.nix { });
-          };
         };
       in
       {
