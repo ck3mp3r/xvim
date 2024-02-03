@@ -19,12 +19,15 @@
 
   plugins.telescope = {
     enable = true;
+    extraOptions = {
+      sync_with_nvim_tree = true;
+    };
     extensions = {
       fzf-native = {
         enable = true;
         caseMode = "smart_case";
       };
-      # project-nvim.enable = true;
+      project-nvim.enable = true;
     };
   };
 

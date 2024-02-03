@@ -1,7 +1,13 @@
 {
   plugins.nvim-tree = {
     enable = true;
-    updateFocusedFile.enable = true;
+    preferStartupRoot = true;
+    respectBufCwd = true;
+    syncRootWithCwd = true;
+    updateFocusedFile = {
+      enable = true;
+      updateRoot = true;
+    };
 
     modified.enable = true;
 

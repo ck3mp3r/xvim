@@ -53,11 +53,11 @@
             desc = "  New file";
             command = "<CMD>ene <CR>";
           }
-          # {
-          #   shortcut = "p";
-          #   desc = "  Projects";
-          #   command = "<CMD>:Telescope projects <CR>";
-          # }
+          {
+            shortcut = "p";
+            desc = "  Projects";
+            command = "<CMD>:Telescope projects <CR>";
+          }
           {
             shortcut = "r";
             desc = "  Recent file";

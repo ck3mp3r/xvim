@@ -57,6 +57,7 @@ in
     ./noice.nix
     ./none-ls.nix
     ./nvim-tree.nix
+    ./project.nix
     ./toggleterm.nix
     ./treesitter.nix
     ./zenmode.nix
