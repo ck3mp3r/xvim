@@ -48,6 +48,7 @@ in
     ./autocmd.nix
     ./bufferline.nix
     ./cmp.nix
+    ./direnv.nix
     ./git.nix
     ./helm.nix
     ./keys.nix
