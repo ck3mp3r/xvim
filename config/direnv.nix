@@ -10,10 +10,7 @@ in
   config = {
 
     extraPlugins = with pkgs.vimPlugins; [
-      {
-        plugin = direnv-vim;
-        config = "g:direnv_auto 0";
-      }
+      direnv-vim
     ];
 
     keymaps = keyInfo.bindings;
