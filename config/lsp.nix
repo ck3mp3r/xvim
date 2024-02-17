@@ -42,6 +42,7 @@ in
         enable = true;
         installCargo = false;
         installRustc = false;
+        installLanguageServer = false;
         settings.files.excludeDirs = [ ".direnv" ];
       };
       terraformls.enable = true;
