@@ -8,7 +8,6 @@ windows:
     panes:
       - commands: # each pane/window can run commands
           - xvim
-          
 
   - name: misc
     panes:
@@ -18,6 +17,6 @@ windows:
         path: . # a relative path to root
         flex_direction: column
         panes:
-          - flex: 1
+          - flex: 2
           - flex: 5
 
