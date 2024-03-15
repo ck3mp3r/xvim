@@ -12,6 +12,7 @@
   };
 
   outputs = {
+    self,
     devshell,
     nixpkgs,
     nixvim,
@@ -50,6 +51,12 @@
           inherit xvim;
           default = xvim;
         };
+
+        overlays = 
+          final: prev: {
+            xvim = self.packages.${system}.default;
+          }
+        ;
       }
     );
 }
