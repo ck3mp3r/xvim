@@ -18,9 +18,7 @@ with pkgs.vimPlugins; {
         sources = cmp.config.sources({
           {name = "nvim_lsp"},
           {name = "nvim_lua"},
-          {name = "luasnip"},
           {name = "treesitter"},
-          {name = "path"},
           {name = "buffer"},
           {name = 'nvim_lsp_signature_help'},
           {name = 'nvim_lsp_document_symbol'},
@@ -31,21 +29,17 @@ with pkgs.vimPlugins; {
           -- { name = "tmux"; }
         }),
         mapping = cmp.mapping.preset.insert({
-          ["<C-Space>"] = cmp.mapping.complete(),
-          ["<C-p>"] = cmp.mapping.complete(),
-          ["<C-n>"] = cmp.mapping.complete(),
-          ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-          ["<C-e>"] = cmp.mapping.close(),
-          ["<C-f>"] = cmp.mapping.scroll_docs(4),
-          ["<CR>"] = cmp.mapping.confirm({ select = true }),
-          ["<S-Tab>"] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), {'i', 's'}),
-          ["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), {'i','s'})
+            ["<C-Space>"] = cmp.mapping.complete(),
+            ["<C-p>"] = cmp.mapping.complete(),
+            ["<C-n>"] = cmp.mapping.complete(),
+            ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+            ["<C-e>"] = cmp.mapping.close(),
+            ["<C-f>"] = cmp.mapping.scroll_docs(4),
+            ["<CR>"] = cmp.mapping.confirm({ select = true }),
+            ["<S-Tab>"] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), {'i', 's'}),
+            ["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), {'i','s'})
           }
         ),
-
-        -- snippet = {
-        --   expand = "luasnip"
-        -- },
 
         experimental = {
           ghost_text = false,
@@ -69,9 +63,16 @@ with pkgs.vimPlugins; {
       pkg = cmp-nvim-lsp;
       config = true;
     }
-    cmp-nvim-lsp-document-symbol
-    cmp-nvim-lsp-signature-help
+    {
+      pkg = cmp-nvim-lsp-document-symbol;
+      event  = ["VeryLazy"];
+      opts = {};
+    }
+    {
+      pkg = cmp-nvim-lsp-signature-help;
+      event = ["VeryLazy"];
+      opts = {};
+    }
     lspkind-nvim
-    luasnip
   ];
 }
