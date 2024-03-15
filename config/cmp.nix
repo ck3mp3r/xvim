@@ -1,69 +1,74 @@
-{
-  plugins.nvim-cmp = {
-    enable = true;
-    sources = [
-      { name = "nvim_lsp"; }
-      { name = "nvim_lua"; }
-      { name = "luasnip"; }
-      { name = "treesitter"; }
-      { name = "path"; }
-      { name = "buffer"; }
-      # { name = "cmp_tabnine"; }
-      # { name = "calc"; }
-      # { name = "emoji"; }
-      # { name = "crates"; }
-      # { name = "tmux"; }
-    ];
+{pkgs, ...}:
+with pkgs.vimPlugins; {
+  pkg = nvim-cmp;
+  event = ["InsertEnter" "CmdlineEnter"];
+  config = ''
+    function()
+      local cmp = require'cmp'
+      local lspkind = require'lspkind'
+      cmp.setup({
+        formatting = {
+          format = lspkind.cmp_format({
+            mode = 'symbol_text',
+            maxwidth = 50,
+            ellipsis_char = '...',
+            show_labelDetails = true,
+          })
+        },
+        sources = cmp.config.sources({
+          {name = "nvim_lsp"},
+          {name = "nvim_lua"},
+          {name = "luasnip"},
+          {name = "treesitter"},
+          {name = "path"},
+          {name = "buffer"},
+          -- {name = 'nvim_lsp_signature_help'},
+          -- {name = 'nvim_lsp_document_symbol'},
+          -- { name = "cmp_tabnine"; }
+          -- { name = "calc"; }
+          -- { name = "emoji"; }
+          -- { name = "crates"; }
+          -- { name = "tmux"; }
+        }),
+        mapping = cmp.mapping.preset.insert({
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ["<C-p>"] = cmp.mapping.complete(),
+          ["<C-n>"] = cmp.mapping.complete(),
+          ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-e>"] = cmp.mapping.close(),
+          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+          ["<S-Tab>"] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), {'i', 's'}),
+          ["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), {'i','s'})
+          }
+        ),
 
-    mapping = {
-      "<C-Space>" = "cmp.mapping.complete()";
-      "<C-p>" = "cmp.mapping.complete()";
-      "<C-n>" = "cmp.mapping.complete()";
-      "<C-d>" = "cmp.mapping.scroll_docs(-4)";
-      "<C-e>" = "cmp.mapping.close()";
-      "<C-f>" = "cmp.mapping.scroll_docs(4)";
-      "<CR>" = "cmp.mapping.confirm({ select = true })";
-      "<S-Tab>" = {
-        action = "cmp.mapping.select_prev_item()";
-        modes = [ "i" "s" ];
-      };
-      "<Tab>" = {
-        action = "cmp.mapping.select_next_item()";
-        modes = [ "i" "s" ];
-      };
-    };
+        -- snippet = {
+        --   expand = "luasnip"
+        -- },
 
-    snippet.expand = "luasnip";
+        experimental = {
+          ghost_text = false,
+          native_menu = false
+        },
 
-    experimental = {
-      ghost_text = false;
-      native_menu = false;
-    };
+        window = {
+          completion = {
+            border = "rounded"
+          },
+          documentation ={
+            border = "rounded"
+          }
+        }
+      })
+    end
+  '';
 
-    window.completion.border = "rounded";
-    window.documentation.border = "rounded";
-  };
-
-  plugins.lspkind = {
-    enable = true;
-    mode = "symbol";
-    cmp = {
-      enable = true;
-      menu = {
-        buffer = "(Buffer)";
-        nvim_lsp = "(LSP)";
-        path = "(Path)";
-        luasnip = "(Snippet)";
-        nvim_lua = "(Lua)";
-        calc = "(Calc)";
-        emoji = "(Emoji)";
-        treesitter = "(Treesitter)";
-        crates = "(Crates)";
-        tmux = "(Tmux)";
-      };
-    };
-  };
-
-  plugins.cmp-nvim-lsp.enable = true;
-  plugins.luasnip.enable = true;
+  dependencies = [
+    cmp-nvim-lsp
+    # cmp-nvim-lsp-document-symbol
+    # cmp-nvim-lsp-signature-help
+    lspkind-nvim
+    # luasnip
+  ];
 }

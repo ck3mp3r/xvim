@@ -1,5 +1,5 @@
-let
-  keys = (import ./util/keys.nix { });
+{pkgs, ...}: let
+  keys = import ./util/keys.nix {};
 
   keyInfo = keys.convert [
     (keys.silent ":BufferLineCycleNext <CR>" "L" "Next")
@@ -10,19 +10,23 @@ let
     (keys.silent ":BufferLineCloseRight <CR>" "<Leader>bl" "Close Right")
     (keys.silent ":BufferLinePickClose <CR>" "<Leader>be" "Pick To Close")
   ];
-in
-{
-  plugins.bufferline = {
-    enable = true;
-    offsets = [
-      {
-        filetype = "NvimTree";
-        text = "Explorer";
-        highlight = "PanelHeading";
-        padding = 1;
-      }
-    ];
+in {
+  plugin = {
+    pkg = pkgs.vimPlugins.bufferline-nvim;
+    opts = {
+      options = {
+        offsets = [
+          {
+            filetype = "NvimTree";
+            text = "Explorer";
+            highlight = "PanelHeading";
+            padding = 1;
+          }
+        ];
+      };
+    };
+    event = ["BufReadPost"];
   };
-  keymaps = keyInfo.bindings;
-  plugins.which-key.registrations = keyInfo.descriptions // { "<leader>b" = "Buffers"; };
+  bindings = keyInfo.bindings;
+  registrations = keyInfo.descriptions // {"<leader>b" = "Buffers";};
 }

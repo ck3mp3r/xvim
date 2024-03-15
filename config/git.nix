@@ -1,7 +1,7 @@
-let
-  keys = (import ./util/keys.nix { });
+{pkgs, ...}: let
+  keys = import ./util/keys.nix {};
   keyInfo = keys.convert [
-    (keys.silent "<cmd>lua require 'lazygit'.toggle()<cr>" "<leader>gg" "Lazygit")
+    (keys.silent "<cmd>lua require 'xvim-components'.toggle()<cr>" "<leader>gg" "Lazygit")
     (keys.silent "<cmd>lua require 'gitsigns'.next_hunk({navigation_message = false})<cr>" "<leader>gj" "Next Hunk")
     (keys.silent "<cmd>lua require 'gitsigns'.prev_hunk({navigation_message = false})<cr>" "<leader>gk" "Prev Hunk")
     (keys.silent "<cmd>lua require 'gitsigns'.blame_line()<cr>" "<leader>gl" "Blame")
@@ -16,18 +16,21 @@ let
     (keys.silent "<cmd>Telescope git_bcommits<cr>" "<leader>gC" "Checkout commit (for current file)")
     (keys.silent "<cmd>Gitsigns diffthis HEAD<cr>" "<leader>gd" "Git Diff")
   ];
-in
-{
-  keymaps = keyInfo.bindings;
-
-  plugins.gitsigns = {
-    enable = true;
+in {
+  plugin = with pkgs.vimPlugins; {
+    pkg = gitsigns-nvim;
+    config = true;
+    dependencies = [
+      {
+        pkg = git-blame-nvim;
+        opts = {
+          delay = 150;
+        };
+      }
+    ];
+    cmd = ["Gitsigns"];
+    event = ["BufReadPost"];
   };
-
-  plugins.gitblame = {
-    enable = true;
-    delay = 150;
-  };
-
-  plugins.which-key.registrations = keyInfo.descriptions // { "<leader>g" = "Git"; };
+  registrations = keyInfo.descriptions // {"<leader>g" = "Git";};
+  bindings = keyInfo.bindings;
 }

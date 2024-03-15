@@ -1,30 +1,21 @@
-{ pkgs, ... }:
-let
-  keys = (import ./util/keys.nix { });
+{pkgs, ...}: let
+  keys = import ./util/keys.nix {};
   keyInfo = keys.convert [
     (keys.silent ":ZenMode <CR>" "<Leader>z" "Toggle ZenMode")
   ];
 in
-{
-  config = {
+  with pkgs.vimPlugins; {
+    plugin = {
+      pkg = zen-mode-nvim;
+      cmd = ["ZenMode"];
+      opts = {
+        plugins.tmux.enabled = true;
+      };
+      dependencies = [
+        twilight-nvim
+      ];
+    };
 
-    extraPlugins = with pkgs.vimPlugins; [
-      zen-mode-nvim
-      twilight-nvim
-    ];
-
-    extraConfigLuaPost = ''
-      require('zen-mode').setup({
-          plugins = {
-            tmux = {
-              enabled = true
-            }
-          }
-        }
-      )
-    '';
-
-    keymaps = keyInfo.bindings;
-    plugins.which-key.registrations = keyInfo.descriptions;
-  };
-}
+    bindings = keyInfo.bindings;
+    registrations = keyInfo.descriptions;
+  }

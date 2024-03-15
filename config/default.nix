@@ -1,17 +1,11 @@
-let
-  keys = (import ./util/keys.nix { });
+{pkgs, ...}: let
+  keys = import ./util/keys.nix {};
   keyInfo = keys.convert [
     (keys.silent ":NvimTreeToggle <CR>" "<Leader>e" "Toggle Tree")
   ];
-in
-{
+in {
   config = {
     globals.mapleader = " ";
-
-    colorschemes.catppuccin = {
-      enable = true;
-      transparentBackground = true;
-    };
 
     options = {
       clipboard = "unnamedplus";
@@ -36,31 +30,19 @@ in
 
     extraFiles = {
       "lua/icons.lua" = builtins.readFile ./lua/icons.lua;
-      "lua/lazygit.lua" = builtins.readFile ./lua/lazygit.lua;
-      "lua/lualine-components.lua" = builtins.readFile ./lua/lualine-components.lua;
-      "lua/nvimtree.lua" = builtins.readFile ./lua/nvimtree.lua;
+      "lua/xvim-components.lua" = builtins.readFile ./lua/xvim-components.lua;
     };
+
+    extraPackages = with pkgs; [
+      lua-language-server
+      nil
+      nodePackages.vscode-json-languageserver-bin
+      yaml-language-server
+    ];
   };
 
-  # Import all your configuration modules here
   imports = [
-    ./alpha.nix
     ./autocmd.nix
-    ./bufferline.nix
-    ./cmp.nix
-    ./direnv.nix
-    ./git.nix
-    ./helm.nix
-    ./keys.nix
-    ./lsp.nix
-    ./lualine.nix
-    ./misc.nix
-    ./noice.nix
-    ./none-ls.nix
-    ./nvim-tree.nix
-    ./project.nix
-    ./toggleterm.nix
-    ./treesitter.nix
-    ./zenmode.nix
+    ./lazy.nix
   ];
 }

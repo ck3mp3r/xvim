@@ -2,21 +2,13 @@
 name: xvim
 
 path: .
-
 windows:
   - name: code
     panes:
       - commands: # each pane/window can run commands
-          - xvim
+          - nix run
 
   - name: misc
     panes:
       - flex: 1
-        path: . # a relative path to root
       - flex: 1
-        path: . # a relative path to root
-        flex_direction: column
-        panes:
-          - flex: 2
-          - flex: 5
-

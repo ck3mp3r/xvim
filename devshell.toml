@@ -1,0 +1,16 @@
+# https://numtide.github.io/devshell
+name = "xvim devshell"
+
+packages = [
+  "nodePackages_latest.bash-language-server"
+]
+
+[[commands]]
+name = "format"
+help = "Format the entire codebase"
+command = "nix fmt"
+
+[[commands]]
+name = "checks"
+help = "Run all nixvim checks"
+command = "nix flake check"

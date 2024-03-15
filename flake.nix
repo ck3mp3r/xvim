@@ -2,39 +2,53 @@
   description = "A nixvim configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/release-23.11";
-    nixvim = { url = "github:nix-community/nixvim/nixos-23.11"; inputs.nixpkgs.follows = "nixpkgs"; };
+    nixpkgs.url = "github:nixos/nixpkgs";
+    devshell.url = "github:numtide/devshell";
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { nixpkgs, nixvim, flake-utils, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
+  outputs = {
+    devshell,
+    nixpkgs,
+    nixvim,
+    flake-utils,
+    ...
+  }:
+    flake-utils.lib.eachDefaultSystem (
+      system: let
+        overlays = [devshell.overlays.default];
         pkgs = import nixpkgs {
-          inherit system;
+          inherit system overlays;
           config = {
             allowUnfree = true;
           };
         };
         nixvimLib = nixvim.lib.${system};
         nixvim' = nixvim.legacyPackages.${system};
-        nvim = nixvim'.makeNixvimWithModule {
+
+        nixvimModule = {
           inherit pkgs;
           module = import ./config;
         };
-      in
-      {
-        checks = {
-          # Run `nix flake check .` to verify that your config is not broken
-          default = nixvimLib.check.mkTestDerivationFromNvim {
-            inherit nvim;
-            name = "A nixvim configuration";
-          };
+        xvim = nixvim'.makeNixvimWithModule nixvimModule;
+      in {
+        devShells.default = pkgs.devshell.mkShell {
+          imports = [(pkgs.devshell.importTOML ./devshell.toml)];
         };
 
+        checks = {
+          default = nixvimLib.check.mkTestDerivationFromNixvimModule nixvimModule;
+        };
+
+        formatter = pkgs.alejandra;
+
         packages = {
-          # Lets you run `nix run .` to start nixvim
-          default = nvim;
+          inherit xvim;
+          default = xvim;
         };
       }
     );

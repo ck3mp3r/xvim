@@ -1,10 +1,9 @@
-let
+{pkgs, ...}: let
   winbar_lualine = [
     {
-      name = "filetype";
-      extraConfig = {
-        icon_only = true;
-      };
+      "__unkeyed" = "filetype";
+      colored = true;
+      icon_only = true;
     }
     "filename"
     "navic"
@@ -13,73 +12,68 @@ let
   sections = {
     lualine_a = [
       {
-        name = ''
-          require('icons').ui.Target .. " "
+        "__unkeyed".__raw = ''
+          function()
+            return require('icons').ui.Target .. " "
+          end
         '';
       }
     ];
     lualine_b = [
       {
-        name = "branch";
+        "__unkeyed" = "branch";
         icon = "";
       }
     ];
-    lualine_c = [
-      {
-        name = ''
-          ""
-        '';
-      }
-    ];
+    lualine_c = [""];
     lualine_x = [
       {
-        name = ''
-          require('lualine-components').lsp()
+        "__unkeyed".__raw = ''
+          require('xvim-components').lsp
         '';
       }
       {
-        name = ''
-          require('lualine-components').spaces()
+        "__unkeyed".__raw = ''
+          require('xvim-components').spaces
         '';
       }
       {
-        name = "filetype";
+        "__unkeyed" = "filetype";
       }
-
     ];
-    lualine_y = [ ];
-    lualine_z = [ ];
+    lualine_y = [];
+    lualine_z = [];
   };
-
-in
-{
-  plugins = {
-    navic = {
-      enable = true;
-      lsp.autoAttach = true;
-    };
-
-    lualine = {
-      enable = true;
-      globalstatus = true;
-      sectionSeparators.left = "";
-      sectionSeparators.right = "";
-      componentSeparators.left = "";
-      componentSeparators.right = "";
-
-      disabledFiletypes = {
-        statusline = [ "alpha" ];
-        winbar = [ "NvimTree" "alpha" ];
+in {
+  plugin = with pkgs.vimPlugins; {
+    pkg = lualine-nvim;
+    event = ["VimEnter"];
+    dependencies = [
+      {
+        pkg = nvim-navic;
+        opts = {
+          lsp.auto_attach = true;
+        };
+      }
+    ];
+    opts = {
+      options = {
+        globalstatus = true;
+        section_separators.left = "";
+        section_separators.right = "";
+        component_separators.left = "";
+        component_separators.right = "";
+        theme = "catppuccin";
+        disabled_filetypes = {
+          statusline = ["alpha"];
+          winbar = ["NvimTree" "alpha"];
+        };
       };
 
-      extensions = [
-        "navic"
-      ];
-
       sections = sections;
-      inactiveSections = sections;
+      inactive_sections = sections;
 
-      inactiveWinbar = {
+      inactive_winbar = {
         lualine_c = winbar_lualine;
       };
 

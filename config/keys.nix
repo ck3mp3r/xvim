@@ -1,5 +1,11 @@
-let
-  keys = (import ./util/keys.nix { });
+{
+  pkgs,
+  helpers,
+  registrations,
+  ...
+}: let
+  keys = import ./util/keys.nix {};
+
   keyInfo = keys.convert [
     (keys.silent ":w <CR>" "<C-s>" "Save")
     (keys.silent "<cmd>nohlsearch<CR>" "<leader>h" "No Highlight")
@@ -17,14 +23,25 @@ let
     (keys.silent "<cmd>Telescope registers<cr>" "<leader>sR" "Registers")
     (keys.silent "<cmd>Telescope resume<cr>" "<leader>sl" "Resume last search")
   ];
-in
-{
-  keymaps = keyInfo.bindings;
 
-  plugins.which-key = {
-    enable = true;
-    registrations = keyInfo.descriptions // {
+  mappings =
+    registrations
+    // keyInfo.descriptions
+    // {
       "<leader>s" = "Search";
     };
+in {
+  bindings = keyInfo.bindings;
+
+  plugin = {
+    pkg = pkgs.vimPlugins.which-key-nvim;
+    # config = true;
+    config = ''
+      function()
+        require("which-key").setup({})
+        require("which-key").register(${helpers.toLuaObject mappings})
+      end
+    '';
+    event = "VeryLazy";
   };
 }
