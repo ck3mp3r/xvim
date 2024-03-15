@@ -97,15 +97,15 @@ in {
       {
         pkg = lsp_lines-nvim;
         config = ''
-        function()
-          vim.diagnostic.config({
-            virtual_text = false,
-            virtual_lines = { 
-              only_current_line = true 
-            }
-          })
-          require("lsp_lines").setup()
-        end
+          function()
+            vim.diagnostic.config({
+              virtual_text = false,
+              virtual_lines = {
+                only_current_line = true
+              }
+            })
+            require("lsp_lines").setup()
+          end
         '';
       }
     ];

@@ -10,6 +10,7 @@
     (keys.silent "<cmd>lua require 'gitsigns'.reset_buffer()<cr>" "<leader>gR" "Reset Buffer")
     (keys.silent "<cmd>lua require 'gitsigns'.stage_hunk()<cr>" "<leader>gs" "Stage Hunk")
     (keys.silent "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>" "<leader>gu" "Undo Stage Hunk")
+    (keys.silent "<cmd>Neogit<cr>" "<leader>gn" "Open Neogit")
     (keys.silent "<cmd>Telescope git_status<cr>" "<leader>go" "Open changed file")
     (keys.silent "<cmd>Telescope git_branches<cr>" "<leader>gb" "Checkout branch")
     (keys.silent "<cmd>Telescope git_commits<cr>" "<leader>gc" "Checkout commit")
@@ -17,7 +18,13 @@
     (keys.silent "<cmd>Gitsigns diffthis HEAD<cr>" "<leader>gd" "Git Diff")
   ];
 in {
-  plugin = with pkgs.vimPlugins; {
+  plugins = with pkgs.vimPlugins; [
+      {
+        pkg = neogit;
+        config = true;
+        cmd = ["Neogit"];
+      }
+    {
     pkg = gitsigns-nvim;
     config = true;
     dependencies = [
@@ -30,7 +37,8 @@ in {
     ];
     cmd = ["Gitsigns"];
     event = ["BufReadPost"];
-  };
+    }
+  ];
   registrations = keyInfo.descriptions // {"<leader>g" = "Git";};
   bindings = keyInfo.bindings;
 }

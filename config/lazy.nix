@@ -38,7 +38,6 @@
     catppuccin
     cmp
     direnv.plugin
-    git.plugin
     comment
     keys.plugin
     lsp.plugin
@@ -80,7 +79,7 @@
         };
       };
     }
-  ];
+  ] ++ git.plugins;
 in {
   config = {
     plugins.lazy = {
