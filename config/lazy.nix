@@ -12,6 +12,7 @@
   git = import ./git.nix {inherit pkgs;};
   lsp = import ./lsp.nix {inherit pkgs helpers;};
   lualine = import ./lualine.nix {inherit pkgs;};
+  misc = import ./misc.nix {inherit pkgs;};
   noice = import ./noice.nix {inherit pkgs;};
   nonels = import ./none-ls.nix {inherit pkgs;};
   nvimtree = import ./nvim-tree.nix {inherit (pkgs) vimPlugins;};
@@ -38,50 +39,23 @@
       bufferline.plugin
       catppuccin
       cmp
-      direnv.plugin
       comment
+      direnv.plugin
       keys.plugin
       lsp.plugin
       lualine.plugin
-      {
-        pkg = markdown-preview-nvim;
-        ft = ["markdown"];
-      }
       noice
       nonels
-      nvim-autopairs
       nvimtree
-      rainbow-delimiters-nvim
-      surround
       telescope.plugin
       tmux-navigator
       toggleterm.plugin
       treesitter
       vim-bbye
       zenmode.plugin
-      {
-        pkg = better-escape-nvim;
-        opts = {
-          mapping = ["jj" "jk"];
-          timeout = 150;
-        };
-      }
-      {
-        pkg = indent-blankline-nvim;
-        main = "ibl";
-        opts = {
-          indent = {
-            char = "▏";
-          };
-          scope = {
-            char = "▏";
-            show_start = false;
-            show_end = false;
-          };
-        };
-      }
     ]
-    ++ git.plugins;
+    ++ git.plugins
+    ++ misc;
 in {
   config = {
     plugins.lazy = {

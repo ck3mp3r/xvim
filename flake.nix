@@ -12,7 +12,6 @@
   };
 
   outputs = {
-    self,
     devshell,
     nixpkgs,
     nixvim,

@@ -22,8 +22,8 @@ with pkgs.vimPlugins; {
           {name = "treesitter"},
           {name = "path"},
           {name = "buffer"},
-          -- {name = 'nvim_lsp_signature_help'},
-          -- {name = 'nvim_lsp_document_symbol'},
+          {name = 'nvim_lsp_signature_help'},
+          {name = 'nvim_lsp_document_symbol'},
           -- { name = "cmp_tabnine"; }
           -- { name = "calc"; }
           -- { name = "emoji"; }
@@ -65,10 +65,13 @@ with pkgs.vimPlugins; {
   '';
 
   dependencies = [
-    cmp-nvim-lsp
-    # cmp-nvim-lsp-document-symbol
-    # cmp-nvim-lsp-signature-help
+    {
+      pkg = cmp-nvim-lsp;
+      config = true;
+    }
+    cmp-nvim-lsp-document-symbol
+    cmp-nvim-lsp-signature-help
     lspkind-nvim
-    # luasnip
+    luasnip
   ];
 }
