@@ -10,18 +10,23 @@ with pkgs.vimPlugins; {
         formatting = {
           format = lspkind.cmp_format({
             mode = 'symbol_text',
-            maxwidth = 50,
+            maxwidth = 60,
             ellipsis_char = '...',
-            show_labelDetails = true,
+            show_labelDetails = false,
+            before = function (entry, vim_item)
+              return vim_item
+            end
           })
         },
         sources = cmp.config.sources({
           {name = "nvim_lsp"},
           {name = "nvim_lua"},
+          {name = "luasnip"},
           {name = "treesitter"},
+          {name = "path"},
           {name = "buffer"},
-          {name = 'nvim_lsp_signature_help'},
-          {name = 'nvim_lsp_document_symbol'},
+          -- {name = 'nvim_lsp_signature_help'},
+          -- {name = 'nvim_lsp_document_symbol'},
           -- { name = "cmp_tabnine"; }
           -- { name = "calc"; }
           -- { name = "emoji"; }
@@ -40,6 +45,12 @@ with pkgs.vimPlugins; {
             ["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), {'i','s'})
           }
         ),
+
+        snippet = {
+          expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+          end,
+        },
 
         experimental = {
           ghost_text = false,
@@ -74,5 +85,11 @@ with pkgs.vimPlugins; {
       opts = {};
     }
     lspkind-nvim
+    {
+      pkg = luasnip;
+      dependencies = [
+        cmp_luasnip
+      ];
+    }
   ];
 }
