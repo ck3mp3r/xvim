@@ -32,54 +32,56 @@
       // direnv.registrations;
   };
 
-  plugins = with pkgs.vimPlugins; [
-    alpha
-    bufferline.plugin
-    catppuccin
-    cmp
-    direnv.plugin
-    comment
-    keys.plugin
-    lsp.plugin
-    lualine.plugin
-    {
-      pkg = markdown-preview-nvim;
-      ft = ["markdown"];
-    }
-    noice
-    nonels
-    nvim-autopairs
-    nvimtree
-    rainbow-delimiters-nvim
-    surround
-    telescope.plugin
-    tmux-navigator
-    toggleterm.plugin
-    treesitter
-    vim-bbye
-    zenmode.plugin
-    {
-      pkg = better-escape-nvim;
-      opts = {
-        mapping = ["jj" "jk"];
-        timeout = 150;
-      };
-    }
-    {
-      pkg = indent-blankline-nvim;
-      main = "ibl";
-      opts = {
-        indent = {
-          char = "▏";
+  plugins = with pkgs.vimPlugins;
+    [
+      alpha
+      bufferline.plugin
+      catppuccin
+      cmp
+      direnv.plugin
+      comment
+      keys.plugin
+      lsp.plugin
+      lualine.plugin
+      {
+        pkg = markdown-preview-nvim;
+        ft = ["markdown"];
+      }
+      noice
+      nonels
+      nvim-autopairs
+      nvimtree
+      rainbow-delimiters-nvim
+      surround
+      telescope.plugin
+      tmux-navigator
+      toggleterm.plugin
+      treesitter
+      vim-bbye
+      zenmode.plugin
+      {
+        pkg = better-escape-nvim;
+        opts = {
+          mapping = ["jj" "jk"];
+          timeout = 150;
         };
-        scope = {
-          char = "▏";
-          show_start = false;
-          show_end = false;
+      }
+      {
+        pkg = indent-blankline-nvim;
+        main = "ibl";
+        opts = {
+          indent = {
+            char = "▏";
+          };
+          scope = {
+            char = "▏";
+            show_start = false;
+            show_end = false;
+          };
         };
-      };
-    }
-  ] ++ git.plugins;
+      }
+    ]
+    ++ git.plugins;
 in {
   config = {
     plugins.lazy = {

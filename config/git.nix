@@ -10,6 +10,7 @@
     (keys.silent "<cmd>lua require 'gitsigns'.reset_buffer()<cr>" "<leader>gR" "Reset Buffer")
     (keys.silent "<cmd>lua require 'gitsigns'.stage_hunk()<cr>" "<leader>gs" "Stage Hunk")
     (keys.silent "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>" "<leader>gu" "Undo Stage Hunk")
+    (keys.silent "<cmd>GitBlameToggle<cr>" "<leader>gtb" "Toggle Git Blame")
     (keys.silent "<cmd>Neogit<cr>" "<leader>gn" "Open Neogit")
     (keys.silent "<cmd>Telescope git_status<cr>" "<leader>go" "Open changed file")
     (keys.silent "<cmd>Telescope git_branches<cr>" "<leader>gb" "Checkout branch")
@@ -19,26 +20,31 @@
   ];
 in {
   plugins = with pkgs.vimPlugins; [
-      {
-        pkg = neogit;
-        config = true;
-        cmd = ["Neogit"];
-      }
     {
-    pkg = gitsigns-nvim;
-    config = true;
-    dependencies = [
-      {
-        pkg = git-blame-nvim;
-        opts = {
-          delay = 150;
-        };
-      }
-    ];
-    cmd = ["Gitsigns"];
-    event = ["BufReadPost"];
+      pkg = neogit;
+      config = true;
+      cmd = ["Neogit"];
+      dependencies = [
+        diffview-nvim
+      ];
+    }
+    {
+      pkg = gitsigns-nvim;
+      config = true;
+      dependencies = [
+        {
+          pkg = git-blame-nvim;
+          opts = {
+            delay = 150;
+            enabled = false;
+          };
+          cmd = ["GitBlameToggle"];
+        }
+      ];
+      cmd = ["Gitsigns"];
+      event = ["BufReadPost"];
     }
   ];
-  registrations = keyInfo.descriptions // {"<leader>g" = "Git";};
+  registrations = keyInfo.descriptions // {"<leader>g" = "Git";} // {"<leader>gt" = "Toggle";};
   bindings = keyInfo.bindings;
 }
