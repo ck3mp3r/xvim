@@ -51,12 +51,6 @@
           inherit xvim;
           default = xvim;
         };
-
-        overlays = 
-          final: prev: {
-            xvim = self.packages.${system}.default;
-          }
-        ;
       }
     );
 }
