@@ -8,6 +8,7 @@
 
   keyInfo = keys.convert [
     (keys.silent ":w <CR>" "<C-s>" "Save")
+    (keys.silent ":qa <CR>" "<Leader>q" "Quit")
     (keys.silent "<cmd>nohlsearch<CR>" "<leader>h" "No Highlight")
     (keys.silent "<cmd>Bdelete<CR>" "<Leader>c" "Close")
     (keys.silent "<cmd>Telescope colorscheme<cr>" "<leader>sc" "Colorscheme")

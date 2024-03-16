@@ -10,6 +10,7 @@ in {
     options = {
       clipboard = "unnamedplus";
       colorcolumn = "120";
+      conceallevel = 1;
       cursorcolumn = false;
       expandtab = true;
       ignorecase = true;
