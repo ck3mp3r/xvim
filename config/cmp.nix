@@ -76,7 +76,7 @@ with pkgs.vimPlugins; {
     }
     {
       pkg = cmp-nvim-lsp-document-symbol;
-      event  = ["VeryLazy"];
+      event = ["VeryLazy"];
       opts = {};
     }
     {

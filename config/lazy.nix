@@ -16,6 +16,7 @@
   noice = import ./noice.nix {inherit pkgs;};
   nonels = import ./none-ls.nix {inherit pkgs;};
   nvimtree = import ./nvim-tree.nix {inherit (pkgs) vimPlugins;};
+  obsidian = import ./obsidian.nix {inherit pkgs;};
   telescope = import ./telescope.nix {inherit (pkgs) vimPlugins;};
   toggleterm = import ./toggleterm.nix {inherit pkgs;};
   treesitter = import ./treesitter.nix {inherit pkgs;};
@@ -25,12 +26,13 @@
     inherit pkgs helpers;
     registrations =
       git.registrations
-      // toggleterm.registrations
-      // telescope.registrations
       // bufferline.registrations
+      // direnv.registrations
       // lsp.registrations
-      // zenmode.registrations
-      // direnv.registrations;
+      // obsidian.registrations
+      // telescope.registrations
+      // toggleterm.registrations
+      // zenmode.registrations;
   };
 
   plugins = with pkgs.vimPlugins;
@@ -47,6 +49,7 @@
       noice
       nonels
       nvimtree
+      obsidian.plugin
       telescope.plugin
       tmux-navigator
       toggleterm.plugin
@@ -62,6 +65,15 @@ in {
       inherit plugins;
       enable = true;
     };
-    keymaps = keys.bindings ++ telescope.bindings ++ toggleterm.bindings ++ git.bindings ++ bufferline.bindings ++ lsp.bindings ++ zenmode.bindings ++ direnv.bindings;
+    keymaps =
+      keys.bindings
+      ++ bufferline.bindings
+      ++ direnv.bindings
+      ++ git.bindings
+      ++ lsp.bindings
+      ++ obsidian.bindings
+      ++ telescope.bindings
+      ++ toggleterm.bindings
+      ++ zenmode.bindings;
   };
 }
