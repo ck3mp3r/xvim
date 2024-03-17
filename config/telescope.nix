@@ -19,7 +19,14 @@ in
           '';
           event = ["VimEnter"];
         }
-        telescope-fzf-native-nvim
+        {
+          pkg = telescope-fzf-native-nvim;
+          config = ''
+            function()
+              require'telescope'.load_extension('fzf')
+            end
+          '';
+        }
         telescope-project-nvim
       ];
       opts = {
