@@ -8,6 +8,7 @@ in
   with pkgs.vimPlugins; {
     plugin = {
       pkg = direnv-vim;
+      event = ["VeryLazy"];
     };
     bindings = keyInfo.bindings;
     registrations = keyInfo.descriptions // {"<leader>d" = "Direnv";};

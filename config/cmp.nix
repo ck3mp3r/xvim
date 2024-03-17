@@ -76,12 +76,10 @@ with pkgs.vimPlugins; {
     }
     {
       pkg = cmp-nvim-lsp-document-symbol;
-      event = ["VeryLazy"];
       opts = {};
     }
     {
       pkg = cmp-nvim-lsp-signature-help;
-      event = ["VeryLazy"];
       opts = {};
     }
     lspkind-nvim

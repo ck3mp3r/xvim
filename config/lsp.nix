@@ -18,6 +18,7 @@
 in {
   plugin = {
     pkg = pkgs.vimPlugins.nvim-lspconfig;
+    event = ["BufReadPost" "BufWritePost" "BufNewFile"];
     config = ''
       function()
         local lspconfig = require('lspconfig')
@@ -65,7 +66,6 @@ in {
         })
       end
     '';
-    lazy = false;
 
     dependencies = with pkgs.vimPlugins; [
       {
