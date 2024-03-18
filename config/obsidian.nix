@@ -15,7 +15,7 @@ in
         workspaces = [
           {
             name = "personal";
-            path = "~/Documents/Projects/ck3mp3r/obsidian-notes";
+            path = "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes";
           }
         ];
         preferred_link_style = "markdown";
