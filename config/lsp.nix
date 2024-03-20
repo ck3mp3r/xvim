@@ -25,7 +25,7 @@ in {
         lspconfig.ansiblels.setup {}
         lspconfig.bashls.setup {}
         lspconfig.jsonls.setup {}
-        lspconfig.nil_ls.setup {}
+        lspconfig.nixd.setup {}
         lspconfig.terraformls.setup {}
         lspconfig.yamlls.setup {}
         lspconfig.rust_analyzer.setup {
