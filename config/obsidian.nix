@@ -9,8 +9,13 @@ in
   with pkgs.vimPlugins; {
     plugin = {
       pkg = obsidian-nvim;
-      ft = ["markdown"];
       cmd = ["ObsidianNew" "ObsidianSearch"];
+      event.__raw =''
+        {
+          "BufReadPre " .. vim.fn.expand "~" .. "/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes/**.md",
+          "BufNewFile " .. vim.fn.expand "~" .. "/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes/**.md",
+        }
+      '';
       opts = {
         workspaces = [
           {
