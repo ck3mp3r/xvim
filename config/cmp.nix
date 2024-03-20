@@ -75,6 +75,18 @@ with pkgs.vimPlugins; {
       config = true;
     }
     {
+      pkg = cmp-buffer;
+      opts = {};
+    }
+    {
+      pkg = cmp-path;
+      opts = {};
+    }
+    {
+      pkg = cmp-cmdline;
+      opts = {};
+    }
+    {
       pkg = cmp-nvim-lsp-document-symbol;
       opts = {};
     }
