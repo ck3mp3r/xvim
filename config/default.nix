@@ -37,6 +37,7 @@ in {
     extraPackages = with pkgs; [
       lua-language-server
       nix
+      nixd
       nodePackages.vscode-json-languageserver-bin
       yaml-language-server
     ];
