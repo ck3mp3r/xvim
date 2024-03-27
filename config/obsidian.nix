@@ -10,7 +10,7 @@ in
     plugin = {
       pkg = obsidian-nvim;
       cmd = ["ObsidianNew" "ObsidianSearch"];
-      event.__raw =''
+      event.__raw = ''
         {
           "BufReadPre " .. vim.fn.expand "~" .. "/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes/**.md",
           "BufNewFile " .. vim.fn.expand "~" .. "/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes/**.md",

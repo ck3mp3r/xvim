@@ -27,7 +27,27 @@ in {
         lspconfig.jsonls.setup {}
         lspconfig.nixd.setup {}
         lspconfig.terraformls.setup {}
-        lspconfig.yamlls.setup {}
+        lspconfig.yamlls.setup {
+          on_attach = function(client, _)
+            if client.name == "yamlls" then
+              client.server_capabilities.documentFormattingProvider = true
+            end
+          end,
+          settings = {
+            redhat = { telemetry = { enabled = false } },
+            yaml = {
+              format = {
+                enable = true
+              },
+              validate = true,
+              schemaStore = {
+                enable = false,
+                url = ""
+              },
+              schemas = require('schemastore').yaml.schemas(),
+            }
+          }
+        }
         lspconfig.rust_analyzer.setup {
           settings = {
             ['rust-analyzer'] = {
@@ -68,6 +88,7 @@ in {
     '';
 
     dependencies = with pkgs.vimPlugins; [
+      SchemaStore-nvim
       {
         pkg = lsp-format-nvim;
         opts = {
