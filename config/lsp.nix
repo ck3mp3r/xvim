@@ -21,13 +21,26 @@ in {
     event = ["BufReadPost" "BufWritePost" "BufNewFile"];
     config = ''
       function()
+        local capabilities = require('cmp_nvim_lsp').default_capabilities()
+        
         local lspconfig = require('lspconfig')
-        lspconfig.ansiblels.setup {}
-        lspconfig.bashls.setup {}
-        lspconfig.jsonls.setup {}
-        lspconfig.nixd.setup {}
-        lspconfig.terraformls.setup {}
+        lspconfig.ansiblels.setup {
+          capabilities = capabilities
+        }
+        lspconfig.bashls.setup {
+          capabilities = capabilities
+        }
+        lspconfig.jsonls.setup {
+          capabilities = capabilities
+        }
+        lspconfig.nixd.setup {
+          capabilities = capabilities
+        }
+        lspconfig.terraformls.setup {
+          capabilities = capabilities
+        }
         lspconfig.yamlls.setup {
+          capabilities = capabilities,
           on_attach = function(client, _)
             if client.name == "yamlls" then
               client.server_capabilities.documentFormattingProvider = true
@@ -49,6 +62,7 @@ in {
           }
         }
         lspconfig.rust_analyzer.setup {
+          capabilities = capabilities,
           settings = {
             ['rust-analyzer'] = {
               diagnostics = {
@@ -60,10 +74,18 @@ in {
             }
           }
         }
-        lspconfig.pyright.setup {}
-        lspconfig.gopls.setup {}
-        lspconfig.kotlin_language_server.setup {}
-        lspconfig.lua_ls.setup {}
+        lspconfig.pyright.setup {
+          capabilities = capabilities
+        }
+        lspconfig.gopls.setup {
+          capabilities = capabilities
+        }
+        lspconfig.kotlin_language_server.setup {
+          capabilities = capabilities
+        }
+        lspconfig.lua_ls.setup {
+          capabilities = capabilities
+        }
 
         -- Use LspAttach autocommand to only map the following keys
         -- after the language server attaches to the current buffer
