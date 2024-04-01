@@ -7,7 +7,7 @@ in {
   config = {
     globals.mapleader = " ";
 
-    options = {
+    opts = {
       clipboard = "unnamedplus";
       colorcolumn = "120";
       conceallevel = 1;
