@@ -6,6 +6,7 @@
       java
       javascript
       json
+      hcl
       kotlin
       lua
       markdown
