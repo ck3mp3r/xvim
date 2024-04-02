@@ -16,6 +16,7 @@
       regex
       rust
       starlark
+      typescript
       yaml
     ]);
 

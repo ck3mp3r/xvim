@@ -39,6 +39,9 @@ in {
         lspconfig.terraformls.setup {
           capabilities = capabilities
         }
+        lspconfig.tsserver.setup{
+          capabilities = capabilities,
+        }
         lspconfig.yamlls.setup {
           capabilities = capabilities,
           on_attach = function(client, _)
