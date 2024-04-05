@@ -14,17 +14,19 @@ with vimPlugins; {
     "NvimTreeFindFileToggle"
   ];
   opts = {
+    disable_netrw = true;
     diagnostics.enable = true;
     modified.enable = true;
-    # prefer_startup_root = true;
+    prefer_startup_root = false;
     sync_root_with_cwd = true;
-    respect_buf_cwd = true;
+    respect_buf_cwd = false;
     update_focused_file = {
       enable = true;
-      update_root = true;
+      update_root = false;
     };
     renderer = {
       icons.git_placement = "signcolumn";
+      group_empty = true;
       root_folder_label.__raw = ''
         function(path)
           return vim.fn.fnamemodify(path, ":t")
@@ -61,6 +63,9 @@ with vimPlugins; {
           end
       end
     '';
-    view.signcolumn = "yes";
+    view = {
+      signcolumn = "yes";
+      width.min = "40";
+    };
   };
 }
