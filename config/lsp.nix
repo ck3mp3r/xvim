@@ -11,7 +11,7 @@
     (keys.silent "<cmd>lua vim.diagnostic.goto_prev()<cr>" "<leader>lk" "Prev Diagnostic")
     (keys.silent "<cmd>lua vim.diagnostic.setloclist()<cr>" "<leader>lq" "Quickfix")
     (keys.silent "<cmd>lua vim.lsp.buf.code_action()<cr>" "<leader>la" "Code Action")
-    (keys.silent "<cmd>lua vim.lsp.buf.format()<cr>" "<leader>lf" "Format")
+    (keys.silent "<cmd>lua vim.lsp.buf.format({timeout_ms=5000})<cr>" "<leader>lf" "Format")
     (keys.silent "<cmd>lua vim.lsp.buf.rename()<cr>" "<leader>lr" "Rename")
     (keys.silent "<cmd>lua vim.lsp.codelens.run()<cr>" "<leader>ll" "CodeLens Action")
   ];
