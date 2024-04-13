@@ -44,7 +44,7 @@ in
     '';
     lazy = false;
     dependencies = [
-      nvim-treesitter-context
+      # nvim-treesitter-context
       nvim-treesitter-textobjects
     ];
   }
