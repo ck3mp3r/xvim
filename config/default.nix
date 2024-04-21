@@ -39,6 +39,7 @@ in {
       nix
       nixd
       nodePackages.vscode-json-languageserver-bin
+      nodePackages_latest.bash-language-server
       shfmt
       yaml-language-server
     ];
