@@ -1,6 +1,6 @@
-{pkgs, ...}:
-with pkgs.vimPlugins; {
-  pkg = pkgs.vimPlugins.catppuccin-nvim;
+{vimPlugins, ...}:
+with vimPlugins; {
+  pkg = vimPlugins.catppuccin-nvim;
   lazy = false;
   priority = 1000;
   config = ''

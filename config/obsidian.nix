@@ -1,4 +1,4 @@
-{pkgs, ...}: let
+{vimPlugins, ...}: let
   keys = import ./util/keys.nix {};
   keyInfo = keys.convert [
     (keys.silent ":ObsidianNew<cr> " "<Leader>on" "New Note")
@@ -6,7 +6,7 @@
     (keys.silent ":ObsidianTemplate<cr>" "<Leader>ot" "Search Templates")
   ];
 in
-  with pkgs.vimPlugins; {
+  with vimPlugins; {
     plugin = {
       pkg = obsidian-nvim;
       cmd = ["ObsidianNew" "ObsidianSearch"];

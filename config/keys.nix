@@ -1,5 +1,5 @@
 {
-  pkgs,
+  vimPlugins,
   helpers,
   registrations,
   ...
@@ -35,7 +35,7 @@ in {
   bindings = keyInfo.bindings;
 
   plugin = {
-    pkg = pkgs.vimPlugins.which-key-nvim;
+    pkg = vimPlugins.which-key-nvim;
     # config = true;
     config = ''
       function()

@@ -1,4 +1,4 @@
-{pkgs, ...}: let
+{vimPlugins, ...}: let
   keys = import ./util/keys.nix {};
   keyInfo = keys.convert [
     (keys.silent "<cmd>LspInfo<cr>" "<leader>li" "Info")
@@ -17,7 +17,7 @@
   ];
 in {
   plugin = {
-    pkg = pkgs.vimPlugins.nvim-lspconfig;
+    pkg = vimPlugins.nvim-lspconfig;
     event = ["BufReadPost" "BufWritePost" "BufNewFile"];
     config = ''
       function()
@@ -126,7 +126,7 @@ in {
       end
     '';
 
-    dependencies = with pkgs.vimPlugins; [
+    dependencies = with vimPlugins; [
       SchemaStore-nvim
       {
         pkg = lsp-format-nvim;

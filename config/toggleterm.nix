@@ -1,4 +1,4 @@
-{pkgs, ...}: let
+{vimPlugins, ...}: let
   keys = import ./util/keys.nix {};
 
   keyInfo = keys.convert [
@@ -7,7 +7,7 @@
     (keys.silent "<cmd>ToggleTerm direction=vertical<cr>" "<leader>tv" "Vertical terminal")
   ];
 in {
-  plugin = with pkgs.vimPlugins; {
+  plugin = with vimPlugins; {
     pkg = toggleterm-nvim;
     opts = {
       float_opts.border = "curved";

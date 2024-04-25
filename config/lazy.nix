@@ -3,27 +3,31 @@
   helpers,
   ...
 }: let
-  alpha = import ./alpha.nix {inherit pkgs;};
-  bufferline = import ./bufferline.nix {inherit pkgs;};
-  catppuccin = import ./catppuccin.nix {inherit pkgs;};
-  cmp = import ./cmp.nix {inherit pkgs;};
-  comment = import ./comment.nix {inherit pkgs;};
-  direnv = import ./direnv.nix {inherit pkgs;};
-  git = import ./git.nix {inherit pkgs;};
-  lsp = import ./lsp.nix {inherit pkgs helpers;};
-  lualine = import ./lualine.nix {inherit pkgs;};
-  misc = import ./misc.nix {inherit pkgs;};
-  noice = import ./noice.nix {inherit pkgs;};
-  nonels = import ./none-ls.nix {inherit pkgs;};
+  alpha = import ./alpha.nix {inherit (pkgs) vimPlugins;};
+  bufferline = import ./bufferline.nix {inherit (pkgs) vimPlugins;};
+  catppuccin = import ./catppuccin.nix {inherit (pkgs) vimPlugins;};
+  cmp = import ./cmp.nix {inherit (pkgs) vimPlugins;};
+  comment = import ./comment.nix {inherit (pkgs) vimPlugins;};
+  direnv = import ./direnv.nix {inherit (pkgs) vimPlugins;};
+  git = import ./git.nix {inherit (pkgs) vimPlugins;};
+  lsp = import ./lsp.nix {
+    inherit (pkgs) vimPlugins;
+    inherit helpers;
+  };
+  lualine = import ./lualine.nix {inherit (pkgs) vimPlugins;};
+  misc = import ./misc.nix {inherit (pkgs) vimPlugins;};
+  noice = import ./noice.nix {inherit (pkgs) vimPlugins;};
+  nonels = import ./none-ls.nix {inherit (pkgs) vimPlugins;};
   nvimtree = import ./nvim-tree.nix {inherit (pkgs) vimPlugins;};
-  obsidian = import ./obsidian.nix {inherit pkgs;};
+  obsidian = import ./obsidian.nix {inherit (pkgs) vimPlugins;};
   telescope = import ./telescope.nix {inherit (pkgs) vimPlugins;};
-  toggleterm = import ./toggleterm.nix {inherit pkgs;};
+  toggleterm = import ./toggleterm.nix {inherit (pkgs) vimPlugins;};
   treesitter = import ./treesitter.nix {inherit pkgs;};
-  zenmode = import ./zenmode.nix {inherit pkgs;};
+  zenmode = import ./zenmode.nix {inherit (pkgs) vimPlugins;};
 
   keys = import ./keys.nix {
-    inherit pkgs helpers;
+    inherit (pkgs) vimPlugins;
+    inherit helpers;
     registrations =
       git.registrations
       // bufferline.registrations

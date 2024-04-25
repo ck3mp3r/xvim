@@ -1,11 +1,11 @@
-{pkgs, ...}: let
+{vimPlugins, ...}: let
   keys = import ./util/keys.nix {};
   keyInfo = keys.convert [
     (keys.silent ":DirenvExport <CR>" "<Leader>dx" "Direnv Export")
     # (keys.silent ":EditDirenvrc <CR>" "<Leader>de" "Edit direnvrc")
   ];
 in
-  with pkgs.vimPlugins; {
+  with vimPlugins; {
     plugin = {
       pkg = direnv-vim;
       event = ["VeryLazy"];

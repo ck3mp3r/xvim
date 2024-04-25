@@ -1,4 +1,4 @@
-{pkgs, ...}: let
+{vimPlugins, ...}: let
   winbar_lualine = [
     {
       "__unkeyed" = "filetype";
@@ -45,7 +45,7 @@
     lualine_z = [];
   };
 in {
-  plugin = with pkgs.vimPlugins; {
+  plugin = with vimPlugins; {
     pkg = lualine-nvim;
     event = ["VimEnter"];
     dependencies = [

@@ -1,5 +1,5 @@
-{pkgs, ...}:
-with pkgs.vimPlugins; {
+{vimPlugins, ...}:
+with vimPlugins; {
   pkg = nvim-cmp;
   event = ["InsertEnter" "CmdlineEnter"];
   config = ''

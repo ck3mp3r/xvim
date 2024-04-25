@@ -1,4 +1,4 @@
-{pkgs, ...}: let
+{vimPlugins, ...}: let
   keys = import ./util/keys.nix {};
 
   keyInfo = keys.convert [
@@ -12,7 +12,7 @@
   ];
 in {
   plugin = {
-    pkg = pkgs.vimPlugins.bufferline-nvim;
+    pkg = vimPlugins.bufferline-nvim;
     opts = {
       options = {
         offsets = [

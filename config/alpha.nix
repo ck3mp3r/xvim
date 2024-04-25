@@ -1,4 +1,4 @@
-{pkgs, ...}: let
+{vimPlugins, ...}: let
   asButton = {
     shortcut,
     desc,
@@ -32,7 +32,7 @@
     };
   };
 in
-  with pkgs.vimPlugins; {
+  with vimPlugins; {
     pkg = alpha-nvim;
     opts = {
       layout = [

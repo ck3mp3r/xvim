@@ -1,4 +1,4 @@
-{pkgs, ...}: let
+{vimPlugins, ...}: let
   keys = import ./util/keys.nix {};
   keyInfo = keys.convert [
     (keys.silent "<cmd>lua require 'xvim-components'.toggle()<cr>" "<leader>gg" "Lazygit")
@@ -19,7 +19,7 @@
     (keys.silent "<cmd>Gitsigns diffthis HEAD<cr>" "<leader>gd" "Git Diff")
   ];
 in {
-  plugins = with pkgs.vimPlugins; [
+  plugins = with vimPlugins; [
     {
       pkg = neogit;
       config = true;
