@@ -18,5 +18,11 @@ with pkgs.vimPlugins; {
 
   dependencies = [
     nui-nvim
+    {
+      pkg = nvim-notify;
+      opts = {
+        background_colour = "#000000";
+      };
+    }
   ];
 }
