@@ -1,6 +1,5 @@
-{vimPlugins, ...}:
-with vimPlugins; {
-  pkg = noice-nvim;
+{ vimPlugins, ... }: {
+  pkg = vimPlugins.noice-nvim;
   event = "VeryLazy";
   config = ''
     function()
@@ -17,12 +16,10 @@ with vimPlugins; {
   '';
 
   dependencies = [
-    nui-nvim
+    vimPlugins.nui-nvim
     {
-      pkg = nvim-notify;
-      opts = {
-        background_colour = "#000000";
-      };
+      pkg = vimPlugins.nvim-notify;
+      opts = { background_colour = "#000000"; };
     }
   ];
 }

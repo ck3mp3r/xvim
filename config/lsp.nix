@@ -1,24 +1,35 @@
-{vimPlugins, ...}: let
-  keys = import ./util/keys.nix {};
+{ vimPlugins, ... }:
+let
+  keys = import ./util/keys.nix { };
   keyInfo = keys.convert [
     (keys.silent "<cmd>LspInfo<cr>" "<leader>li" "Info")
-    (keys.silent "<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<cr>" "<leader>ld" "Buffer Diagnostics")
+    (keys.silent "<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<cr>"
+      "<leader>ld" "Buffer Diagnostics")
     (keys.silent "<cmd>Telescope diagnostics<cr>" "<leader>lw" "Diagnostics")
-    (keys.silent "<cmd>Telescope lsp_document_symbols<cr>" "<leader>ls" "Document Symbols")
-    (keys.silent "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>" "<leader>lS" "Workspace Symbols")
-    (keys.silent "<cmd>Telescope quickfix<cr>" "<leader>le" "Telescope Quickfix")
-    (keys.silent "<cmd>lua vim.diagnostic.goto_next()<cr>" "<leader>lj" "Next Diagnostic")
-    (keys.silent "<cmd>lua vim.diagnostic.goto_prev()<cr>" "<leader>lk" "Prev Diagnostic")
-    (keys.silent "<cmd>lua vim.diagnostic.setloclist()<cr>" "<leader>lq" "Quickfix")
-    (keys.silent "<cmd>lua vim.lsp.buf.code_action()<cr>" "<leader>la" "Code Action")
-    (keys.silent "<cmd>lua vim.lsp.buf.format({timeout_ms=5000})<cr>" "<leader>lf" "Format")
+    (keys.silent "<cmd>Telescope lsp_document_symbols<cr>" "<leader>ls"
+      "Document Symbols")
+    (keys.silent "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>" "<leader>lS"
+      "Workspace Symbols")
+    (keys.silent "<cmd>Telescope quickfix<cr>" "<leader>le"
+      "Telescope Quickfix")
+    (keys.silent "<cmd>lua vim.diagnostic.goto_next()<cr>" "<leader>lj"
+      "Next Diagnostic")
+    (keys.silent "<cmd>lua vim.diagnostic.goto_prev()<cr>" "<leader>lk"
+      "Prev Diagnostic")
+    (keys.silent "<cmd>lua vim.diagnostic.setloclist()<cr>" "<leader>lq"
+      "Quickfix")
+    (keys.silent "<cmd>lua vim.lsp.buf.code_action()<cr>" "<leader>la"
+      "Code Action")
+    (keys.silent "<cmd>lua vim.lsp.buf.format({timeout_ms=5000})<cr>"
+      "<leader>lf" "Format")
     (keys.silent "<cmd>lua vim.lsp.buf.rename()<cr>" "<leader>lr" "Rename")
-    (keys.silent "<cmd>lua vim.lsp.codelens.run()<cr>" "<leader>ll" "CodeLens Action")
+    (keys.silent "<cmd>lua vim.lsp.codelens.run()<cr>" "<leader>ll"
+      "CodeLens Action")
   ];
 in {
   plugin = {
     pkg = vimPlugins.nvim-lspconfig;
-    event = ["BufReadPost" "BufWritePost" "BufNewFile"];
+    event = [ "BufReadPost" "BufWritePost" "BufNewFile" ];
     config = ''
       function()
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -126,10 +137,10 @@ in {
       end
     '';
 
-    dependencies = with vimPlugins; [
-      SchemaStore-nvim
+    dependencies = [
+      vimPlugins.SchemaStore-nvim
       {
-        pkg = lsp-format-nvim;
+        pkg = vimPlugins.lsp-format-nvim;
         opts = {
           rust-analyzer = {
             force = true;
@@ -138,7 +149,7 @@ in {
         };
       }
       {
-        pkg = vim-helm;
+        pkg = vimPlugins.vim-helm;
         config = ''
           function()
             local lspconfig = require('lspconfig')
@@ -155,7 +166,7 @@ in {
         '';
       }
       {
-        pkg = lsp_lines-nvim;
+        pkg = vimPlugins.lsp_lines-nvim;
         config = ''
           function()
             vim.diagnostic.config({
@@ -176,5 +187,5 @@ in {
   # };
 
   bindings = keyInfo.bindings;
-  registrations = keyInfo.descriptions // {"<leader>l" = "LSP";};
+  registrations = keyInfo.descriptions // { "<leader>l" = "LSP"; };
 }

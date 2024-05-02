@@ -1,6 +1,5 @@
-{vimPlugins, ...}:
-with vimPlugins; {
-  pkg = comment-nvim;
+{ vimPlugins, ... }: {
+  pkg = vimPlugins.comment-nvim;
   config = true;
-  keys = ["gc" "gb"];
+  keys = [ "gc" "gb" ];
 }

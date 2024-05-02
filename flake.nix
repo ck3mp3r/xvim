@@ -11,21 +11,13 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = {
-    devshell,
-    nixpkgs,
-    nixvim,
-    flake-utils,
-    ...
-  }:
-    flake-utils.lib.eachDefaultSystem (
-      system: let
-        overlays = [devshell.overlays.default];
+  outputs = { devshell, nixpkgs, nixvim, flake-utils, ... }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let
+        overlays = [ devshell.overlays.default ];
         pkgs = import nixpkgs {
           inherit system overlays;
-          config = {
-            allowUnfree = true;
-          };
+          config = { allowUnfree = true; };
         };
         nixvimLib = nixvim.lib.${system};
         nixvim' = nixvim.legacyPackages.${system};
@@ -37,19 +29,19 @@
         xvim = nixvim'.makeNixvimWithModule nixvimModule;
       in {
         devShells.default = pkgs.devshell.mkShell {
-          imports = [(pkgs.devshell.importTOML ./devshell.toml)];
+          imports = [ (pkgs.devshell.importTOML ./devshell.toml) ];
         };
 
         checks = {
-          default = nixvimLib.check.mkTestDerivationFromNixvimModule nixvimModule;
+          default =
+            nixvimLib.check.mkTestDerivationFromNixvimModule nixvimModule;
         };
 
-        formatter = pkgs.alejandra;
+        formatter = pkgs.nixfmt;
 
         packages = {
           inherit xvim;
           default = xvim;
         };
-      }
-    );
+      });
 }

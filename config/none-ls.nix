@@ -1,6 +1,5 @@
-{vimPlugins, ...}:
-with vimPlugins; {
-  pkg = none-ls-nvim;
+{ vimPlugins, ... }: {
+  pkg = vimPlugins.none-ls-nvim;
   config = ''
     function()
       local null_ls = require("null-ls")

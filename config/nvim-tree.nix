@@ -1,12 +1,9 @@
-{vimPlugins, ...}:
-with vimPlugins; {
-  pkg = nvim-tree-lua;
-  dependencies = [
-    {
-      pkg = nvim-web-devicons;
-      config = true;
-    }
-  ];
+{ vimPlugins, ... }: {
+  pkg = vimPlugins.nvim-tree-lua;
+  dependencies = [{
+    pkg = vimPlugins.nvim-web-devicons;
+    config = true;
+  }];
   cmd = [
     "NvimTreeToggle"
     "NvimTreeOpen"

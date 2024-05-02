@@ -1,5 +1,4 @@
-{vimPlugins, ...}:
-with vimPlugins; {
+{ vimPlugins, ... }: {
   pkg = vimPlugins.catppuccin-nvim;
   lazy = false;
   priority = 1000;

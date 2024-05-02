@@ -1,17 +1,19 @@
-{vimPlugins, ...}: let
-  keys = import ./util/keys.nix {};
+{ vimPlugins, ... }:
+let
+  keys = import ./util/keys.nix { };
 
   keyInfo = keys.convert [
-    (keys.silent "<cmd>ToggleTerm direction=float<cr>" "<leader>tf" "Floating terminal")
-    (keys.silent "<cmd>ToggleTerm direction=horizontal<cr>" "<leader>th" "Horizontal terminal")
-    (keys.silent "<cmd>ToggleTerm direction=vertical<cr>" "<leader>tv" "Vertical terminal")
+    (keys.silent "<cmd>ToggleTerm direction=float<cr>" "<leader>tf"
+      "Floating terminal")
+    (keys.silent "<cmd>ToggleTerm direction=horizontal<cr>" "<leader>th"
+      "Horizontal terminal")
+    (keys.silent "<cmd>ToggleTerm direction=vertical<cr>" "<leader>tv"
+      "Vertical terminal")
   ];
 in {
   plugin = with vimPlugins; {
     pkg = toggleterm-nvim;
-    opts = {
-      float_opts.border = "curved";
-    };
+    opts = { float_opts.border = "curved"; };
     cmd = [
       "ToggleTerm"
       "TermExec"
@@ -23,9 +25,5 @@ in {
   };
 
   bindings = keyInfo.bindings;
-  registrations =
-    keyInfo.descriptions
-    // {
-      "<leader>t" = "Terminal";
-    };
+  registrations = keyInfo.descriptions // { "<leader>t" = "Terminal"; };
 }

@@ -1,43 +1,40 @@
-{vimPlugins, ...}:
-with vimPlugins; [
+{ vimPlugins, ... }: [
   {
-    pkg = markdown-preview-nvim;
-    ft = ["markdown"];
+    pkg = vimPlugins.markdown-preview-nvim;
+    ft = [ "markdown" ];
   }
   {
-    pkg = rainbow-delimiters-nvim;
-    event = ["BufRead"];
+    pkg = vimPlugins.rainbow-delimiters-nvim;
+    event = [ "BufRead" ];
   }
   {
-    pkg = nvim-autopairs;
+    pkg = vimPlugins.nvim-autopairs;
     config = true;
-    event = ["InsertEnter"];
+    event = [ "InsertEnter" ];
   }
   {
-    pkg = better-escape-nvim;
+    pkg = vimPlugins.better-escape-nvim;
     opts = {
-      mapping = ["jj" "jk"];
+      mapping = [ "jj" "jk" ];
       timeout = 150;
     };
-    event = ["InsertEnter"];
+    event = [ "InsertEnter" ];
   }
   {
-    pkg = indent-blankline-nvim;
+    pkg = vimPlugins.indent-blankline-nvim;
     main = "ibl";
     opts = {
-      indent = {
-        char = "▏";
-      };
+      indent = { char = "▏"; };
       scope = {
         char = "▏";
         show_start = false;
         show_end = false;
       };
     };
-    event = ["BufRead"];
+    event = [ "BufRead" ];
   }
   {
-    pkg = surround;
-    event = ["InsertEnter"];
+    pkg = vimPlugins.surround;
+    event = [ "InsertEnter" ];
   }
 ]

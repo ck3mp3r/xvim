@@ -1,8 +1,8 @@
-{pkgs, ...}: let
-  keys = import ./util/keys.nix {};
-  keyInfo = keys.convert [
-    (keys.silent ":NvimTreeToggle <CR>" "<Leader>e" "Toggle Tree")
-  ];
+{ pkgs, ... }:
+let
+  keys = import ./util/keys.nix { };
+  keyInfo = keys.convert
+    [ (keys.silent ":NvimTreeToggle <CR>" "<Leader>e" "Toggle Tree") ];
 in {
   config = {
     globals.mapleader = " ";
@@ -45,8 +45,5 @@ in {
     ];
   };
 
-  imports = [
-    ./autocmd.nix
-    ./lazy.nix
-  ];
+  imports = [ ./autocmd.nix ./lazy.nix ];
 }

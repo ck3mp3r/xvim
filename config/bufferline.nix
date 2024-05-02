@@ -1,5 +1,6 @@
-{vimPlugins, ...}: let
-  keys = import ./util/keys.nix {};
+{ vimPlugins, ... }:
+let
+  keys = import ./util/keys.nix { };
 
   keyInfo = keys.convert [
     (keys.silent ":BufferLineCycleNext <CR>" "L" "Next")
@@ -15,18 +16,16 @@ in {
     pkg = vimPlugins.bufferline-nvim;
     opts = {
       options = {
-        offsets = [
-          {
-            filetype = "NvimTree";
-            text = "Explorer";
-            highlight = "PanelHeading";
-            padding = 1;
-          }
-        ];
+        offsets = [{
+          filetype = "NvimTree";
+          text = "Explorer";
+          highlight = "PanelHeading";
+          padding = 1;
+        }];
       };
     };
-    event = ["BufReadPost"];
+    event = [ "BufReadPost" ];
   };
   bindings = keyInfo.bindings;
-  registrations = keyInfo.descriptions // {"<leader>b" = "Buffers";};
+  registrations = keyInfo.descriptions // { "<leader>b" = "Buffers"; };
 }
