@@ -94,6 +94,23 @@ with vimPlugins; {
       pkg = cmp-nvim-lsp-signature-help;
       opts = {};
     }
+    {
+      pkg = copilot-cmp;
+      event = ["InsertEnter"];
+      opts = {};
+      dependencies = [
+        {
+          pkg = copilot-lua;
+          event = ["InsertEnter"];
+          config = ''
+            function()
+            require("copilot").setup({})
+            end
+          '';
+          opts = {};
+        }
+      ];
+    }
     lspkind-nvim
     {
       pkg = luasnip;
