@@ -3,7 +3,7 @@ let
   alpha = import ./alpha.nix { inherit (pkgs) vimPlugins; };
   bufferline = import ./bufferline.nix { inherit (pkgs) vimPlugins; };
   catppuccin = import ./catppuccin.nix { inherit (pkgs) vimPlugins; };
-  cmp = import ./cmp.nix { inherit pkgs; };
+  cmp = import ./cmp.nix { inherit (pkgs) vimPlugins; };
   comment = import ./comment.nix { inherit (pkgs) vimPlugins; };
   direnv = import ./direnv.nix { inherit (pkgs) vimPlugins; };
   git = import ./git.nix { inherit (pkgs) vimPlugins; };
