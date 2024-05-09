@@ -1,6 +1,6 @@
-{ vimPlugins, ... }: {
+{vimPlugins, ...}: {
   pkg = vimPlugins.nvim-cmp;
-  event = [ "InsertEnter" "CmdlineEnter" ];
+  event = ["InsertEnter" "CmdlineEnter"];
   config = ''
     function()
       local cmp = require'cmp'
@@ -75,43 +75,45 @@
     }
     {
       pkg = vimPlugins.cmp-buffer;
-      opts = { };
+      opts = {};
     }
     {
       pkg = vimPlugins.cmp-path;
-      opts = { };
+      opts = {};
     }
     {
       pkg = vimPlugins.cmp-cmdline;
-      opts = { };
+      opts = {};
     }
     {
       pkg = vimPlugins.cmp-nvim-lsp-document-symbol;
-      opts = { };
+      opts = {};
     }
     {
       pkg = vimPlugins.cmp-nvim-lsp-signature-help;
-      opts = { };
+      opts = {};
     }
     {
       pkg = vimPlugins.copilot-cmp;
-      event = [ "InsertEnter" ];
-      opts = { };
-      dependencies = [{
-        pkg = vimPlugins.copilot-lua;
-        event = [ "InsertEnter" ];
-        config = ''
-          function()
-          require("copilot").setup({})
-          end
-        '';
-        opts = { };
-      }];
+      event = ["InsertEnter"];
+      opts = {};
+      dependencies = [
+        {
+          pkg = vimPlugins.copilot-lua;
+          event = ["InsertEnter"];
+          config = ''
+            function()
+            require("copilot").setup({})
+            end
+          '';
+          opts = {};
+        }
+      ];
     }
     vimPlugins.lspkind-nvim
     {
       pkg = vimPlugins.luasnip;
-      dependencies = [ vimPlugins.cmp_luasnip ];
+      dependencies = [vimPlugins.cmp_luasnip];
     }
   ];
 }

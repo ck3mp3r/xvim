@@ -1,4 +1,4 @@
-{ vimPlugins, ... }: {
+{vimPlugins, ...}: {
   pkg = vimPlugins.noice-nvim;
   event = "VeryLazy";
   config = ''
@@ -19,7 +19,7 @@
     vimPlugins.nui-nvim
     {
       pkg = vimPlugins.nvim-notify;
-      opts = { background_colour = "#000000"; };
+      opts = {background_colour = "#000000";};
     }
   ];
 }

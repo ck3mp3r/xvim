@@ -1,12 +1,12 @@
-{ vimPlugins, ... }:
-let
-  keys = import ./util/keys.nix { };
-  keyInfo = keys.convert
-    [ (keys.silent ":Telescope projects <CR>" "<Leader>p" "Projects") ];
+{vimPlugins, ...}: let
+  keys = import ./util/keys.nix {};
+  keyInfo =
+    keys.convert
+    [(keys.silent ":Telescope projects <CR>" "<Leader>p" "Projects")];
 in {
   plugin = {
     pkg = vimPlugins.telescope-nvim;
-    cmd = [ "Telescope" ];
+    cmd = ["Telescope"];
     dependencies = [
       vimPlugins.plenary-nvim
       {
@@ -16,7 +16,7 @@ in {
             require("project_nvim").setup {}
           end
         '';
-        event = [ "VimEnter" ];
+        event = ["VimEnter"];
       }
       {
         pkg = vimPlugins.telescope-fzf-native-nvim;
@@ -28,7 +28,7 @@ in {
       }
       vimPlugins.telescope-project-nvim
     ];
-    opts = { sync_with_nvim_tree = true; };
+    opts = {sync_with_nvim_tree = true;};
   };
   registrations = keyInfo.descriptions;
   bindings = keyInfo.bindings;

@@ -1,6 +1,5 @@
-{ vimPlugins, ... }:
-let
-  keys = import ./util/keys.nix { };
+{vimPlugins, ...}: let
+  keys = import ./util/keys.nix {};
   keyInfo = keys.convert [
     (keys.silent "<cmd>LspInfo<cr>" "<leader>li" "Info")
     (keys.silent "<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<cr>"
@@ -29,7 +28,7 @@ let
 in {
   plugin = {
     pkg = vimPlugins.nvim-lspconfig;
-    event = [ "BufReadPost" "BufWritePost" "BufNewFile" ];
+    event = ["BufReadPost" "BufWritePost" "BufNewFile"];
     config = ''
       function()
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -187,5 +186,5 @@ in {
   # };
 
   bindings = keyInfo.bindings;
-  registrations = keyInfo.descriptions // { "<leader>l" = "LSP"; };
+  registrations = keyInfo.descriptions // {"<leader>l" = "LSP";};
 }

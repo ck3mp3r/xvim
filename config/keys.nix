@@ -1,6 +1,10 @@
-{ vimPlugins, helpers, registrations, ... }:
-let
-  keys = import ./util/keys.nix { };
+{
+  vimPlugins,
+  helpers,
+  registrations,
+  ...
+}: let
+  keys = import ./util/keys.nix {};
 
   keyInfo = keys.convert [
     (keys.silent ":w <CR>" "<C-s>" "Save")
@@ -23,9 +27,12 @@ let
     (keys.silent "<cmd>Telescope resume<cr>" "<leader>sl" "Resume last search")
   ];
 
-  mappings = registrations // keyInfo.descriptions // {
-    "<leader>s" = "Search";
-  };
+  mappings =
+    registrations
+    // keyInfo.descriptions
+    // {
+      "<leader>s" = "Search";
+    };
 in {
   bindings = keyInfo.bindings;
 

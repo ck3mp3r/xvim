@@ -1,6 +1,9 @@
-{ vimPlugins, ... }:
-let
-  asButton = { shortcut, desc, command }: {
+{vimPlugins, ...}: let
+  asButton = {
+    shortcut,
+    desc,
+    command,
+  }: {
     type = "button";
     val = desc;
     on_press.__raw = ''

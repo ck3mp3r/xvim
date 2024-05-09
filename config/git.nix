@@ -1,6 +1,5 @@
-{ vimPlugins, ... }:
-let
-  keys = import ./util/keys.nix { };
+{vimPlugins, ...}: let
+  keys = import ./util/keys.nix {};
   keyInfo = keys.convert [
     (keys.silent "<cmd>lua require 'xvim-components'.toggle()<cr>" "<leader>gg"
       "Lazygit")
@@ -39,28 +38,33 @@ in {
     {
       pkg = vimPlugins.neogit;
       config = true;
-      cmd = [ "Neogit" ];
-      dependencies = [ vimPlugins.diffview-nvim ];
+      cmd = ["Neogit"];
+      dependencies = [vimPlugins.diffview-nvim];
     }
     {
       pkg = vimPlugins.gitsigns-nvim;
       config = true;
-      dependencies = [{
-        pkg = vimPlugins.git-blame-nvim;
-        opts = {
-          delay = 150;
-          enabled = false;
-        };
-        cmd = [ "GitBlameToggle" ];
-      }];
-      cmd = [ "Gitsigns" ];
-      event = [ "BufReadPost" ];
+      dependencies = [
+        {
+          pkg = vimPlugins.git-blame-nvim;
+          opts = {
+            delay = 150;
+            enabled = false;
+          };
+          cmd = ["GitBlameToggle"];
+        }
+      ];
+      cmd = ["Gitsigns"];
+      event = ["BufReadPost"];
     }
   ];
-  registrations = keyInfo.descriptions // {
-    "<leader>g" = "Git";
-  } // {
-    "<leader>gt" = "Toggle";
-  };
+  registrations =
+    keyInfo.descriptions
+    // {
+      "<leader>g" = "Git";
+    }
+    // {
+      "<leader>gt" = "Toggle";
+    };
   bindings = keyInfo.bindings;
 }

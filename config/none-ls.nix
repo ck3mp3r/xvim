@@ -1,4 +1,4 @@
-{ vimPlugins, ... }: {
+{vimPlugins, ...}: {
   pkg = vimPlugins.none-ls-nvim;
   config = ''
     function()

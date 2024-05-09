@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-let
+{pkgs, ...}: let
   nvim-plugintree = pkgs.vimPlugins.nvim-treesitter.withPlugins (p:
     with p; [
       bash
