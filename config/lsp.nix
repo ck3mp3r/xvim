@@ -44,7 +44,13 @@ in {
           capabilities = capabilities
         }
         lspconfig.nixd.setup {
-          capabilities = capabilities
+          settings = {
+            nixd = {
+              formatting = {
+                command = { "alejandra" },
+              }
+            }
+          }
         }
         lspconfig.terraformls.setup {
           capabilities = capabilities

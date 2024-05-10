@@ -35,6 +35,7 @@ in {
     };
 
     extraPackages = with pkgs; [
+      alejandra
       lua-language-server
       nix
       nixd
