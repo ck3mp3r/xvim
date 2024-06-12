@@ -39,11 +39,6 @@
           imports = [(pkgs.devshell.importTOML ./devshell.toml)];
         };
 
-        # checks = {
-        #   default =
-        #     nixvimLib.check.mkTestDerivationFromNixvimModule nixvimModule;
-        # };
-
         packages = {
           default = wrapper;
         };
