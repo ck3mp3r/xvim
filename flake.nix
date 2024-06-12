@@ -4,49 +4,49 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs";
     devshell.url = "github:numtide/devshell";
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = {
+  outputs = inputs @ {
     devshell,
     nixpkgs,
-    nixvim,
     flake-utils,
     ...
   }:
-    flake-utils.lib.eachDefaultSystem (system: let
-      overlays = [devshell.overlays.default];
-      pkgs = import nixpkgs {
-        inherit system overlays;
-        config = {allowUnfree = true;};
-      };
-      nixvimLib = nixvim.lib.${system};
-      nixvim' = nixvim.legacyPackages.${system};
+    flake-utils.lib.eachDefaultSystem (
+      system: let
+        overlays = [devshell.overlays.default];
+        pkgs = import nixpkgs {
+          inherit system overlays;
+          config = {allowUnfree = true;};
+        };
+        config = pkgs.callPackage ./nix/config.nix {};
+        plugins = pkgs.callPackage ./nix/plugins.nix {};
+        wrapper = pkgs.callPackage ./nix/wrapper.nix {
+          appName = "nvim";
+          configLocation = "${config}/config";
+          runtimePaths =
+            [
+              pkgs.vimPlugins.lazy-nvim
+            ]
+            ++ plugins.runtimePaths;
+          extraVars = plugins.extraVars;
+        };
+      in {
+        formatter = pkgs.alejandra;
 
-      nixvimModule = {
-        inherit pkgs;
-        module = import ./config;
-      };
-      xvim = nixvim'.makeNixvimWithModule nixvimModule;
-    in {
-      devShells.default = pkgs.devshell.mkShell {
-        imports = [(pkgs.devshell.importTOML ./devshell.toml)];
-      };
+        devShells.default = pkgs.devshell.mkShell {
+          imports = [(pkgs.devshell.importTOML ./devshell.toml)];
+        };
 
-      checks = {
-        default =
-          nixvimLib.check.mkTestDerivationFromNixvimModule nixvimModule;
-      };
+        # checks = {
+        #   default =
+        #     nixvimLib.check.mkTestDerivationFromNixvimModule nixvimModule;
+        # };
 
-      formatter = pkgs.alejandra;
-
-      packages = {
-        inherit xvim;
-        default = xvim;
-      };
-    });
+        packages = {
+          default = wrapper;
+        };
+      }
+    );
 }

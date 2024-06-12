@@ -3,7 +3,9 @@ name = "xvim devshell"
 
 packages = [
   "nixd",
-  "nodePackages_latest.bash-language-server"
+  "alejandra",
+  "nodePackages_latest.bash-language-server",
+  "lua-language-server"
 ]
 
 [[commands]]
