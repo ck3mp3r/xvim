@@ -10,19 +10,6 @@ return {
         q = { ":qa <CR>", "quit" },
         s = {
           name = "[s]earch",
-          c = { ":Telescope colorscheme<cr>", "Colorscheme" },
-          C = { ":Telescope commands<cr>", "Commands" },
-          f = { ":Telescope find_files<cr>", "Find File" },
-          b = { ":Telescope git_branches<cr>", "Checkout branch" },
-          h = { ":Telescope help_tags<cr>", "Find Help" },
-          H = { ":Telescope highlights<cr>", "Find highlight groups" },
-          k = { ":Telescope keymaps<cr>", "Keymaps" },
-          t = { ":Telescope live_grep<cr>", "Text" },
-          M = { ":Telescope man_pages<cr>", "Man Pages" },
-          p = { ":Telescope projects <cr>", "Projects" },
-          r = { ":Telescope oldfiles<cr>", "Open Recent File" },
-          R = { ":Telescope registers<cr>", "Registers" },
-          l = { ":Telescope resume<cr>", "Resume last search" }
         },
         g = {
           name = "[g]it",
