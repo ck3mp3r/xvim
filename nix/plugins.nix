@@ -11,6 +11,7 @@
     SchemaStore-nvim
     alpha-nvim
     better-escape-nvim
+    bufdelete-nvim
     bufferline-nvim
     catppuccin-nvim
     cmp-buffer

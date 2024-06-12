@@ -53,5 +53,9 @@ return {
   {
     "tpope/vim-surround",
     event = { "InsertEnter" },
+  },
+  {
+    "famiu/bufdelete.nvim",
+    event = { "BufRead" }
   }
 }
