@@ -32,19 +32,7 @@ return {
         },
         l = {
           name = "[l]sp",
-          i = { ":LspInfo<cr>", "Info" },
-          d = { ":Telescope diagnostics bufnr=0 theme=get_ivy<cr>", "Buffer Diagnostics" },
-          w = { ":Telescope diagnostics<cr>", "Diagnostics" },
-          s = { ":Telescope lsp_document_symbols<cr>", "Document Symbols" },
-          S = { ":Telescope lsp_dynamic_workspace_symbols<cr>", "Workspace Symbols" },
-          e = { ":Telescope quickfix<cr>", "Telescope Quickfix" },
-          j = { ":lua vim.diagnostic.goto_next()<cr>", "Next Diagnostic" },
-          k = { ":lua vim.diagnostic.goto_prev()<cr>", "Prev Diagnostic" },
-          q = { ":lua vim.diagnostic.setloclist()<cr>", "Quickfix" },
-          a = { ":lua vim.lsp.buf.code_action()<cr>", "Code Action" },
-          f = { ":lua vim.lsp.buf.format({timeout_ms=5000})<cr>", "Format" },
-          r = { ":lua vim.lsp.buf.rename()<cr>", "Rename" },
-          l = { ":lua vim.lsp.codelens.run()<cr>", "CodeLens Action" }
+          _ = 'which_key_ignore'
         },
         b = {
           name = "[b]uffer",

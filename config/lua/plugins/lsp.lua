@@ -3,7 +3,68 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPost", "BufWritePost", "BufNewFile" },
     config = function()
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+      vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('xvim-lsp-attach', { clear = true }),
+        callback = function(event)
+          local map = function(keys, func, desc)
+            vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+          end
+
+          map('<leader>lD', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+          map('<leader>lS', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+          map('<leader>la', vim.lsp.buf.code_action, '[C]ode [A]ction')
+          map('<leader>ld', ":Telescope diagnostics bufnr=0 theme=get_ivy<cr>", "Buffer Diagnostics")
+          map('<leader>le', ":Telescope quickfix<cr>", "Telescope Quickfix")
+          map('<leader>lf', ":lua vim.lsp.buf.format({timeout_ms=5000})<cr>", "Format")
+          map('<leader>li', ":LspInfo<cr>", "Info")
+          map('<leader>lj', ":lua vim.diagnostic.goto_next()<cr>", "Next Diagnostic")
+          map('<leader>lk', ":lua vim.diagnostic.goto_prev()<cr>", "Prev Diagnostic")
+          map('<leader>ll', ":lua vim.lsp.codelens.run()<cr>", "CodeLens Action")
+          map('<leader>lq', ":lua vim.diagnostic.setloclist()<cr>", "Quickfix")
+          map('<leader>lr', vim.lsp.buf.rename, '[R]e[n]ame')
+          map('<leader>ls', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+          map('<leader>lw', ":Telescope diagnostics<cr>", "Diagnostics")
+          map('K', vim.lsp.buf.hover, 'Hover Documentation')
+          map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+          map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+          map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+          map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+          map('<C-k>', vim.lsp.buf.signature_help, 'Signature Help')
+
+          local client = vim.lsp.get_client_by_id(event.data.client_id)
+          if client and client.server_capabilities.documentHighlightProvider then
+            local highlight_augroup = vim.api.nvim_create_augroup('xvim-lsp-highlight', { clear = false })
+            vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+              buffer = event.buf,
+              group = highlight_augroup,
+              callback = vim.lsp.buf.document_highlight,
+            })
+
+            vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+              buffer = event.buf,
+              group = highlight_augroup,
+              callback = vim.lsp.buf.clear_references,
+            })
+
+            vim.api.nvim_create_autocmd('LspDetach', {
+              group = vim.api.nvim_create_augroup('xvim-lsp-detach', { clear = true }),
+              callback = function(event2)
+                vim.lsp.buf.clear_references()
+                vim.api.nvim_clear_autocmds { group = 'xvim-lsp-highlight', buffer = event2.buf }
+              end,
+            })
+
+            if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
+              map('<leader>th', function()
+                vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+              end, '[T]oggle Inlay [H]ints')
+            end
+          end
+        end
+      })
+
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
       local lspconfig = require('lspconfig')
       lspconfig.ansiblels.setup {
@@ -91,25 +152,6 @@ return {
       lspconfig.lua_ls.setup {
         capabilities = capabilities
       }
-
-      -- Use LspAttach autocommand to only map the following keys
-      -- after the language server attaches to the current buffer
-      vim.api.nvim_create_autocmd('LspAttach', {
-        group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-        callback = function(ev)
-          -- Buffer local mappings.
-          -- See `:help vim.lsp.*` for documentation on any of the below functions
-          local opts = { buffer = ev.buf }
-          vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-          vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-          vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-          vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-          vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-          vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-          vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-          vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-        end,
-      })
     end,
     dependencies = {
       "b0o/SchemaStore.nvim",
