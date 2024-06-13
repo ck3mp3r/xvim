@@ -17,6 +17,14 @@ return {
     },
   },
   {
+    "folke/todo-comments.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim"
+    },
+    opts = { signs = false },
+    event = { "BufReadPost" },
+  },
+  {
     "iamcco/markdown-preview.nvim",
     ft = { "markdown" },
   },
@@ -48,7 +56,7 @@ return {
         show_end = false,
       },
     },
-    event = { "BufRead" },
+    event = { "BufReadPost" }
   },
   {
     "tpope/vim-surround",
@@ -56,6 +64,6 @@ return {
   },
   {
     "famiu/bufdelete.nvim",
-    event = { "BufRead" }
+    event = { "BufReadPost" }
   }
 }

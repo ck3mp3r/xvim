@@ -10,25 +10,17 @@ return {
             vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
-          map('<leader>lD', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
-          map('<leader>lS', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-          map('<leader>la', vim.lsp.buf.code_action, '[C]ode [A]ction')
-          map('<leader>ld', ":Telescope diagnostics bufnr=0 theme=get_ivy<cr>", "Buffer Diagnostics")
-          map('<leader>le', ":Telescope quickfix<cr>", "Telescope Quickfix")
-          map('<leader>lf', ":lua vim.lsp.buf.format({timeout_ms=5000})<cr>", "Format")
-          map('<leader>li', ":LspInfo<cr>", "Info")
-          map('<leader>lj', ":lua vim.diagnostic.goto_next()<cr>", "Next Diagnostic")
-          map('<leader>lk', ":lua vim.diagnostic.goto_prev()<cr>", "Prev Diagnostic")
-          map('<leader>ll', ":lua vim.lsp.codelens.run()<cr>", "CodeLens Action")
-          map('<leader>lq', ":lua vim.diagnostic.setloclist()<cr>", "Quickfix")
-          map('<leader>lr', vim.lsp.buf.rename, '[R]e[n]ame')
-          map('<leader>ls', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-          map('<leader>lw', ":Telescope diagnostics<cr>", "Diagnostics")
+          map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+          map('<leader>cf', ":lua vim.lsp.buf.format({timeout_ms=5000})<cr>", "[C]ode [F]ormat")
+          map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+          map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+          map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
           map('K', vim.lsp.buf.hover, 'Hover Documentation')
-          map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+          map('gD', require('telescope.builtin').lsp_type_definitions, '[G]oto Type [D]efinition')
           map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
           map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
           map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+
           map('<C-k>', vim.lsp.buf.signature_help, 'Signature Help')
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
@@ -55,9 +47,9 @@ return {
             })
 
             if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
-              map('<leader>th', function()
+              map('<leader>ti', function()
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-              end, '[T]oggle Inlay [H]ints')
+              end, '[T]oggle [I]nlay Hints')
             end
           end
         end

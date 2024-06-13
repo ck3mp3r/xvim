@@ -56,6 +56,7 @@
     telescope-nvim
     telescope-project-nvim
     telescope-ui-select-nvim
+    todo-comments-nvim
     toggleterm-nvim
     twilight-nvim
     vim-helm
