@@ -41,8 +41,12 @@
     nui-nvim
     nvim-autopairs
     nvim-cmp
+    nvim-dap
+    nvim-dap-ui
+    nvim-dap-virtual-text
     nvim-lspconfig
     nvim-navic
+    nvim-nio
     nvim-notify
     nvim-tree-lua
     nvim-treesitter
@@ -51,6 +55,7 @@
     plenary-nvim
     project-nvim
     rainbow-delimiters-nvim
+    rustaceanvim
     surround
     telescope-fzf-native-nvim
     telescope-nvim

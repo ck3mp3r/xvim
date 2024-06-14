@@ -41,11 +41,13 @@ require("lazy").setup({
     require "plugins.alpha",
     require "plugins.buffer",
     require "plugins.cmp",
+    require "plugins.code.dap",
+    require "plugins.code.lsp",
+    require "plugins.code.treesitter",
     require "plugins.colorscheme",
     require "plugins.comment",
     require "plugins.direnv",
     require "plugins.git",
-    require "plugins.lsp",
     require "plugins.lualine",
     require "plugins.misc",
     require "plugins.noice",
@@ -53,13 +55,13 @@ require("lazy").setup({
     require "plugins.nvim-tree",
     require "plugins.telescope",
     require "plugins.toggle-term",
-    require "plugins.treesitter",
     require "plugins.whichkey",
     require "plugins.zenmode",
   },
 })
 
-vim.api.nvim_set_keymap('n', '<C-s>', ':w<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-s>', '<cmd>lua vim.cmd("w")<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<C-s>', ':w<CR>', { noremap = true, silent = true })
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',

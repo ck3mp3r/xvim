@@ -16,9 +16,13 @@
   runtimePathCommands = lib.concatStringsSep " " (map (path: "--cmd \"set runtimepath^=${path}\"") runtimePaths);
 
   extraPackages = with pkgs; [
-    yaml-language-server
-    jsonnet-language-server
+    alejandra
+    lldb
+    lua-language-server
+    nixd
     nodePackages.bash-language-server
+    nodePackages.vscode-json-languageserver
+    yaml-language-server
   ];
 
   extraPath = pkgs.lib.makeBinPath extraPackages;

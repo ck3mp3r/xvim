@@ -2,13 +2,19 @@
   ts_plugin = pkgs.vimPlugins.nvim-treesitter.withPlugins (p:
     with p; [
       bash
+      cue
       go
+      hcl
+      helm
+      html
       java
       javascript
+      jq
       json
-      hcl
+      jsonnet
       kotlin
       lua
+      make
       markdown
       markdown_inline
       nix

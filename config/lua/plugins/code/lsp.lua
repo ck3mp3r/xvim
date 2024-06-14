@@ -63,6 +63,7 @@ return {
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+      _G.lsp_capabilities = capabilities
 
       local lspconfig = require('lspconfig')
       lspconfig.ansiblels.setup {
@@ -72,7 +73,8 @@ return {
         capabilities = capabilities
       }
       lspconfig.jsonls.setup {
-        capabilities = capabilities
+        capabilities = capabilities,
+        cmd = { "vscode-json-languageserver", "--stdio" }
       }
       lspconfig.nixd.setup {
         settings = {
@@ -111,33 +113,33 @@ return {
           }
         }
       }
-      lspconfig.rust_analyzer.setup {
-        capabilities = capabilities,
-        settings = {
-          ['rust-analyzer'] = {
-            imports = {
-              granularity = {
-                group = "module",
-              },
-              prefix = "self",
-            },
-            cargo = {
-              buildScripts = {
-                enable = true,
-              },
-            },
-            procMacro = {
-              enable = true
-            },
-            diagnostics = {
-              enable = false
-            },
-            files = {
-              excludeDirs = { ".direnv", ".git", ".github" },
-            }
-          }
-        }
-      }
+      -- lspconfig.rust_analyzer.setup {
+      --   capabilities = capabilities,
+      --   settings = {
+      --     ['rust-analyzer'] = {
+      --       imports = {
+      --         granularity = {
+      --           group = "module",
+      --         },
+      --         prefix = "self",
+      --       },
+      --       cargo = {
+      --         buildScripts = {
+      --           enable = true,
+      --         },
+      --       },
+      --       procMacro = {
+      --         enable = true
+      --       },
+      --       diagnostics = {
+      --         enable = false
+      --       },
+      --       files = {
+      --         excludeDirs = { ".direnv", ".git", ".github" },
+      --       }
+      --     }
+      --   }
+      -- }
       lspconfig.pyright.setup {
         capabilities = capabilities
       }
@@ -188,8 +190,15 @@ return {
           })
           require("lsp_lines").setup()
         end
-      }
-
+      },
+    }
+  },
+  {
+    "mrcjkb/rustaceanvim",
+    ft = "rust",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+      "mfussenegger/nvim-dap",
     }
   }
 }
