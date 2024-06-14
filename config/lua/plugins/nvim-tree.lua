@@ -13,6 +13,10 @@ return {
       "NvimTreeFocus",
       "NvimTreeFindFileToggle",
     },
+    init = function()
+      vim.keymap.set('n', '<leader>te', ':NvimTreeToggle <CR>',
+        { silent = true, desc = '[T]oggle [E]xplorer' })
+    end,
     opts = {
       disable_netrw = true,
       diagnostics = { enable = true },

@@ -7,19 +7,25 @@ return {
         group = vim.api.nvim_create_augroup('xvim-lsp-attach', { clear = true }),
         callback = function(event)
           local map = function(keys, func, desc)
-            vim.keymap.set('n', keys, func, { silent = true, buffer = event.buf, desc = 'LSP: ' .. desc })
+            vim.keymap.set('n', keys, func, { silent = true, buffer = event.buf, desc = desc })
           end
 
           map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
           map('<leader>cf', ":lua vim.lsp.buf.format({timeout_ms=5000})<cr>", "[C]ode [F]ormat")
+          map('<leader>cr', vim.lsp.buf.rename, '[C]ode [R]ename')
+          map('<leader>cE', vim.diagnostic.open_float, 'Show diagnostic [E]rror messages')
+          map('<leader>cQ', vim.diagnostic.setloclist, 'Open diagnostic [Q]uickfix list')
           map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-          map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
           map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
           map('K', vim.lsp.buf.hover, 'Hover Documentation')
           map('gD', require('telescope.builtin').lsp_type_definitions, '[G]oto Type [D]efinition')
           map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
           map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
           map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+          --
+          -- Diagnostic keymaps
+          -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
+          -- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 
           map('<C-k>', vim.lsp.buf.signature_help, 'Signature Help')
 
