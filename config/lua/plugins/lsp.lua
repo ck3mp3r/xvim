@@ -7,7 +7,7 @@ return {
         group = vim.api.nvim_create_augroup('xvim-lsp-attach', { clear = true }),
         callback = function(event)
           local map = function(keys, func, desc)
-            vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+            vim.keymap.set('n', keys, func, { silent = true, buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
           map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')

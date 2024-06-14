@@ -13,7 +13,7 @@ return {
       config = true,
       init = function()
         local map = function(keys, func, desc)
-          vim.keymap.set('n', keys, func, { desc = 'Git: ' .. desc })
+          vim.keymap.set('n', keys, func, { silent = true, desc = 'Git: ' .. desc })
         end
 
         map('<leader>gC', ":Telescope git_bcommits<cr>", "Checkout commit (for current file)")

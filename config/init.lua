@@ -39,7 +39,7 @@ require("lazy").setup({
   },
   spec = {
     require "plugins.alpha",
-    require "plugins.bufferline",
+    require "plugins.buffer",
     require "plugins.cmp",
     require "plugins.colorscheme",
     require "plugins.comment",

@@ -15,9 +15,13 @@ return {
     },
     config = function(_, opts)
       require 'bufferline'.setup(opts)
-      vim.keymap.set('n', 'H', ':BufferLineCyclePrev <CR>', { desc = 'Previous Buffer' })
-      vim.keymap.set('n', 'L', ':BufferLineCycleNext <CR>', { desc = 'Next Buffer' })
+      vim.keymap.set('n', 'H', ':BufferLineCyclePrev <CR>', { silent = true, desc = 'Previous Buffer' })
+      vim.keymap.set('n', 'L', ':BufferLineCycleNext <CR>', { silent = true, desc = 'Next Buffer' })
     end,
+    event = { "BufReadPost" }
+  },
+  {
+    "famiu/bufdelete.nvim",
     event = { "BufReadPost" }
   }
 }
