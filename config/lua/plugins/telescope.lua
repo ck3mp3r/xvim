@@ -36,7 +36,7 @@ return {
       end, { desc = '[S]earch [/] in Open Files' })
     end,
     dependencies = {
-      "plenary.nvim/plenary.nvim",
+      "nvim-lua/plenary.nvim",
       {
         "ahmedkhalf/project.nvim",
         config = function()
