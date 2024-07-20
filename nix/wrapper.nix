@@ -22,6 +22,7 @@
     nixd
     nodePackages.bash-language-server
     nodePackages.vscode-json-languageserver
+    vscode-extensions.vadimcn.vscode-lldb.adapter
     yaml-language-server
   ];
 
