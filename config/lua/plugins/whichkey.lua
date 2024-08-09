@@ -5,18 +5,28 @@ return {
     config = function()
       require 'which-key'.setup({})
 
-      require 'which-key'.register({
-        b = { name = '[B]uffer', _ = 'which_key_ignore' },
-        c = { name = '[C]ode', _ = 'which_key_ignore' },
-        d = { name = '[D]ocument', _ = 'which_key_ignore' },
-        g = { name = '[G]it', _ = 'which_key_ignore' },
-        h = { ":nohlsearch<CR>", "No [H]ighlight" },
-        q = { ":qa <CR>", "[Q]uit" },
-        r = { name = '[R]ename', _ = 'which_key_ignore' },
-        s = { name = '[S]earch', _ = 'which_key_ignore' },
-        t = { name = '[T]oggle', _ = 'which_key_ignore' },
-        w = { name = '[W]orkspace', _ = 'which_key_ignore' },
-      }, { prefix = "<leader>" })
+      require 'which-key'.add(
+        {
+          { "<leader>b",  group = "[B]uffer" },
+          { "<leader>b_", hidden = true },
+          { "<leader>c",  group = "[C]ode" },
+          { "<leader>c_", hidden = true },
+          { "<leader>d",  group = "[D]ocument" },
+          { "<leader>d_", hidden = true },
+          { "<leader>g",  group = "[G]it" },
+          { "<leader>g_", hidden = true },
+          { "<leader>h",  ":nohlsearch<CR>",    desc = "No [H]ighlight" },
+          { "<leader>q",  ":qa <CR>",           desc = "[Q]uit" },
+          { "<leader>r",  group = "[R]ename" },
+          { "<leader>r_", hidden = true },
+          { "<leader>s",  group = "[S]earch" },
+          { "<leader>s_", hidden = true },
+          { "<leader>t",  group = "[T]oggle" },
+          { "<leader>t_", hidden = true },
+          { "<leader>w",  group = "[W]orkspace" },
+          { "<leader>w_", hidden = true },
+        }
+      )
     end
   }
 }

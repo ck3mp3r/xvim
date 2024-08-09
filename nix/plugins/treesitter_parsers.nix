@@ -12,6 +12,7 @@
       jq
       json
       jsonnet
+      just
       kotlin
       lua
       make
