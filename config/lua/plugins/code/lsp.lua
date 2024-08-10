@@ -85,6 +85,10 @@ return {
           }
         }
       }
+      lspconfig.pyright.setup{
+        capabilities = capabilities,
+        filetypes = {"python", "starlark"},
+      }
       lspconfig.terraformls.setup {
         capabilities = capabilities
       }

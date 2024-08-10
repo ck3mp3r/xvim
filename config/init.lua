@@ -71,3 +71,12 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
+
+-- Function to detect Tiltfile as starlark filetype
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+    pattern = "Tiltfile",
+    callback = function()
+        vim.bo.filetype = "starlark"
+    end,
+})
+
