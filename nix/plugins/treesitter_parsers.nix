@@ -23,6 +23,7 @@
       regex
       rust
       starlark
+      terraform
       typescript
       yaml
     ]);
