@@ -25,10 +25,6 @@ return {
     event = { "BufReadPost" },
   },
   {
-    "iamcco/markdown-preview.nvim",
-    ft = { "markdown" },
-  },
-  {
     "HiPhish/rainbow-delimiters.nvim",
     event = { "BufRead" },
   },

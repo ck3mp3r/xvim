@@ -50,6 +50,7 @@ require("lazy").setup({
     require "plugins.direnv",
     require "plugins.git",
     require "plugins.lualine",
+    require "plugins.markdown",
     require "plugins.misc",
     require "plugins.noice",
     require "plugins.none-ls",

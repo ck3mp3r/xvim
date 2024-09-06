@@ -34,6 +34,7 @@
     lspkind-nvim
     lualine-nvim
     luasnip
+    render-markdown
     markdown-preview-nvim
     neogit
     noice-nvim
