@@ -68,7 +68,6 @@
     vim-helm
     vim-tmux-navigator
     which-key-nvim
-    zen-mode-nvim
   ];
 
   ts_parsers = pkgs.callPackage ./plugins/treesitter_parsers.nix {};

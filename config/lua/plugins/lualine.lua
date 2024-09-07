@@ -10,7 +10,7 @@ local winbar_lualine = {
 
 local sections = {
   lualine_a = { function()
-    return require('icons').ui.Target .. " "
+    return require('core.icons').ui.Target .. " "
   end },
   lualine_b = {
     {
@@ -20,8 +20,8 @@ local sections = {
   },
   lualine_c = { "" },
   lualine_x = {
-    { require('xvim-components').lsp },
-    { require('xvim-components').spaces },
+    { require('core.components').lsp },
+    { require('core.components').spaces },
     "filetype"
   },
   -- lualine_y = {},

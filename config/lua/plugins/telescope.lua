@@ -1,7 +1,7 @@
 return {
   {
     "nvim-telescope/telescope.nvim",
-    cmd = { "Telescope" },
+    event = "VimEnter",
     opts = {
       sync_with_nvim_tree = true
     },
