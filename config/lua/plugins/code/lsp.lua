@@ -213,7 +213,17 @@ return {
       "neovim/nvim-lspconfig",
     },
     config = function()
-      require 'aerial'.setup({})
+      require 'aerial'.setup({
+        close_automatic_events = {
+          "switch_buffer",
+          "unsupported"
+        },
+        ignore = {
+          filetypes = {
+            "NvimTree"
+          }
+        }
+      })
       vim.keymap.set("n", "<leader>ta", "<cmd>AerialToggle!<CR>", { silent = true, desc = "[T]oggle [A]erial" })
       vim.keymap.set("n", "<leader>tn", "<cmd>AerialNavToggle<CR>",
         { silent = true, desc = "[T]oggle Aerial [N]avigation" })
