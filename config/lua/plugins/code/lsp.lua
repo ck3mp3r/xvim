@@ -85,9 +85,9 @@ return {
           }
         }
       }
-      lspconfig.pyright.setup{
+      lspconfig.pyright.setup {
         capabilities = capabilities,
-        filetypes = {"python", "starlark"},
+        filetypes = { "python", "starlark" },
       }
       lspconfig.terraformls.setup {
         capabilities = capabilities
@@ -204,5 +204,20 @@ return {
       "neovim/nvim-lspconfig",
       "mfussenegger/nvim-dap",
     }
+  },
+  {
+    "stevearc/aerial.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+      "neovim/nvim-lspconfig",
+    },
+    config = function()
+      require 'aerial'.setup({})
+      vim.keymap.set("n", "<leader>ta", "<cmd>AerialToggle!<CR>", { silent = true, desc = "[T]oggle [A]erial" })
+      vim.keymap.set("n", "<leader>tn", "<cmd>AerialNavToggle<CR>",
+        { silent = true, desc = "[T]oggle Aerial [N]avigation" })
+    end,
+    event = "BufReadPost",
   }
 }

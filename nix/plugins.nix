@@ -10,6 +10,7 @@
   vimPlugins = with pkgs.vimPlugins; [
     SchemaStore-nvim
     alpha-nvim
+    aerial-nvim
     better-escape-nvim
     bufdelete-nvim
     bufferline-nvim
