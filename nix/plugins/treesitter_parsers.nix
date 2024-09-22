@@ -13,6 +13,7 @@
       json
       jsonnet
       just
+      kdl
       kotlin
       lua
       make
