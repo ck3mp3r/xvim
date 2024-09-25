@@ -1,5 +1,5 @@
-{stdenv}:
-stdenv.mkDerivation {
+{stdenvNoCC}:
+stdenvNoCC.mkDerivation {
   name = "nvim-config";
 
   src = ../config;

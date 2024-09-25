@@ -1,6 +1,6 @@
 {
   pkgs,
-  stdenv,
+  stdenvNoCC,
   lib,
   neovim,
   configLocation,
@@ -28,7 +28,7 @@
 
   extraPath = pkgs.lib.makeBinPath extraPackages;
 in
-  stdenv.mkDerivation {
+  stdenvNoCC.mkDerivation {
     name = appName;
     src = ./.;
 
