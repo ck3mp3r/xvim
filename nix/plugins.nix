@@ -32,11 +32,12 @@
     indent-blankline-nvim
     lsp-format-nvim
     lsp_lines-nvim
-    lspkind-nvim
     lualine-nvim
     luasnip
     render-markdown-nvim
     markdown-preview-nvim
+    mini-icons
+    mini-nvim
     neogit
     noice-nvim
     none-ls-nvim

@@ -4,19 +4,7 @@ return {
     event = { "InsertEnter", "CmdlineEnter" },
     config = function()
       local cmp = require 'cmp'
-      local lspkind = require 'lspkind'
       cmp.setup({
-        formatting = {
-          format = lspkind.cmp_format({
-            mode = 'symbol_text',
-            maxwidth = 60,
-            ellipsis_char = '...',
-            show_labelDetails = false,
-            before = function(_, vim_item)
-              return vim_item
-            end
-          })
-        },
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
           { name = "nvim_lua" },
@@ -73,7 +61,6 @@ return {
       "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-nvim-lsp-document-symbol",
       "hrsh7th/cmp-nvim-lsp-signature-help",
-      "onsails/lspkind-nvim",
       {
         "L3MON4D3/LuaSnip",
         dependencies = {
