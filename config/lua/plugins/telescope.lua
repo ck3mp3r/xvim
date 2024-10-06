@@ -3,7 +3,22 @@ return {
     "nvim-telescope/telescope.nvim",
     event = "VimEnter",
     opts = {
-      sync_with_nvim_tree = true
+      sync_with_nvim_tree = true,
+      defaults = {
+        vimgrep_arguments = {
+          'rg',
+          '--color=never',
+          '--no-heading',
+          '--with-filename',
+          '--line-number',
+          '--column',
+          '--smart-case',
+          '--hidden',
+          '--glob', '!.git/',
+          '--glob', '!.direnv/',
+          '--glob', '!node_modules/',
+        }
+      }
     },
     config = function(_, opts)
       require('telescope').setup(opts)
