@@ -19,9 +19,14 @@
     alejandra
     lldb
     lua-language-server
+    # luarocks
     nixd
+    nodejs
     nodePackages.bash-language-server
     nodePackages.vscode-json-languageserver
+    python3
+    python3Packages.pip
+    shellcheck
     vscode-extensions.vadimcn.vscode-lldb.adapter
     yaml-language-server
   ];
