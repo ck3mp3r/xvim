@@ -20,9 +20,12 @@
           inherit system overlays;
           config = {allowUnfree = true;};
         };
+
         config = pkgs.callPackage ./nix/config.nix {};
+
         plugins = pkgs.callPackage ./nix/plugins.nix {};
-        wrapper = pkgs.callPackage ./nix/wrapper.nix {
+
+        nvim = pkgs.callPackage ./nix/wrapper.nix {
           appName = "nvim";
           configLocation = "${config}/config";
           runtimePaths =
@@ -32,15 +35,29 @@
             ++ plugins.runtimePaths;
           extraVars = plugins.extraVars;
         };
+
+        individualPackages = with pkgs; {
+          inherit
+            nodejs
+            python3
+            nvim
+            ;
+          pip = python3Packages.pip;
+        };
       in {
         formatter = pkgs.alejandra;
 
+        packages =
+          individualPackages
+          // {
+            default = pkgs.buildEnv {
+              name = "xvim packages";
+              paths = builtins.attrValues individualPackages;
+            };
+          };
+
         devShells.default = pkgs.devshell.mkShell {
           imports = [(pkgs.devshell.importTOML ./devshell.toml)];
-        };
-
-        packages = {
-          default = wrapper;
         };
       }
     );
