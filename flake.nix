@@ -38,6 +38,7 @@
 
         individualPackages = with pkgs; {
           inherit
+            lua
             luarocks
             nodejs
             nvim
