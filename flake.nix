@@ -38,9 +38,10 @@
 
         individualPackages = with pkgs; {
           inherit
+            luarocks
             nodejs
-            python3
             nvim
+            python3
             ;
           pip = python3Packages.pip;
         };
