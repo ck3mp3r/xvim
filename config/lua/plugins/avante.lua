@@ -4,7 +4,7 @@ return {
     event = "VeryLazy",
     lazy = false,
     opts = {
-      provider = 'ollama',
+      provider = 'copilot',
       use_absolute_path = true,
       vendors = {
         ollama = {
@@ -39,6 +39,7 @@ return {
       "nvim-tree/nvim-web-devicons",
       "nvim-treesitter/nvim-treesitter",
       "stevearc/dressing.nvim",
+      "zbirenbaum/copilot.lua",
       {
         -- Make sure to set this up properly if you have lazy=true
         'MeanderingProgrammer/render-markdown.nvim',
