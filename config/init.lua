@@ -14,6 +14,7 @@ require("lazy").setup({
   },
   spec = {
     require "plugins.alpha",
+    require "plugins.avante",
     require "plugins.buffer",
     require "plugins.cmp",
     require "plugins.code.dap",

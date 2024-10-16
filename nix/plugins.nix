@@ -11,6 +11,7 @@
     SchemaStore-nvim
     alpha-nvim
     aerial-nvim
+    avante-nvim
     better-escape-nvim
     bufdelete-nvim
     bufferline-nvim
@@ -27,6 +28,7 @@
     copilot-lua
     diffview-nvim
     direnv-vim
+    dressing-nvim
     git-blame-nvim
     gitsigns-nvim
     indent-blankline-nvim
