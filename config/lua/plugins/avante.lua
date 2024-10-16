@@ -2,7 +2,6 @@ return {
   {
     "yetone/avante.nvim",
     event = "VeryLazy",
-    lazy = false,
     opts = {
       provider = 'copilot',
       use_absolute_path = true,
@@ -21,7 +20,7 @@ return {
               },
               body = {
                 model = opts.model,
-                messages = require('avante.providers').copilot.parse_message(code_opts),   -- you can make your own message, but this is very advanced
+                messages = require('avante.providers').copilot.parse_message(code_opts),
                 max_tokens = 2048,
                 stream = true,
               },
@@ -39,7 +38,12 @@ return {
       "nvim-tree/nvim-web-devicons",
       "nvim-treesitter/nvim-treesitter",
       "stevearc/dressing.nvim",
-      "zbirenbaum/copilot.lua",
+      {
+        "zbirenbaum/copilot.lua",
+        config = function ()
+          require'copilot'.setup({})
+        end
+      },
       {
         -- Make sure to set this up properly if you have lazy=true
         'MeanderingProgrammer/render-markdown.nvim',
