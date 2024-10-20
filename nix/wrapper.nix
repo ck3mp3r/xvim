@@ -24,6 +24,7 @@
     nodePackages.bash-language-server
     nodePackages.vscode-json-languageserver
     shellcheck
+    shfmt
     vscode-extensions.vadimcn.vscode-lldb.adapter
     yaml-language-server
   ];
