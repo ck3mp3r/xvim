@@ -17,12 +17,13 @@
 
   extraPackages = with pkgs; [
     alejandra
+    black
     lldb
     lua-language-server
-    # luarocks
     nixd
     nodePackages.bash-language-server
     nodePackages.vscode-json-languageserver
+    pyright
     shellcheck
     shfmt
     vscode-extensions.vadimcn.vscode-lldb.adapter
