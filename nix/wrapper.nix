@@ -22,6 +22,7 @@
     lua-language-server
     nixd
     nodePackages.bash-language-server
+    nodePackages.prettier
     nodePackages.vscode-json-languageserver
     pyright
     shellcheck
