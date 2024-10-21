@@ -72,9 +72,6 @@ return {
       lspconfig.bashls.setup {
         capabilities = capabilities
       }
-      lspconfig.dagger.setup {
-        capabilities = capabilities
-      }
       lspconfig.jsonls.setup {
         capabilities = capabilities,
         cmd = { "vscode-json-languageserver", "--stdio" }

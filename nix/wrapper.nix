@@ -18,6 +18,7 @@
   extraPackages = with pkgs; [
     alejandra
     black
+    cue
     lldb
     lua-language-server
     nixd

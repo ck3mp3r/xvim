@@ -12,6 +12,16 @@ return {
           null_ls.builtins.formatting.prettier.with({
             filetypes = { "json" }, -- Enable for JSON files
           }),
+          null_ls.builtins.formatting.cue_fmt.with({
+            command = "cue",
+            args = { "fmt" },
+            filetypes = { "cue" },
+          }),
+          null_ls.builtins.diagnostics.cue_fmt.with({
+            command = "cue",
+            args = { "vet" },
+            filetypes = { "cue" },
+          }),
         }
       })
     end
