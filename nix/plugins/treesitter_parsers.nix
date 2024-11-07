@@ -25,6 +25,7 @@
       rust
       starlark
       terraform
+      tree-sitter-nu
       typescript
       yaml
     ]);
