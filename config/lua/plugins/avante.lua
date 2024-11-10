@@ -2,6 +2,7 @@ return {
   {
     "yetone/avante.nvim",
     event = "VeryLazy",
+    lazy = false,
     opts = {
       provider = 'copilot',
       use_absolute_path = true,
@@ -38,12 +39,7 @@ return {
       "nvim-tree/nvim-web-devicons",
       "nvim-treesitter/nvim-treesitter",
       "stevearc/dressing.nvim",
-      {
-        "zbirenbaum/copilot.lua",
-        config = function ()
-          require'copilot'.setup({})
-        end
-      },
+      "zbirenbaum/copilot.lua",
       {
         -- Make sure to set this up properly if you have lazy=true
         'MeanderingProgrammer/render-markdown.nvim',
