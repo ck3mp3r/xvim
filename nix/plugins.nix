@@ -9,7 +9,6 @@
 
   vimPlugins = with pkgs.vimPlugins; [
     SchemaStore-nvim
-    alpha-nvim
     aerial-nvim
     avante-nvim
     better-escape-nvim
@@ -61,13 +60,14 @@
     project-nvim
     rainbow-delimiters-nvim
     rustaceanvim
+    snacks-nvim
     surround
     telescope-fzf-native-nvim
     telescope-nvim
     telescope-project-nvim
     telescope-ui-select-nvim
     todo-comments-nvim
-    toggleterm-nvim
+    # toggleterm-nvim
     twilight-nvim
     vim-helm
     vim-tmux-navigator

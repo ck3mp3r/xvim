@@ -21,7 +21,6 @@ return {
         map('<leader>gb', ":Telescope git_branches<cr>", "Checkout branch")
         map('<leader>gc', ":Telescope git_commits<cr>", "Checkout commit")
         map('<leader>gd', ":Gitsigns diffthis HEAD<cr>", "Git Diff")
-        map('<leader>gg', ":lua require 'core.components'.toggle()<cr>", "Lazygit")
         map('<leader>gj', ":lua require 'gitsigns'.next_hunk({navigation_message = false})<cr>", "Next Hunk")
         map('<leader>gk', ":lua require 'gitsigns'.prev_hunk({navigation_message = false})<cr>", "Prev Hunk")
         map('<leader>gl', ":lua require 'gitsigns'.blame_line()<cr>", "Blame")

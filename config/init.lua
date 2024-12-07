@@ -13,7 +13,7 @@ require("lazy").setup({
     missing = false
   },
   spec = {
-    require "plugins.alpha",
+    -- require "plugins.alpha",
     require "plugins.avante",
     require "plugins.buffer",
     require "plugins.cmp",
@@ -30,8 +30,8 @@ require("lazy").setup({
     require "plugins.noice",
     require "plugins.none-ls",
     require "plugins.nvim-tree",
+    require "plugins.snacks",
     require "plugins.telescope",
-    require "plugins.toggle-term",
     require "plugins.whichkey",
   },
 })
