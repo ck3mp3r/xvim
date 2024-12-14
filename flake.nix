@@ -48,7 +48,6 @@
         };
       in {
         formatter = pkgs.alejandra;
-        apps.default = nvim;
 
         packages =
           individualPackages
