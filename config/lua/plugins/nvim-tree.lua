@@ -14,8 +14,8 @@ return {
       "NvimTreeFindFileToggle",
     },
     init = function()
-      vim.keymap.set('n', '<leader>te', ':NvimTreeToggle <CR>',
-        { silent = true, desc = '[T]oggle [E]xplorer' })
+      vim.keymap.set('n', '<leader>e', ':NvimTreeToggle <CR>',
+        { silent = true, desc = 'Toggle [E]xplorer' })
     end,
     opts = {
       disable_netrw = true,
