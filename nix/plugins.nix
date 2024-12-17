@@ -7,60 +7,83 @@
     }
     else drv;
 
+  LazyVimCustom = pkgs.vimPlugins.LazyVim.overrideAttrs (oldAttrs: {
+    postInstall = ''
+      rm -f $out/lua/lazyvim/plugins/treesitter.lua
+    '';
+  });
+
   vimPlugins = with pkgs.vimPlugins; [
+    # LazyVim
+    LazyVimCustom
     SchemaStore-nvim
     aerial-nvim
     avante-nvim
     better-escape-nvim
-    bufdelete-nvim
+    # bufdelete-nvim
     bufferline-nvim
     catppuccin-nvim
     cmp-buffer
-    cmp-cmdline
+    # cmp-cmdline
     cmp-nvim-lsp
     cmp-nvim-lsp-document-symbol
     cmp-nvim-lsp-signature-help
     cmp-path
-    cmp_luasnip
-    comment-nvim
-    copilot-cmp
+    # cmp_luasnip
+    # comment-nvim
+    conform-nvim
+    # copilot-cmp
     copilot-lua
-    diffview-nvim
+    # diffview-nvim
     direnv-vim
     dressing-nvim
-    git-blame-nvim
+    friendly-snippets
+    flash-nvim
+    # git-blame-nvim
     gitsigns-nvim
+    grug-far-nvim
     indent-blankline-nvim
-    lsp-format-nvim
-    lsp_lines-nvim
+    # lsp-format-nvim
+    # lsp_lines-nvim
+    lazydev-nvim
     lualine-nvim
-    luasnip
+    # luasnip
     render-markdown-nvim
     markdown-preview-nvim
     mini-icons
     mini-nvim
-    neogit
+    mini-ai
+    mini-pairs
+    mini-surround
+    neo-tree-nvim
+    # neogit
     noice-nvim
-    none-ls-nvim
-    nui-nvim
-    nvim-autopairs
+    # none-ls-nvim
+    # nvim-autopairs
     nvim-cmp
     nvim-dap
     nvim-dap-ui
     nvim-dap-virtual-text
+    nvim-lint
     nvim-lspconfig
     nvim-navic
     nvim-nio
-    nvim-notify
-    nvim-tree-lua
+    # nvim-notify
+    # nvim-tree-lua
+    nvim-snippets
+    nvim-ts-autotag
+    nui-nvim
     nvim-treesitter
     nvim-treesitter-textobjects
     nvim-web-devicons
+    persistence-nvim
     plenary-nvim
-    project-nvim
+    # project-nvim
     rainbow-delimiters-nvim
     rustaceanvim
     snacks-nvim
+    ts-comments-nvim
+    trouble-nvim
     surround
     telescope-fzf-native-nvim
     telescope-nvim
@@ -68,7 +91,7 @@
     telescope-ui-select-nvim
     todo-comments-nvim
     # toggleterm-nvim
-    twilight-nvim
+    # twilight-nvim
     vim-helm
     vim-tmux-navigator
     which-key-nvim

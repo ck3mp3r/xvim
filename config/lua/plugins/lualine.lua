@@ -10,7 +10,7 @@ local winbar_lualine = {
 
 local sections = {
   lualine_a = { function()
-    return require('core.icons').ui.Target .. " "
+    return require('lib.icons').ui.Target .. " "
   end },
   lualine_b = {
     {
@@ -20,13 +20,14 @@ local sections = {
   },
   lualine_c = { "" },
   lualine_x = {
-    { require('core.components').lsp },
-    { require('core.components').spaces },
+    { require('lib.components').lsp },
+    { require('lib.components').spaces },
     "filetype"
   },
   -- lualine_y = {},
   -- lualine_z = {},
 }
+
 --
 return {
   {

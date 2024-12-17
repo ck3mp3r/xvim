@@ -3,17 +3,26 @@
   stdenvNoCC,
   lib,
   neovim,
-  configLocation,
+  configPath,
   appName,
   extraVars ? {},
   runtimePaths ? [],
 }: let
   # Generate the variable commands string in Nix
-  extraVarsList = lib.attrsets.mapAttrsToList (name: value: "--cmd \"let g:${name}='${value}'\"") extraVars;
+  extraVarsList =
+    lib.attrsets.mapAttrsToList (
+      name: value: "--cmd \"let g:${name}='${value}'\""
+    ) (
+      extraVars // {"config_path" = configPath;}
+    );
   varCommands = lib.concatStringsSep " " extraVarsList;
 
   # Generate the runtime path commands string in Nix
-  runtimePathCommands = lib.concatStringsSep " " (map (path: "--cmd \"set runtimepath^=${path}\"") runtimePaths);
+  runtimePathCommands = lib.concatStringsSep " " (
+    map (path: "--cmd \"set runtimepath^=${path}\"") (
+      runtimePaths ++ [configPath]
+    )
+  );
 
   extraPackages = with pkgs; [
     alejandra
@@ -47,10 +56,9 @@ in
       #!/usr/bin/env bash
       export PATH=${extraPath}:\$PATH
       exec ${neovim}/bin/nvim \
-        --cmd "set runtimepath^=${configLocation}" \
-        ${runtimePathCommands} \
         ${varCommands} \
-        -u ${configLocation}/init.lua "\$@"
+        ${runtimePathCommands} \
+        -u "${configPath}/init.lua" "\$@"
       EOF
 
           chmod +x $out/bin/${appName}

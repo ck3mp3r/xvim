@@ -5,7 +5,8 @@ stdenvNoCC.mkDerivation {
   src = ../config;
 
   installPhase = ''
-    mkdir -p $out/config
-    cp -r $src/* $out/config/
+    mkdir -p $out
+    cp -r $src/lua $out/
+    cp -r $src/init.lua $out/
   '';
 }
