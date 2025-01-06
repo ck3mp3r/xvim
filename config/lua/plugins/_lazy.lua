@@ -18,4 +18,5 @@ return {
     import = "lazyvim.plugins"
   },
   { import = "lazyvim.plugins.extras.coding.mini-surround" },
+  { import = "lazyvim.plugins.extras.formatting.black" },
 }
