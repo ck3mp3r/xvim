@@ -1,0 +1,16 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directories:
+      - "./.github/actions/**"
+      - "./.github/workflows/**"
+    schedule:
+      interval: daily
+    commit-message:
+      prefix: "IDP-27 - "
+    groups:
+      minor-patch-versions:
+        update-types:
+          - minor
+          - patch
+    open-pull-requests-limit: 10
