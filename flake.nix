@@ -43,6 +43,7 @@
             nodejs
             nvim
             python3
+            vtsls
             ;
           pip = python3Packages.pip;
         };
