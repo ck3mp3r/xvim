@@ -33,6 +33,9 @@ return {
         capabilities = capabilities,
         cmd = { "vscode-json-languageserver", "--stdio" }
       }
+      lspconfig.vtsls.setup {
+        capabilities = capabilities,
+      }
       lspconfig.yamlls.setup {
         capabilities = capabilities,
         on_attach = function(client, _)

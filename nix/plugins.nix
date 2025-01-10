@@ -50,6 +50,9 @@
     # luasnip
     render-markdown-nvim
     markdown-preview-nvim
+    # mason-nvim
+    # mason-lspconfig-nvim
+    # mason-nvim-dap-nvim
     mini-icons
     mini-nvim
     mini-ai

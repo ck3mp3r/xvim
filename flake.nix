@@ -43,7 +43,10 @@
             nodejs
             nvim
             python3
+            shfmt
+            stylua
             vtsls
+            vscode-js-debug
             ;
           pip = python3Packages.pip;
         };

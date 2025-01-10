@@ -2,10 +2,9 @@ require("lazy").setup({
   spec = {
     { import = "plugins" },
     { "folke/tokyonight.nvim",             enabled = false },
-    { "williamboman/mason.nvim",           enabled = false },
-    { "williamboman/mason.nvim",           enabled = false },
+    { "jay-babu/mason-nvim-dap.nvim",      enabled = false },
     { "williamboman/mason-lspconfig.nvim", enabled = false },
-    { "jay-babu/mason-nvim-dap.nvim",      enabled = false }
+    { "williamboman/mason.nvim",           enabled = false },
   },
   dev = {
     path = vim.g.lazy_path,
