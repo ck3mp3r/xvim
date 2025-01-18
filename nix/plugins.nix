@@ -53,9 +53,12 @@
     # mason-nvim
     # mason-lspconfig-nvim
     # mason-nvim-dap-nvim
+    mini-ai
+    mini-comment
+    mini-diff
     mini-icons
     mini-nvim
-    mini-ai
+    mini-move
     mini-pairs
     mini-surround
     neo-tree-nvim
@@ -78,6 +81,7 @@
     nui-nvim
     nvim-treesitter
     nvim-treesitter-textobjects
+    nvim-ts-context-commentstring
     nvim-web-devicons
     persistence-nvim
     plenary-nvim
@@ -87,7 +91,7 @@
     snacks-nvim
     ts-comments-nvim
     trouble-nvim
-    surround
+    # surround
     telescope-fzf-native-nvim
     telescope-nvim
     telescope-project-nvim

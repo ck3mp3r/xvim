@@ -14,8 +14,4 @@ return {
     end,
     event = { "InsertEnter" },
   },
-  {
-    "tpope/vim-surround",
-    event = { "BufRead" },
-  },
 }
