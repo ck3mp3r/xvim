@@ -39,6 +39,7 @@
     dressing-nvim
     friendly-snippets
     flash-nvim
+    fzf-lua
     # git-blame-nvim
     gitsigns-nvim
     grug-far-nvim
