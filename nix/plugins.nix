@@ -9,7 +9,7 @@
 
   LazyVimCustom = pkgs.vimPlugins.LazyVim.overrideAttrs (oldAttrs: {
     postInstall = ''
-      rm -f $out/lua/lazyvim/plugins/treesitter.lua
+      echo "return {}" > $out/lua/lazyvim/plugins/treesitter.lua
     '';
   });
 
