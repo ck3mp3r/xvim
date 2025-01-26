@@ -2,41 +2,41 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = function()
-      local lspconfig = require('lspconfig')
+      local lspconfig = require("lspconfig")
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-      lspconfig.nixd.setup {
+      capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+      lspconfig.nixd.setup({
         settings = {
           nixd = {
             formatting = {
               command = { "alejandra" },
-            }
-          }
-        }
-      }
-      lspconfig.pyright.setup {
-        capabilities = capabilities
-      }
-      lspconfig.gopls.setup {
-        capabilities = capabilities
-      }
-      lspconfig.kotlin_language_server.setup {
-        capabilities = capabilities
-      }
-      lspconfig.ansiblels.setup {
-        capabilities = capabilities
-      }
-      lspconfig.bashls.setup {
-        capabilities = capabilities
-      }
-      lspconfig.jsonls.setup {
+            },
+          },
+        },
+      })
+      lspconfig.pyright.setup({
         capabilities = capabilities,
-        cmd = { "vscode-json-languageserver", "--stdio" }
-      }
-      lspconfig.vtsls.setup {
+      })
+      lspconfig.gopls.setup({
         capabilities = capabilities,
-      }
-      lspconfig.yamlls.setup {
+      })
+      lspconfig.kotlin_language_server.setup({
+        capabilities = capabilities,
+      })
+      lspconfig.ansiblels.setup({
+        capabilities = capabilities,
+      })
+      lspconfig.bashls.setup({
+        capabilities = capabilities,
+      })
+      lspconfig.jsonls.setup({
+        capabilities = capabilities,
+        cmd = { "vscode-json-languageserver", "--stdio" },
+      })
+      lspconfig.vtsls.setup({
+        capabilities = capabilities,
+      })
+      lspconfig.yamlls.setup({
         capabilities = capabilities,
         on_attach = function(client, _)
           if client.name == "yamlls" then
@@ -47,17 +47,17 @@ return {
           redhat = { telemetry = { enabled = false } },
           yaml = {
             format = {
-              enable = true
+              enable = true,
             },
             validate = true,
             schemaStore = {
               enable = false,
-              url = ""
+              url = "",
             },
-            schemas = require('schemastore').yaml.schemas(),
-          }
-        }
-      }
+            schemas = require("schemastore").yaml.schemas(),
+          },
+        },
+      })
     end,
     dependencies = {
       "b0o/SchemaStore.nvim",
@@ -73,17 +73,17 @@ return {
       {
         "towolf/vim-helm",
         config = function()
-          local lspconfig = require('lspconfig')
-          lspconfig.helm_ls.setup {
+          local lspconfig = require("lspconfig")
+          lspconfig.helm_ls.setup({
             settings = {
-              ['helm-ls'] = {
+              ["helm-ls"] = {
                 yamlls = {
                   path = "yaml-language-server",
-                }
-              }
-            }
-          }
-        end
+                },
+              },
+            },
+          })
+        end,
       },
       -- {
       --   "maan2003/lsp_lines.nvim",
@@ -103,9 +103,10 @@ return {
         dependencies = {
           "neovim/nvim-lspconfig",
           "mfussenegger/nvim-dap",
-        }
+        },
       },
-    }
+      { "hrsh7th/cmp-nvim-lsp" },
+    },
   },
   {
     "stevearc/aerial.nvim",
@@ -115,21 +116,25 @@ return {
       "neovim/nvim-lspconfig",
     },
     config = function()
-      require 'aerial'.setup({
+      require("aerial").setup({
         close_automatic_events = {
           "switch_buffer",
-          "unsupported"
+          "unsupported",
         },
         ignore = {
           filetypes = {
-            "NvimTree"
-          }
-        }
+            "NvimTree",
+          },
+        },
       })
       vim.keymap.set("n", "<leader>ta", "<cmd>AerialToggle!<CR>", { silent = true, desc = "[T]oggle [A]erial" })
-      vim.keymap.set("n", "<leader>tn", "<cmd>AerialNavToggle<CR>",
-        { silent = true, desc = "[T]oggle Aerial [N]avigation" })
+      vim.keymap.set(
+        "n",
+        "<leader>tn",
+        "<cmd>AerialNavToggle<CR>",
+        { silent = true, desc = "[T]oggle Aerial [N]avigation" }
+      )
     end,
     event = "BufReadPost",
-  }
+  },
 }
