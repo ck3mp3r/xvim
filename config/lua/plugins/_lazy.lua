@@ -20,5 +20,11 @@ return {
   { import = "lazyvim.plugins.extras.coding.mini-comment" },
   { import = "lazyvim.plugins.extras.coding.mini-surround" },
   { import = "lazyvim.plugins.extras.editor.mini-move" },
+  { import = "lazyvim.plugins.extras.coding.nvim-cmp" },
   { import = "lazyvim.plugins.extras.formatting.black" },
+  { import = "lazyvim.plugins.extras.lang.yaml" },
+  { import = "lazyvim.plugins.extras.lang.helm" },
+  { import = "lazyvim.plugins.extras.lang.rust" },
+  { import = "lazyvim.plugins.extras.lang.go" },
+  { import = "lazyvim.plugins.extras.lang.python" },
 }

@@ -20,6 +20,7 @@
     aerial-nvim
     avante-nvim
     better-escape-nvim
+    blink-cmp
     # bufdelete-nvim
     bufferline-nvim
     catppuccin-nvim
