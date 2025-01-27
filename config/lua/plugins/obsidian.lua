@@ -14,7 +14,7 @@ return {
   },
   opts = {
     completion = {
-      nvim_cmp = true,
+      -- blink_cmp = true,
     },
     workspaces = {
       {
