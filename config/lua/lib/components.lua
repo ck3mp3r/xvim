@@ -1,9 +1,14 @@
-local icons = require('lib.icons')
+local icons = require("lib.icons")
 
 M = {}
 
 M.lsp = function()
-  local buf_clients = vim.lsp.get_active_clients { bufnr = 0 }
+  local buf_clients = {}
+  for _, client in pairs(vim.lsp.get_clients()) do
+    if client.attached_buffers[vim.api.nvim_get_current_buf()] then
+      table.insert(buf_clients, client)
+    end
+  end
   if #buf_clients == 0 then
     return "LSP Inactive"
   end
@@ -27,7 +32,7 @@ M.lsp = function()
 end
 
 M.spaces = function()
-  local shiftwidth = vim.api.nvim_buf_get_option(0, "shiftwidth")
+  local shiftwidth = vim.api.nvim_get_option_value("shiftwidth", { buf = 0 })
   return icons.ui.Tab .. " " .. shiftwidth
 end
 
