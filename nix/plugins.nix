@@ -24,21 +24,12 @@
     # bufdelete-nvim
     bufferline-nvim
     catppuccin-nvim
-    cmp-buffer
-    # cmp-cmdline
-    cmp-nvim-lsp
-    cmp-nvim-lsp-document-symbol
-    cmp-nvim-lsp-signature-help
-    cmp-path
-    # cmp_luasnip
-    # comment-nvim
     conform-nvim
     # copilot-cmp
     copilot-lua
     # diffview-nvim
     direnv-vim
     dressing-nvim
-    friendly-snippets
     flash-nvim
     fzf-lua
     # git-blame-nvim
@@ -68,7 +59,6 @@
     noice-nvim
     # none-ls-nvim
     # nvim-autopairs
-    nvim-cmp
     nvim-dap
     nvim-dap-ui
     nvim-dap-virtual-text

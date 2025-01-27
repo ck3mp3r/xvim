@@ -30,6 +30,7 @@
     cue
     lldb
     lua-language-server
+    marksman
     nixd
     nodePackages.bash-language-server
     nodePackages.prettier
