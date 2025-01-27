@@ -31,6 +31,7 @@
     direnv-vim
     dressing-nvim
     flash-nvim
+    friendly-snippets
     fzf-lua
     # git-blame-nvim
     gitsigns-nvim
