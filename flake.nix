@@ -38,15 +38,18 @@
 
         individualPackages = with pkgs; {
           inherit
+            black
             lua
             luarocks
             nodejs
             nvim
             python3
+            ruff
+            shellcheck
             shfmt
             stylua
-            vtsls
             vscode-js-debug
+            vtsls
             ;
           pip = python3Packages.pip;
         };
