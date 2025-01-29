@@ -5,7 +5,9 @@ return {
       servers = {
         ansiblels = {},
         bashls = {},
-        jsonls = {},
+        jsonls = {
+          cmd = { "vscode-json-languageserver", "--stdio" },
+        },
         nixd = {
           settings = {
             nixd = {

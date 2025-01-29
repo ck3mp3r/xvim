@@ -52,7 +52,8 @@
             vscode-js-debug
             vtsls
             ;
-          pip = python3Packages.pip;
+          inherit (nodePackages) vscode-json-languageserver;
+          inherit (python312Packages) pip;
         };
       in {
         formatter = pkgs.alejandra;
