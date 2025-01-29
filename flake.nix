@@ -38,6 +38,7 @@
 
         individualPackages = with pkgs; {
           inherit
+            bash-language-server
             black
             lua
             luarocks

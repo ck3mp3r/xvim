@@ -3,6 +3,8 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
+        bashls = {},
+        ansiblels = {},
         nixd = {
           settings = {
             nixd = {
