@@ -37,6 +37,7 @@
     gitsigns-nvim
     grug-far-nvim
     indent-blankline-nvim
+    kulala-nvim
     # lsp-format-nvim
     # lsp_lines-nvim
     lazydev-nvim

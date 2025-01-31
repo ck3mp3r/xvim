@@ -4,9 +4,11 @@
       bash
       cue
       go
+      graphql
       hcl
       helm
       html
+      http
       java
       javascript
       jq
