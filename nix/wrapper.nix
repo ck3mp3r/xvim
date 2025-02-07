@@ -28,6 +28,7 @@
     alejandra
     black
     cue
+    dockerfile-language-server-nodejs
     lldb
     lua-language-server
     marksman
