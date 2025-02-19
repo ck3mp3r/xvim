@@ -17,6 +17,15 @@ return {
             },
           },
         },
+        nushell = {
+          settings = {
+            nushell = {
+              formatting = {
+                command = { "nufmt" },
+              },
+            },
+          },
+        },
       },
     },
   },

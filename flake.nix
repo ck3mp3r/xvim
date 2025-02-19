@@ -43,6 +43,7 @@
             lua
             luarocks
             nodejs
+            nufmt
             nvim
             python3
             ruff
