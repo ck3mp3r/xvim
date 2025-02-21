@@ -49,6 +49,7 @@
             shellcheck
             shfmt
             stylua
+            topiary
             vscode-js-debug
             vtsls
             ;

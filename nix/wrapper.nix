@@ -24,6 +24,7 @@
     )
   );
 
+  topiary_nu = pkgs.callPackage ./plugins/topiary.nix {};
   extraPackages = with pkgs; [
     alejandra
     black
@@ -52,10 +53,12 @@ in
     buildInputs = [pkgs.neovim] ++ extraPackages;
 
     installPhase = ''
-          mkdir -p $out/bin
+      mkdir -p $out/bin
 
-          cat > $out/bin/${appName} <<EOF
+      cat > $out/bin/${appName} <<EOF
       #!/usr/bin/env bash
+      export TOPIARY_CONFIG_FILE=${topiary_nu}/languages.ncl
+      export TOPIARY_LANGUAGE_DIR=${topiary_nu}/languages
       export PATH=${extraPath}:\$PATH
       exec ${neovim}/bin/nvim \
         ${varCommands} \
