@@ -27,20 +27,32 @@
   topiary-nu = pkgs.topiary-nu;
   extraPackages = with pkgs; [
     alejandra
+    bash-language-server
     black
     cue
     dockerfile-language-server-nodejs
     lldb
+    lua
     lua-language-server
     marksman
     nixd
     nodePackages.bash-language-server
     nodePackages.prettier
     nodePackages.vscode-json-languageserver
+    nodejs
     pyright
+    python3
+    python312Packages.pip
+    ruff
+    shellcheck
     shellcheck
     shfmt
+    shfmt
+    stylua
+    topiary
     vscode-extensions.vadimcn.vscode-lldb.adapter
+    vscode-js-debug
+    vtsls
     yaml-language-server
   ];
 

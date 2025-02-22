@@ -43,38 +43,9 @@
             ++ plugins.runtimePaths;
           extraVars = plugins.extraVars;
         };
-
-        individualPackages = with pkgs; {
-          inherit
-            bash-language-server
-            black
-            lua
-            luarocks
-            nodejs
-            nvim
-            python3
-            ruff
-            shellcheck
-            shfmt
-            stylua
-            topiary
-            vscode-js-debug
-            vtsls
-            ;
-          inherit (nodePackages) vscode-json-languageserver;
-          inherit (python312Packages) pip;
-        };
       in {
         formatter = pkgs.alejandra;
-
-        packages =
-          individualPackages
-          // {
-            default = pkgs.buildEnv {
-              name = "xvim packages";
-              paths = builtins.attrValues individualPackages;
-            };
-          };
+        packages.default = nvim;
 
         devShells.default = pkgs.devshell.mkShell {
           imports = [(pkgs.devshell.importTOML ./devshell.toml)];
