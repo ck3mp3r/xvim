@@ -22,9 +22,7 @@
       system: let
         overlays = [
           devshell.overlays.default
-          (final: prev: {
-            topiary-nu = topiary-nu.packages.${system}.default;
-          })
+          topiary-nu.overlays.default
         ];
         pkgs = import nixpkgs {
           inherit system overlays;

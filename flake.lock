@@ -134,11 +134,11 @@
       },
       "locked": {
         "dir": "topiary-nu",
-        "lastModified": 1740246482,
-        "narHash": "sha256-L3vggZVqdpbpukpX6moVxdjzuDnY3yRb6LPWk3POHaU=",
+        "lastModified": 1740259408,
+        "narHash": "sha256-zGKk+oAqPx+8sLAP6LseNLZfo4geLp6O/HUYvJlSGaw=",
         "owner": "ck3mp3r",
         "repo": "flakes",
-        "rev": "fc496d7a6c94682fedf8aa6117809501206e6820",
+        "rev": "ceee5fcc97db34a823de3a58c6c2446293580d50",
         "type": "github"
       },
       "original": {
