@@ -5,17 +5,27 @@
     nixpkgs.url = "github:nixos/nixpkgs";
     devshell.url = "github:numtide/devshell";
     flake-utils.url = "github:numtide/flake-utils";
+    topiary-nu = {
+      url = "github:ck3mp3r/flakes?dir=topiary-nu";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
     devshell,
     nixpkgs,
+    topiary-nu,
     flake-utils,
     ...
   }:
     flake-utils.lib.eachDefaultSystem (
       system: let
-        overlays = [devshell.overlays.default];
+        overlays = [
+          devshell.overlays.default
+          (final: prev: {
+            topiary-nu = topiary-nu.packages.${system}.default;
+          })
+        ];
         pkgs = import nixpkgs {
           inherit system overlays;
           config = {allowUnfree = true;};

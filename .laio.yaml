@@ -6,7 +6,7 @@ windows:
   - name: code
     panes:
       - commands: # each pane/window can run commands
-          - command: $EDITOR
+          - command: nvim
 
   - name: misc
     panes:
