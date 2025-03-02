@@ -1,5 +1,11 @@
 return {
   {
+    "saghen/blink.cmp",
+    opts = {
+      fuzzy = { implementation = "lua" },
+    },
+  },
+  {
     "HiPhish/rainbow-delimiters.nvim",
     event = { "BufRead" },
   },
