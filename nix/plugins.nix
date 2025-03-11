@@ -27,6 +27,7 @@
     conform-nvim
     # copilot-cmp
     copilot-lua
+    crates-nvim
     # diffview-nvim
     direnv-vim
     dressing-nvim
