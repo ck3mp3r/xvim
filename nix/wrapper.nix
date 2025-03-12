@@ -45,10 +45,11 @@
     python312Packages.pip
     ruff
     shellcheck
-    shellcheck
     shfmt
     shfmt
     stylua
+    terraform-ls
+    tflint
     topiary
     vscode-extensions.vadimcn.vscode-lldb.adapter
     vscode-js-debug
