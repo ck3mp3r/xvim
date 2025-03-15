@@ -31,6 +31,7 @@
     black
     cue
     dockerfile-language-server-nodejs
+    hadolint
     lldb
     lua
     lua-language-server
