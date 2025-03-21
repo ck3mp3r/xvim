@@ -2,9 +2,12 @@ return {
   {
     "yetone/avante.nvim",
     event = "VeryLazy",
-    lazy = false,
     opts = {
       provider = "copilot",
+      auto_suggestions_provider = "copilot",
+      copilot = {
+        model = "claude-3.5-sonnet",
+      },
     },
     dependencies = {
       "MunifTanjim/nui.nvim",
