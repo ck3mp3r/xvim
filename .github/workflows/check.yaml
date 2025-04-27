@@ -8,11 +8,14 @@ on:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: macos-14
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
       - uses: DeterminateSystems/nix-installer-action@main
 
-      - run: nix flake check
+      - name: Running checks
+        run: |
+          nix flake check
+          nix run . -- --headless "+checkhealth" +qa
