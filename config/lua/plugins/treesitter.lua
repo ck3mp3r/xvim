@@ -11,11 +11,11 @@ return {
       indent = { enable = true },
     },
     dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects"
+      "nvim-treesitter/nvim-treesitter-textobjects",
     },
     config = function(_, opts)
       vim.opt.runtimepath:append(ts_parsers)
-      require('nvim-treesitter.configs').setup(opts)
-    end
-  }
+      require("nvim-treesitter.configs").setup(opts)
+    end,
+  },
 }

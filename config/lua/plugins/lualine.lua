@@ -9,20 +9,22 @@ local winbar_lualine = {
 }
 
 local sections = {
-  lualine_a = { function()
-    return require('lib.icons').ui.Target .. " "
-  end },
+  lualine_a = {
+    function()
+      return require("lib.icons").ui.Target .. " "
+    end,
+  },
   lualine_b = {
     {
       "branch",
       icon = "",
-    }
+    },
   },
   lualine_c = { "" },
   lualine_x = {
-    { require('lib.components').lsp },
-    { require('lib.components').spaces },
-    "filetype"
+    { require("lib.components").lsp },
+    { require("lib.components").spaces },
+    "filetype",
   },
   -- lualine_y = {},
   -- lualine_z = {},
@@ -38,22 +40,22 @@ return {
         "SmiteshP/nvim-navic",
         opts = {
           lsp = {
-            auto_attach = true
-          }
-        }
+            auto_attach = true,
+          },
+        },
       },
-      'nvim-tree/nvim-web-devicons'
+      "nvim-tree/nvim-web-devicons",
     },
     opts = {
       options = {
         globalstatus = true,
         section_separators = {
           left = "",
-          right = ""
+          right = "",
         },
         component_separators = {
           left = "",
-          right = ""
+          right = "",
         },
         theme = "catppuccin",
         disabled_filetypes = {
@@ -65,9 +67,9 @@ return {
       sections = sections,
       inactive_sections = sections,
 
-      inactive_winbar = { lualine_c = winbar_lualine, },
+      inactive_winbar = { lualine_c = winbar_lualine },
 
-      winbar = { lualine_c = winbar_lualine, },
-    }
-  }
+      winbar = { lualine_c = winbar_lualine },
+    },
+  },
 }
