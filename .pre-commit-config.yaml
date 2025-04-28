@@ -1,0 +1,15 @@
+repos:
+  - repo: local
+    hooks:
+      - id: stylua
+        name: Format Lua files with local stylua
+        entry: stylua
+        language: system
+        types: [lua]
+        args: ["--search-parent-directories"]
+
+      - id: alejandra
+        name: Format Nix files with local alejandra
+        entry: alejandra
+        language: system
+        types: [nix]

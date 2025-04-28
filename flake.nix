@@ -48,7 +48,10 @@
         packages.default = nvim;
 
         devShells.default = pkgs.devshell.mkShell {
-          imports = [(pkgs.devshell.importTOML ./devshell.toml)];
+          imports = [
+            "${devshell}/extra/git/hooks.nix"
+            (pkgs.devshell.importTOML ./devshell.toml)
+          ];
         };
       }
     );
