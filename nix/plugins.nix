@@ -24,6 +24,7 @@
     # bufdelete-nvim
     bufferline-nvim
     catppuccin-nvim
+    codecompanion-nvim
     conform-nvim
     # copilot-cmp
     copilot-lua
@@ -56,6 +57,7 @@
     mini-nvim
     mini-move
     mini-pairs
+    mini-pick
     mini-surround
     neo-tree-nvim
     # neogit
