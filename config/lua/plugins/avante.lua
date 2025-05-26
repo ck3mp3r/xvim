@@ -1,3 +1,5 @@
+local mcp_cli = vim.g.mcp_cli
+
 return {
   {
     "yetone/avante.nvim",
@@ -29,5 +31,16 @@ return {
         ft = { "markdown", "Avante" },
       },
     },
+  },
+  {
+    "ravitemer/vimplugin-mcphub.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    config = function()
+      require("mcphub").setup({
+        cmd = mcp_cli,
+      })
+    end,
   },
 }
