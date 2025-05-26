@@ -6,8 +6,6 @@ updates:
       - "./.github/workflows/**"
     schedule:
       interval: daily
-    commit-message:
-      prefix: "IDP-27 - "
     groups:
       minor-patch-versions:
         update-types:
