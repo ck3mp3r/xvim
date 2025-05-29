@@ -7,9 +7,9 @@ return {
     opts = {
       provider = "copilot",
       auto_suggestions_provider = "copilot",
-      -- copilot = {
-      --   model = "claude-3.5-sonnet",
-      -- },
+      copilot = {
+        model = "claude-sonnet-4",
+      },
     },
     dependencies = {
       "ibhagwan/fzf-lua",
