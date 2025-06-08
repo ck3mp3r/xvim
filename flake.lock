@@ -104,11 +104,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1748258357,
-        "narHash": "sha256-uOolj0w9M9YaggdCMr1v/C2EqyOF8oj2lQpNG/JjWRg=",
+        "lastModified": 1748590318,
+        "narHash": "sha256-zMxxBgW/WQtQxuU0Qa8aruNKCEW4XYawpIFdlpGAuHI=",
         "owner": "ravitemer",
         "repo": "mcp-hub",
-        "rev": "6667c733e55083980105e6c610aabfa9aa049282",
+        "rev": "3258ce48a81b4d225eb203ff991acce6688d2e8c",
         "type": "github"
       },
       "original": {
@@ -125,11 +125,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1748272838,
-        "narHash": "sha256-4fMo7V4P3eLyNiP7sSzb5FAhxlTLRVeE6PhA9Cmt3Qc=",
+        "lastModified": 1748589155,
+        "narHash": "sha256-x1Nsi2ChR7nBbk0WrAuK/1OKNHUQI5adfFbIwdqIAhA=",
         "owner": "ravitemer",
         "repo": "mcphub.nvim",
-        "rev": "d8be90ba424f50b9ce171040fc37474dd5502867",
+        "rev": "08cd58b0263b20638973ba57950d15f1c3b7b427",
         "type": "github"
       },
       "original": {
@@ -156,11 +156,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1748137719,
-        "narHash": "sha256-RXReUlkHBFRbJ7wKRqekEISEgOpmoYfJV2ylVekpza4=",
+        "lastModified": 1748743881,
+        "narHash": "sha256-R8e5wk3ns6EWaEVJSqo3XLlquCdiq//Zm7AdD3Dw00I=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "a6c856ab10c252c5bb1ea9e917218b075af43537",
+        "rev": "ea0057cc9fa818ee66b850887e119db2a1b9a313",
         "type": "github"
       },
       "original": {
@@ -220,11 +220,11 @@
       },
       "locked": {
         "dir": "topiary-nu",
-        "lastModified": 1747792796,
-        "narHash": "sha256-cwI5NoCeKvLshMBy1KW5IvsoFmGkNvJRGSuVjID+bIY=",
+        "lastModified": 1748397640,
+        "narHash": "sha256-tLhRW4j/XEu+S+5GXd0fonpFLAhLvDbe3nZZyxJAZGE=",
         "owner": "ck3mp3r",
         "repo": "flakes",
-        "rev": "2f8cbbaa844884c0d195f9d11b7e68bb80a4d3ab",
+        "rev": "6f14b775ea8f7a4a9eb1a28247ff4e992fc1fc2e",
         "type": "github"
       },
       "original": {
