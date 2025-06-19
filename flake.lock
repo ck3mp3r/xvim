@@ -104,11 +104,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1749702874,
-        "narHash": "sha256-KEZzrV3h09EN+a1ttVeBIoYKS73RxqZAX13IPB/arp0=",
+        "lastModified": 1750227155,
+        "narHash": "sha256-MyKZ9I39x26ZIjaciVqz6GB9V/NPNf9faTOzzEQcZWQ=",
         "owner": "ravitemer",
         "repo": "mcp-hub",
-        "rev": "fa4f04618ec02f77ac1d54da8221200933f89246",
+        "rev": "2bc5d88405028b8d038dd37f6659718f3918ae58",
         "type": "github"
       },
       "original": {
@@ -125,11 +125,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1749806716,
-        "narHash": "sha256-be+pHQHUuCvVHMBADxbeP3pMSljyvqILb6Wr2H41Rlg=",
+        "lastModified": 1750227497,
+        "narHash": "sha256-t3OY4481cAK5T2XGILbTuXOrlbNCra5JHbwlHFhe7e4=",
         "owner": "ravitemer",
         "repo": "mcphub.nvim",
-        "rev": "4888f27a2c0122d351a337e7576797f4a63df166",
+        "rev": "85a7a659fc82da1429a2241ab61e9ce07b3db374",
         "type": "github"
       },
       "original": {
@@ -156,11 +156,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1749953825,
-        "narHash": "sha256-MFwkAknk6CsUzBE+wpsODtLYPUnmbAhQtfreQChY5yc=",
+        "lastModified": 1750332497,
+        "narHash": "sha256-ELRZ6FHOOYzXrpfsejKfXuia8+WnmKY15jN8mmm6CHo=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "5db83a6ec70fb62248372e757f7e3beb1a892448",
+        "rev": "4a11705e3ae2662b8271456dce3c0d3058d844e8",
         "type": "github"
       },
       "original": {
@@ -220,11 +220,11 @@
       },
       "locked": {
         "dir": "topiary-nu",
-        "lastModified": 1749607382,
-        "narHash": "sha256-vYrze2rvo/3t2scWbTp98kICkFZ6oITAOLJd1kfF5rk=",
+        "lastModified": 1750332745,
+        "narHash": "sha256-MreUy3Lxj3DjLQtSPZnyxeAyvCbyHJper6y60YejveA=",
         "owner": "ck3mp3r",
         "repo": "flakes",
-        "rev": "96ea48c20902bc6d46b47e1878f1ffbaeaf4078c",
+        "rev": "31edb3f0a79ba31ce65a9fca7dbf8ff482c07f1b",
         "type": "github"
       },
       "original": {
@@ -253,11 +253,11 @@
     "tree-sitter-nu": {
       "flake": false,
       "locked": {
-        "lastModified": 1748951018,
-        "narHash": "sha256-ZKpaAvXwMP6Z/15u1TwocCrgfD+ebPywM+UDTt04Sh0=",
+        "lastModified": 1750158656,
+        "narHash": "sha256-v4Nr+dN7VT4AMuejvDWJZK0+wH9/Q3h29vvAKYABaXE=",
         "owner": "nushell",
         "repo": "tree-sitter-nu",
-        "rev": "100d06e29d13a8ebfc3f29173c07a5c4f2050586",
+        "rev": "7983592fe54750b750f2ee9dc8e89449257855d4",
         "type": "github"
       },
       "original": {
