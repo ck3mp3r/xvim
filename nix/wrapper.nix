@@ -32,6 +32,7 @@
     cue
     dockerfile-language-server-nodejs
     hadolint
+    kubernetes-helm
     lldb
     lua
     lua-language-server
@@ -46,7 +47,6 @@
     python312Packages.pip
     ruff
     shellcheck
-    shfmt
     shfmt
     stylua
     terraform-ls
