@@ -32,6 +32,7 @@
     cue
     dockerfile-language-server-nodejs
     hadolint
+    helm-ls
     kubernetes-helm
     lldb
     lua
