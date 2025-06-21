@@ -10,9 +10,12 @@ return {
       providers = {
         copilot = {
           model = "claude-sonnet-4",
+          timeout = 30000,
         },
         ollama = {
           model = "qwen3:8b",
+          endpoint = "http://localhost:11434",
+          timeout = 30000,
         },
       },
     },
