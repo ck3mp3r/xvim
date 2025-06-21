@@ -17,17 +17,6 @@ return {
           endpoint = "http://localhost:11434",
           timeout = 30000,
         },
-        abacus = {
-          __inherited_from = "openai",
-          endpoint = "https://api.abacus.ai/chat/completions",
-          model = "claude-sonnet-4",
-          api_key_name = "ABACUS_API_KEY",
-          timeout = 30000,
-          extra_request_body = {
-            temperature = 0.2,
-            max_tokens = 4096,
-          },
-        },
       },
     },
     dependencies = {
