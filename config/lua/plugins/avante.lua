@@ -11,6 +11,9 @@ return {
         copilot = {
           model = "claude-sonnet-4",
         },
+        ollama = {
+          model = "qwen3:8b",
+        },
       },
     },
     dependencies = {
