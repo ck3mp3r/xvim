@@ -27,6 +27,7 @@
       regex
       rust
       starlark
+      swift
       terraform
       tsx
       typescript

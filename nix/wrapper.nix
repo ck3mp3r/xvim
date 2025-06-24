@@ -49,6 +49,9 @@
     ruff
     shellcheck
     shfmt
+    shfmt
+    sourcekit-lsp
+    swift-format
     stylua
     terraform-ls
     tflint

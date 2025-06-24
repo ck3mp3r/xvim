@@ -17,6 +17,12 @@ return {
             },
           },
         },
+        sourcekit = {
+          cmd = {
+            "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp",
+          },
+          root_dir = require("lspconfig.util").root_pattern("Package.swift", ".git"),
+        },
       },
     },
   },
