@@ -21,6 +21,7 @@ return {
           cmd = {
             "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp",
           },
+          filetypes = { "swift", "c", "cpp", "objective-c", "objective-cpp" },
           root_dir = require("lspconfig.util").root_pattern("Package.swift", ".git"),
         },
       },
