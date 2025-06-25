@@ -9,7 +9,7 @@ return {
       auto_suggestions_provider = "copilot",
       providers = {
         copilot = {
-          model = "gpt-4.1",
+          model = "gpt-4o",
           timeout = 30000,
         },
         ollama = {
