@@ -13,7 +13,7 @@ return {
           timeout = 30000,
         },
         ollama = {
-          model = "qwen3:8b",
+          model = "deepseek-coder-v2:16b",
           endpoint = "http://localhost:11434",
           timeout = 30000,
         },
