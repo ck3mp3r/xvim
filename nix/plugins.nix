@@ -14,6 +14,7 @@
   });
 
   mcphub-nvim = pkgs.mcphub-nvim;
+  codecompanion-nvim = pkgs.codecompanion-nvim;
 
   vimPlugins = with pkgs.vimPlugins; [
     # LazyVim

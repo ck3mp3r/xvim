@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "codecompanion": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1750804890,
+        "narHash": "sha256-OkQhcSaJvC9ToETNGSycanNVsn00pPab5FfX+6V62kk=",
+        "owner": "olimorris",
+        "repo": "codecompanion.nvim",
+        "rev": "ff939d18d8d64b0bef985aeb9be26f57e4ee8837",
+        "type": "github"
+      },
+      "original": {
+        "owner": "olimorris",
+        "repo": "codecompanion.nvim",
+        "type": "github"
+      }
+    },
     "devshell": {
       "inputs": {
         "nixpkgs": "nixpkgs"
@@ -171,6 +187,7 @@
     },
     "root": {
       "inputs": {
+        "codecompanion": "codecompanion",
         "devshell": "devshell",
         "flake-utils": "flake-utils",
         "mcp-hub": "mcp-hub",
