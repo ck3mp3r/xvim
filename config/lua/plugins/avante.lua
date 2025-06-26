@@ -9,7 +9,7 @@ return {
       auto_suggestions_provider = "copilot",
       providers = {
         copilot = {
-          model = "gpt-4.1",
+          model = "gpt-4",
           timeout = 30000,
         },
         ollama = {
@@ -19,7 +19,6 @@ return {
         },
         claude = {
           endpoint = "https://api.anthropic.com",
-          model = "claude-sonnet-4-20250514",
           timeout = 30000, -- Timeout in milliseconds
           extra_request_body = {
             temperature = 0.75,
