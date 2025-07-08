@@ -24,6 +24,11 @@ return {
           filetypes = { "swift", "c", "cpp", "objective-c", "objective-cpp" },
           root_dir = require("lspconfig.util").root_pattern("Package.swift", ".git"),
         },
+        cue = {
+          cmd = { "cue", "lsp" },
+          filetypes = { "cue" },
+          root_dir = require("lspconfig.util").root_pattern(".git"),
+        },
       },
     },
   },
