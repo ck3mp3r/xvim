@@ -21,9 +21,15 @@
       url = "github:olimorris/codecompanion.nvim";
       flake = false;
     };
+
+    avante-nvim = {
+      url = "github:ck3mp3r/flakes?dir=avante";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
+    avante-nvim,
     codecompanion,
     devshell,
     nixpkgs,
@@ -54,6 +60,7 @@
         overlays = [
           devshell.overlays.default
           topiary-nu.overlays.default
+          avante-nvim.overlays.default
           (final: next: {
             codecompanion-nvim = codecompanion';
             mcphub-nvim = mcphub-nvim.packages."${system}".default;
