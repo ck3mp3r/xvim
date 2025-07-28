@@ -3,6 +3,7 @@
     "avante-nvim": {
       "inputs": {
         "avante-src": "avante-src",
+        "fenix": "fenix",
         "flake-utils": "flake-utils",
         "nixpkgs": [
           "nixpkgs"
@@ -10,11 +11,11 @@
       },
       "locked": {
         "dir": "avante",
-        "lastModified": 1753550397,
-        "narHash": "sha256-B6pAkDKlRHd/kzw6E2oKBEQryPV/JFVAQvp5OWl9PtQ=",
+        "lastModified": 1753738075,
+        "narHash": "sha256-I/emWPB3mKwRU5vENSRXxZSCFs+tE93Hg4qDLkay6yE=",
         "owner": "ck3mp3r",
         "repo": "flakes",
-        "rev": "c4daa53809a3ff8bd488a6bc98d9645ec22d19ec",
+        "rev": "6d225adad8c45abb8bb476e435aef3f3a28f5b7a",
         "type": "github"
       },
       "original": {
@@ -27,16 +28,16 @@
     "avante-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1753517978,
-        "narHash": "sha256-A1EWIEhb+oo1uLuLKNFZfJXYgcDy+jrOyAhIhxrHMCc=",
+        "lastModified": 1753672485,
+        "narHash": "sha256-0PSZkDHoVSnDhbcxJ1koL31mTmHd5oOnLhLRKtTvzZQ=",
         "owner": "yetone",
         "repo": "avante.nvim",
-        "rev": "d8ec4e4aa464b29c6ee276a701a691a042053c3f",
+        "rev": "7e50de89049ea3540f0d39acec7b68a74a5d1edb",
         "type": "github"
       },
       "original": {
         "owner": "yetone",
-        "ref": "v0.0.26",
+        "ref": "v0.0.27",
         "repo": "avante.nvim",
         "type": "github"
       }
@@ -72,6 +73,28 @@
       "original": {
         "owner": "numtide",
         "repo": "devshell",
+        "type": "github"
+      }
+    },
+    "fenix": {
+      "inputs": {
+        "nixpkgs": [
+          "avante-nvim",
+          "nixpkgs"
+        ],
+        "rust-analyzer-src": "rust-analyzer-src"
+      },
+      "locked": {
+        "lastModified": 1753685071,
+        "narHash": "sha256-hf+A5F4yyCisGPN4SvTpO0EkE0dQsp5gwRtRHUs46oY=",
+        "owner": "nix-community",
+        "repo": "fenix",
+        "rev": "b3b3e0da43a02ef1e40f4cfe485af70176e6f2e5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "fenix",
         "type": "github"
       }
     },
@@ -254,6 +277,23 @@
         "mcphub-nvim": "mcphub-nvim",
         "nixpkgs": "nixpkgs_2",
         "topiary-nu": "topiary-nu"
+      }
+    },
+    "rust-analyzer-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1753651982,
+        "narHash": "sha256-RzsKuX6BQntFOhvqbstzOtzkOv0lkW4l8SYu6ffTf74=",
+        "owner": "rust-lang",
+        "repo": "rust-analyzer",
+        "rev": "db02cdc7fc8b0e0b9aa1be4110a74620bbac1f98",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rust-lang",
+        "ref": "nightly",
+        "repo": "rust-analyzer",
+        "type": "github"
       }
     },
     "systems": {

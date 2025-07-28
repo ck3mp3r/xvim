@@ -85,7 +85,7 @@
     nvim-ts-context-commentstring
     nvim-web-devicons
     persistence-nvim
-    obsidian-nvim
+    # obsidian-nvim
     plenary-nvim
     # project-nvim
     rainbow-delimiters-nvim
