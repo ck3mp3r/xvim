@@ -74,15 +74,13 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
-    config = function()
-      require("mcphub").setup({
-        cmd = mcp_cli,
-        extensions = {
-          avante = {
-            make_slash_commands = true, -- make /slash commands from MCP server prompts
-          },
+    opts = {
+      cmd = mcp_cli,
+      extensions = {
+        avante = {
+          make_slash_commands = true, -- make /slash commands from MCP server prompts
         },
-      })
-    end,
+      },
+    },
   },
 }
