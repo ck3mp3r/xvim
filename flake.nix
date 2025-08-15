@@ -80,11 +80,9 @@
         nvim = pkgs.callPackage ./nix/wrapper.nix {
           appName = "nvim";
           configPath = "${config}";
-          runtimePaths =
-            [
-              pkgs.vimPlugins.lazy-nvim
-            ]
-            ++ plugins.runtimePaths;
+          runtimePaths = [
+            pkgs.vimPlugins.lazy-nvim
+          ];
           extraVars = plugins.extraVars;
         };
       in {
