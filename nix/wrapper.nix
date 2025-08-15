@@ -6,7 +6,6 @@
   configPath,
   appName,
   extraVars ? {},
-  runtimePaths ? [],
 }: let
   # Generate the variable commands string in Nix
   extraVarsList =
@@ -16,13 +15,6 @@
       extraVars // {"config_path" = configPath;}
     );
   varCommands = lib.concatStringsSep " " extraVarsList;
-
-  # Generate the runtime path commands string in Nix
-  runtimePathCommands = lib.concatStringsSep " " (
-    map (path: "--cmd \"set runtimepath^=${path}\"") (
-      runtimePaths ++ [configPath]
-    )
-  );
 
   topiary-nu = pkgs.topiary-nu;
   extraPackages = with pkgs; [
@@ -80,7 +72,6 @@ in
       export PATH=${extraPath}:\$PATH
       exec ${neovim}/bin/nvim \
         ${varCommands} \
-        ${runtimePathCommands} \
         -u "${configPath}/init.lua" "\$@"
       EOF
 

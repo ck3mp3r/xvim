@@ -1,0 +1,7 @@
+{
+  "diagnostics.globals": ["vim", "Snacks"],
+    "diagnostics.disable": [
+        "assign-type-mismatch",
+        "missing-fields"
+    ]
+}
