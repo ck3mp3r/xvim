@@ -116,7 +116,7 @@
   extraVars = {
     "mcp_cli" = "${pkgs.mcp-hub}/bin/mcp-hub";
     "ts_parsers" = ts_parsers;
-    "lazy_path" = plugins;
+    "plugin_path" = plugins;
   };
 in {
   inherit plugins runtimePaths extraVars;
