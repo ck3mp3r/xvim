@@ -76,7 +76,6 @@
           (final: next: {
             codecompanion-nvim = codecompanion';
             direnv-nvim = direnv-nvim';
-            mkShell = next.mkShellNoCC;
             mcphub-nvim = mcphub-nvim.packages."${system}".default;
             mcp-hub = mcp-hub.packages."${system}".default;
           })
