@@ -22,6 +22,11 @@
       flake = false;
     };
 
+    direnv-nvim = {
+      url = "github:NotAShelf/direnv.nvim";
+      flake = false;
+    };
+
     avante-nvim = {
       url = "github:ck3mp3r/flakes?dir=avante";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -32,6 +37,7 @@
     avante-nvim,
     codecompanion,
     devshell,
+    direnv-nvim,
     nixpkgs,
     topiary-nu,
     flake-utils,
@@ -57,12 +63,19 @@
           ];
         };
 
+        direnv-nvim' = pkgs.vimUtils.buildVimPlugin {
+          pname = "direnv.nvim";
+          src = direnv-nvim;
+          version = "custom";
+        };
+
         overlays = [
           devshell.overlays.default
           topiary-nu.overlays.default
           avante-nvim.overlays.default
           (final: next: {
             codecompanion-nvim = codecompanion';
+            direnv-nvim = direnv-nvim';
             mcphub-nvim = mcphub-nvim.packages."${system}".default;
             mcp-hub = mcp-hub.packages."${system}".default;
           })

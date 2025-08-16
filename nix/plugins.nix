@@ -13,8 +13,9 @@
     '';
   });
 
-  mcphub-nvim = pkgs.mcphub-nvim;
   codecompanion-nvim = pkgs.codecompanion-nvim;
+  direnv-nvim = pkgs.direnv-nvim;
+  mcphub-nvim = pkgs.mcphub-nvim;
 
   vimPlugins = with pkgs.vimPlugins; [
     # LazyVim
@@ -33,7 +34,7 @@
     copilot-lua
     crates-nvim
     # diffview-nvim
-    direnv-vim
+    direnv-nvim
     dressing-nvim
     flash-nvim
     friendly-snippets

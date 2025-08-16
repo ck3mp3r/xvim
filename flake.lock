@@ -76,6 +76,22 @@
         "type": "github"
       }
     },
+    "direnv-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1749467049,
+        "narHash": "sha256-KqO8uDbVy4sVVZ6mHikuO+SWCzWr97ZuFRC8npOPJIE=",
+        "owner": "NotAShelf",
+        "repo": "direnv.nvim",
+        "rev": "4dfc8758a1deab45e37b7f3661e0fd3759d85788",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NotAShelf",
+        "repo": "direnv.nvim",
+        "type": "github"
+      }
+    },
     "fenix": {
       "inputs": {
         "nixpkgs": [
@@ -272,6 +288,7 @@
         "avante-nvim": "avante-nvim",
         "codecompanion": "codecompanion",
         "devshell": "devshell",
+        "direnv-nvim": "direnv-nvim",
         "flake-utils": "flake-utils_2",
         "mcp-hub": "mcp-hub",
         "mcphub-nvim": "mcphub-nvim",
