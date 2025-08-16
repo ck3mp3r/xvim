@@ -4,7 +4,10 @@ return {
     event = { "BufRead" },
   },
   {
-    "direnv/direnv.vim",
+    "NotAShelf/direnv.nvim",
+    config = function()
+      require("direnv").setup({})
+    end,
     event = { "VeryLazy" },
   },
   {

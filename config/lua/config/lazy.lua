@@ -7,7 +7,7 @@ require("lazy").setup({
     { "williamboman/mason.nvim", enabled = false },
   },
   dev = {
-    path = vim.g.lazy_path,
+    path = vim.g.plugin_path,
     patterns = { "" },
     fallback = false,
   },
