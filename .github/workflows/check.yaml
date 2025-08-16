@@ -17,4 +17,5 @@ jobs:
 
       - name: Running checks
         run: |
-          nix develop -c checks
+          nix flake check
+          nix run . -- --headless +checkhealth +qa
