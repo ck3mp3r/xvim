@@ -18,42 +18,31 @@
   mcphub-nvim = pkgs.mcphub-nvim;
 
   vimPlugins = with pkgs.vimPlugins; [
-    # LazyVim
     LazyVimCustom
     SchemaStore-nvim
     aerial-nvim
     avante-nvim
     better-escape-nvim
     blink-cmp
-    # bufdelete-nvim
     bufferline-nvim
     catppuccin-nvim
     codecompanion-nvim
     conform-nvim
-    # copilot-cmp
     copilot-lua
     crates-nvim
-    # diffview-nvim
     direnv-nvim
     dressing-nvim
     flash-nvim
     friendly-snippets
     fzf-lua
-    # git-blame-nvim
     gitsigns-nvim
     grug-far-nvim
     indent-blankline-nvim
     kulala-nvim
-    # lsp-format-nvim
-    # lsp_lines-nvim
     lazydev-nvim
     lualine-nvim
-    # luasnip
     render-markdown-nvim
     markdown-preview-nvim
-    # mason-nvim
-    # mason-lspconfig-nvim
-    # mason-nvim-dap-nvim
     mcphub-nvim
     mini-ai
     mini-comment
@@ -65,10 +54,7 @@
     mini-pick
     mini-surround
     neo-tree-nvim
-    # neogit
     noice-nvim
-    # none-ls-nvim
-    # nvim-autopairs
     nvim-dap
     nvim-dap-ui
     nvim-dap-virtual-text
@@ -76,8 +62,6 @@
     nvim-lspconfig
     nvim-navic
     nvim-nio
-    # nvim-notify
-    # nvim-tree-lua
     nvim-snippets
     nvim-ts-autotag
     nui-nvim
@@ -88,20 +72,12 @@
     persistence-nvim
     # obsidian-nvim
     plenary-nvim
-    # project-nvim
     rainbow-delimiters-nvim
     rustaceanvim
     snacks-nvim
     ts-comments-nvim
     trouble-nvim
-    # surround
-    telescope-fzf-native-nvim
-    telescope-nvim
-    telescope-project-nvim
-    telescope-ui-select-nvim
     todo-comments-nvim
-    # toggleterm-nvim
-    # twilight-nvim
     vim-helm
     vim-tmux-navigator
     which-key-nvim
