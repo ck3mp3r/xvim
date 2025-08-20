@@ -11,4 +11,9 @@ return {
     "iamcco/markdown-preview.nvim",
     ft = { "markdown" },
   },
+  {
+    "mpas/marp-nvim",
+    opts = {},
+    ft = { "markdown" },
+  },
 }

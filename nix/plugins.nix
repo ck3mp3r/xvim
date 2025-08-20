@@ -15,6 +15,7 @@
 
   codecompanion-nvim = pkgs.codecompanion-nvim;
   direnv-nvim = pkgs.direnv-nvim;
+  marp-nvim = pkgs.marp-nvim;
   mcphub-nvim = pkgs.mcphub-nvim;
 
   vimPlugins = with pkgs.vimPlugins; [
@@ -43,6 +44,7 @@
     lualine-nvim
     render-markdown-nvim
     markdown-preview-nvim
+    marp-nvim
     mcphub-nvim
     mini-ai
     mini-comment
