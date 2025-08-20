@@ -34,6 +34,7 @@
     lua
     lua-language-server
     # marksman
+    marp-cli
     nixd
     nodePackages.bash-language-server
     nodePackages.prettier
