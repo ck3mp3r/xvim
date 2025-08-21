@@ -210,22 +210,6 @@
         "type": "github"
       }
     },
-    "marp-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1722411115,
-        "narHash": "sha256-CebyoqIBi8xT5U+aCBwptOSz89KxhXS27kAtPrRZvT8=",
-        "owner": "mpas",
-        "repo": "marp-nvim",
-        "rev": "4f38e6ffe2f5ea260f35f7ff3e4e424b9f8bea29",
-        "type": "github"
-      },
-      "original": {
-        "owner": "mpas",
-        "repo": "marp-nvim",
-        "type": "github"
-      }
-    },
     "mcp-hub": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -306,7 +290,6 @@
         "devshell": "devshell",
         "direnv-nvim": "direnv-nvim",
         "flake-utils": "flake-utils_2",
-        "marp-nvim": "marp-nvim",
         "mcp-hub": "mcp-hub",
         "mcphub-nvim": "mcphub-nvim",
         "nixpkgs": "nixpkgs_2",
