@@ -31,11 +31,6 @@
       url = "github:ck3mp3r/flakes?dir=avante";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    marp-nvim = {
-      url = "github:mpas/marp-nvim";
-      flake = false;
-    };
   };
 
   outputs = {
@@ -46,7 +41,6 @@
     nixpkgs,
     topiary-nu,
     flake-utils,
-    marp-nvim,
     mcphub-nvim,
     mcp-hub,
     ...
@@ -75,12 +69,6 @@
           version = "custom";
         };
 
-        marp-nvim' = pkgs.vimUtils.buildVimPlugin {
-          pname = "marp-nvim";
-          src = marp-nvim;
-          version = "custom";
-        };
-
         overlays = [
           devshell.overlays.default
           topiary-nu.overlays.default
@@ -90,7 +78,6 @@
             direnv-nvim = direnv-nvim';
             mcphub-nvim = mcphub-nvim.packages."${system}".default;
             mcp-hub = mcp-hub.packages."${system}".default;
-            marp-nvim = marp-nvim';
           })
         ];
 
