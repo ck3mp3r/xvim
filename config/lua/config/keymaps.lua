@@ -8,3 +8,5 @@ vim.api.nvim_set_keymap(
   { desc = "Action", noremap = true, silent = true }
 )
 vim.api.nvim_set_keymap("n", "<leader>Cc", ":CodeCompanionChat<CR>", { desc = "Chat", noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>MT", "<cmd>MarpToggle<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>MS", "<cmd>MarpStatus<cr>", { noremap = true, silent = true })

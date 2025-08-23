@@ -18,4 +18,4 @@ jobs:
       - name: Running checks
         run: |
           nix flake check
-          nix run . -- --headless "+checkhealth" +qa
+          nix run . -- --headless +checkhealth +qa
