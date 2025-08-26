@@ -38,7 +38,7 @@
     nodePackages.bash-language-server
     nodePackages.prettier
     nodePackages.vscode-json-languageserver
-    (nodejs_24.overrideAttrs (_: {doCheck = false;}))
+    nodejs_24
     pyright
     python3
     python312Packages.pip
