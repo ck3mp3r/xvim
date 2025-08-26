@@ -3,3 +3,4 @@
 -- Add any additional options here
 vim.opt.cursorcolumn = true
 vim.opt.swapfile = false
+vim.opt.autoread = true

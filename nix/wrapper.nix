@@ -18,11 +18,7 @@
   varCommands = lib.concatStringsSep " " extraVarsList;
 
   # Generate the runtime path commands string in Nix
-  runtimePathCommands = lib.concatStringsSep " " (
-    map (path: "--cmd \"set runtimepath^=${path}\"") (
-      runtimePaths ++ [configPath]
-    )
-  );
+  runtimePathCommands = "--cmd \"set runtimepath^=${lib.concatStringsSep "," ([configPath] ++ runtimePaths)}\"";
 
   topiary-nu = pkgs.topiary-nu;
   extraPackages = with pkgs; [
@@ -42,7 +38,7 @@
     nodePackages.bash-language-server
     nodePackages.prettier
     nodePackages.vscode-json-languageserver
-    nodejs
+    nodejs_24
     pyright
     python3
     python312Packages.pip
