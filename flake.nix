@@ -2,7 +2,7 @@
   description = "A nixvim configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     devshell.url = "github:numtide/devshell";
     flake-utils.url = "github:numtide/flake-utils";
     mcphub-nvim = {
