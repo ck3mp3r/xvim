@@ -4,3 +4,6 @@
 vim.opt.cursorcolumn = true
 vim.opt.swapfile = false
 vim.opt.autoread = true
+
+-- Set default border for all floating windows (Neovim 0.11+)
+vim.o.winborder = "rounded"
