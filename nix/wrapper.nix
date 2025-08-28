@@ -18,7 +18,7 @@
   varCommands = lib.concatStringsSep " " extraVarsList;
 
   # Generate the runtime path commands string in Nix
-  runtimePathCommands = "--cmd \"set runtimepath^=${lib.concatStringsSep "," ([configPath] ++ runtimePaths)}\"";
+  runtimePathCommands = "--cmd \"set runtimepath=\" --cmd \"set runtimepath^=${lib.concatStringsSep "," ([configPath "${neovim}/share/nvim/runtime"] ++ runtimePaths)}\"";
 
   topiary-nu = pkgs.topiary-nu;
   extraPackages = with pkgs; [
