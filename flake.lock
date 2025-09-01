@@ -45,11 +45,11 @@
     "codecompanion": {
       "flake": false,
       "locked": {
-        "lastModified": 1756643044,
-        "narHash": "sha256-wyK+QlkxzfB1gbPAE6u9oiVmtXzE1imc7Jbw7tlXmlQ=",
+        "lastModified": 1756747068,
+        "narHash": "sha256-xNOxk8n9gVHFV/ywo2XMwk5k9xWJZcsJmrWl8JAnZfY=",
         "owner": "olimorris",
         "repo": "codecompanion.nvim",
-        "rev": "dfd894a3888a87725eb6285b97bb69f7d8e07824",
+        "rev": "8b60fcc972ae08604505c4626b0e885e3d7396bf",
         "type": "github"
       },
       "original": {
