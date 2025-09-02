@@ -25,7 +25,7 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@main
 
       - name: update flake lock
-        uses: ck3mp3r/actions/update-flake-lock@refactor/extract-update-logic
+        uses: ck3mp3r/actions/update-flake-lock@main
         with:
           github-token: ${{ steps.token.outputs.token }}
           checks-required: "Check"
