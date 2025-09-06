@@ -29,6 +29,7 @@
     dockerfile-language-server-nodejs
     hadolint
     helm-ls
+    jq # For reliable JSON parsing in the wrapper script
     kubernetes-helm
     lldb
     lua
@@ -71,6 +72,16 @@ in
 
       cat > $out/bin/${appName} <<EOF
       #!/usr/bin/env bash
+
+      # Set up Claude OAuth token
+      CLAUDE_TOKEN=\$(security find-generic-password -s "Claude Code-credentials" -w 2>/dev/null | jq -r '.claudeAiOauth.accessToken // empty' 2>/dev/null)
+      if [[ -n "\$CLAUDE_TOKEN" ]]; then
+        export CLAUDE_CODE_OAUTH_TOKEN="\$CLAUDE_TOKEN"
+        echo "✓ Claude OAuth token exported"
+      else
+        echo "✗ Claude OAuth token not found in keychain"
+      fi
+
       export TOPIARY_CONFIG_FILE=${topiary-nu}/languages.ncl
       export TOPIARY_LANGUAGE_DIR=${topiary-nu}/languages
       export PATH=${extraPath}:\$PATH
@@ -80,7 +91,7 @@ in
         -u "${configPath}/init.lua" "\$@"
       EOF
 
-          chmod +x $out/bin/${appName}
+      chmod +x $out/bin/${appName}
     '';
 
     shellHook = ''
