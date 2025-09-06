@@ -34,7 +34,6 @@
     lldb
     lua
     lua-language-server
-    # marksman
     nixd
     nodePackages.bash-language-server
     nodePackages.prettier
@@ -46,10 +45,9 @@
     ruff
     shellcheck
     shfmt
-    shfmt
     sourcekit-lsp
-    swift-format
     stylua
+    swift-format
     terraform-ls
     tflint
     topiary
