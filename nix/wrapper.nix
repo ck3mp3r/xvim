@@ -77,7 +77,6 @@ in
       CLAUDE_TOKEN=\$(security find-generic-password -s "Claude Code-credentials" -w 2>/dev/null | jq -r '.claudeAiOauth.accessToken // empty' 2>/dev/null)
       if [[ -n "\$CLAUDE_TOKEN" ]]; then
         export CLAUDE_CODE_OAUTH_TOKEN="\$CLAUDE_TOKEN"
-        echo "✓ Claude OAuth token exported"
       else
         echo "✗ Claude OAuth token not found in keychain"
       fi
