@@ -21,7 +21,7 @@ return {
         end
 
         vim.notify("✓ Claude OAuth token configured", vim.log.levels.INFO)
-        return true, oauth_token
+        return true
       end
 
       -- Helper function to keep only allowed message fields
@@ -130,12 +130,10 @@ return {
       end
 
       -- Validate setup and get OAuth token
-      local is_valid, oauth_token = validate_oauth_setup()
-      if not is_valid then
-        return -- Don't proceed with setup if token is missing
-      end
+      local is_valid = validate_oauth_setup()
 
-      require("codecompanion").setup({
+      local adapters = {}
+      if is_valid then
         adapters = {
           anthropic = function()
             local utils = require("codecompanion.utils.adapters")
@@ -280,7 +278,11 @@ return {
               },
             })
           end,
-        },
+        }
+      end
+
+      require("codecompanion").setup({
+        adapters = adapters,
         extensions = {
           mcphub = {
             callback = "mcphub.extensions.codecompanion",
