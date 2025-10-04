@@ -20,11 +20,6 @@ return {
       which_key = true,
     },
     config = function(_, opts)
-      --TODO: remove when https://github.com/LazyVim/LazyVim/pull/6354 is merged
-      local module = require("catppuccin.groups.integrations.bufferline")
-      if module then
-        module.get = module.get_theme
-      end
       require("catppuccin").setup(opts)
     end,
   },
