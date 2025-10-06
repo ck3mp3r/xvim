@@ -26,7 +26,7 @@
     bash-language-server
     black
     cue
-    dockerfile-language-server-nodejs
+    dockerfile-language-server
     hadolint
     helm-ls
     jq # For reliable JSON parsing in the wrapper script
