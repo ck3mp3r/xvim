@@ -1,8 +1,6 @@
 name: Build and Release XVIM
 
 on:
-  push:
-    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -10,40 +8,51 @@ jobs:
     runs-on: macos-latest
     permissions:
       contents: write
-    
+
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      
-    - name: Install Nix
-      uses: DeterminateSystems/nix-installer-action@main
-      
-    - name: Run the Magic Nix Cache
-      uses: DeterminateSystems/magic-nix-cache-action@main
-      
-    - name: Build XVIM
-      run: nix build .#default
-      
-    - name: Extract runtime distribution
-      run: ./result/bin/ci-extract.sh
-      
-    - name: Create release
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        # Get the current commit hash for tagging
-        COMMIT_SHA=$(git rev-parse --short HEAD)
-        TAG_NAME="latest"
-        RELEASE_NAME="XVIM Runtime Distribution"
-        
-        # Delete existing release and tag if they exist
-        gh release delete "$TAG_NAME" --yes || true
-        git tag -d "$TAG_NAME" || true
-        git push origin --delete "$TAG_NAME" || true
-        
-        # Create new release with fixed tag
-        gh release create "$TAG_NAME" \
-          --title "$RELEASE_NAME" \
-          --notes "Automated build from commit $COMMIT_SHA" \
-          --latest \
-          build/xvim-*.tar.gz#xvim-runtime.tar.gz
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Run the Magic Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: Build XVIM
+        run: nix build .#default
+
+      - name: Extract runtime distribution
+        run: ./result/bin/ci-extract.sh
+
+      - name: Create or update release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Get the current commit hash for release notes
+          COMMIT_SHA=$(git rev-parse --short HEAD)
+          TAG_NAME="latest"
+          RELEASE_NAME="XVIM Runtime Distribution"
+          
+          # Rename the file to have a consistent name
+          mv build/xvim-*.tar.gz build/xvim-runtime.tar.gz
+          
+          # Check if release exists and update it, otherwise create new one
+          if gh release view "$TAG_NAME" >/dev/null 2>&1; then
+            echo "Updating existing release..."
+            # Delete old assets first
+            gh release delete-asset "$TAG_NAME" xvim-runtime.tar.gz --yes || true
+            # Upload new asset
+            gh release upload "$TAG_NAME" build/xvim-runtime.tar.gz --clobber
+            # Update release notes
+            gh release edit "$TAG_NAME" \
+              --notes "Automated build from commit $COMMIT_SHA ($(date -u '+%Y-%m-%d %H:%M:%S UTC'))"
+          else
+            echo "Creating new release..."
+            gh release create "$TAG_NAME" \
+              --title "$RELEASE_NAME" \
+              --notes "Automated build from commit $COMMIT_SHA ($(date -u '+%Y-%m-%d %H:%M:%S UTC'))" \
+              --latest \
+              build/xvim-runtime.tar.gz
+          fi
+
