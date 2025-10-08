@@ -1,0 +1,49 @@
+name: Build and Release XVIM
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Install Nix
+      uses: DeterminateSystems/nix-installer-action@main
+      
+    - name: Run the Magic Nix Cache
+      uses: DeterminateSystems/magic-nix-cache-action@main
+      
+    - name: Build XVIM
+      run: nix build .#default
+      
+    - name: Extract runtime distribution
+      run: ./result/bin/ci-extract.sh
+      
+    - name: Create release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        # Get the current commit hash for tagging
+        COMMIT_SHA=$(git rev-parse --short HEAD)
+        TAG_NAME="latest"
+        RELEASE_NAME="XVIM Runtime Distribution"
+        
+        # Delete existing release and tag if they exist
+        gh release delete "$TAG_NAME" --yes || true
+        git tag -d "$TAG_NAME" || true
+        git push origin --delete "$TAG_NAME" || true
+        
+        # Create new release with fixed tag
+        gh release create "$TAG_NAME" \
+          --title "$RELEASE_NAME" \
+          --notes "Automated build from commit $COMMIT_SHA" \
+          --latest \
+          build/xvim-*.tar.gz#xvim-runtime.tar.gz
