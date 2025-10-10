@@ -1,0 +1,55 @@
+---
+name: Build and Push to Cachix
+
+on:
+  workflow_dispatch:
+    inputs:
+      cache_name:
+        description: 'Cachix cache name'
+        required: false
+        default: "ck3mp3r"
+        type: string
+      filter:
+        description: 'Filter for store paths to push (e.g., "mcp-hub")'
+        required: true
+        default: "mcp-hub"
+        type: string
+  push:
+    branches:
+      - main
+    paths:
+      - 'flake.nix'
+      - 'flake.lock'
+      - 'nix/**'
+
+jobs:
+  build-and-push:
+    runs-on: macos-14
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v5
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Setup Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: Install Cachix
+        uses: cachix/cachix-action@v15
+        with:
+          name: ${{ inputs.cache_name || 'ck3mp3r' }}
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+
+      - name: Build xvim
+        run: |
+          echo "🔨 Building xvim configuration..."
+          nix build
+          echo "✅ Build completed"
+
+      - name: Push filtered paths to Cachix
+        run: |
+          echo "🚀 Pushing filtered store paths to Cachix..."
+          ./scripts/push-to-cachix.nu \
+            --cache-name "${{ inputs.cache_name || 'ck3mp3r' }}" \
+            --filter "${{ inputs.filter || 'mcp-hub' }}"
