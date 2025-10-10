@@ -21,7 +21,6 @@
     LazyVimCustom
     SchemaStore-nvim
     (aerial-nvim.overrideAttrs {doCheck = false;})
-    avante-nvim
     better-escape-nvim
     blink-cmp
     bufferline-nvim

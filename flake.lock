@@ -1,47 +1,5 @@
 {
   "nodes": {
-    "avante-nvim": {
-      "inputs": {
-        "avante-src": "avante-src",
-        "fenix": "fenix",
-        "flake-utils": "flake-utils",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "dir": "avante",
-        "lastModified": 1759598110,
-        "narHash": "sha256-IP5F1xyxNrwjEs5QIlyO9EqBFRD5eTZ6xs4EM9YQ2Zo=",
-        "owner": "ck3mp3r",
-        "repo": "flakes",
-        "rev": "eefa179604a230e3b82968e1d2b53843f6d15468",
-        "type": "github"
-      },
-      "original": {
-        "dir": "avante",
-        "owner": "ck3mp3r",
-        "repo": "flakes",
-        "type": "github"
-      }
-    },
-    "avante-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1753672485,
-        "narHash": "sha256-0PSZkDHoVSnDhbcxJ1koL31mTmHd5oOnLhLRKtTvzZQ=",
-        "owner": "yetone",
-        "repo": "avante.nvim",
-        "rev": "7e50de89049ea3540f0d39acec7b68a74a5d1edb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "yetone",
-        "ref": "v0.0.27",
-        "repo": "avante.nvim",
-        "type": "github"
-      }
-    },
     "codecompanion": {
       "flake": false,
       "locked": {
@@ -89,28 +47,6 @@
       "original": {
         "owner": "NotAShelf",
         "repo": "direnv.nvim",
-        "type": "github"
-      }
-    },
-    "fenix": {
-      "inputs": {
-        "nixpkgs": [
-          "avante-nvim",
-          "nixpkgs"
-        ],
-        "rust-analyzer-src": "rust-analyzer-src"
-      },
-      "locked": {
-        "lastModified": 1753685071,
-        "narHash": "sha256-hf+A5F4yyCisGPN4SvTpO0EkE0dQsp5gwRtRHUs46oY=",
-        "owner": "nix-community",
-        "repo": "fenix",
-        "rev": "b3b3e0da43a02ef1e40f4cfe485af70176e6f2e5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "fenix",
         "type": "github"
       }
     },
@@ -177,24 +113,6 @@
     "flake-utils_2": {
       "inputs": {
         "systems": "systems_2"
-      },
-      "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "flake-utils_3": {
-      "inputs": {
-        "systems": "systems_3"
       },
       "locked": {
         "lastModified": 1731533236,
@@ -286,32 +204,14 @@
     },
     "root": {
       "inputs": {
-        "avante-nvim": "avante-nvim",
         "codecompanion": "codecompanion",
         "devshell": "devshell",
         "direnv-nvim": "direnv-nvim",
-        "flake-utils": "flake-utils_2",
+        "flake-utils": "flake-utils",
         "mcp-hub": "mcp-hub",
         "mcphub-nvim": "mcphub-nvim",
         "nixpkgs": "nixpkgs_2",
         "topiary-nu": "topiary-nu"
-      }
-    },
-    "rust-analyzer-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1753651982,
-        "narHash": "sha256-RzsKuX6BQntFOhvqbstzOtzkOv0lkW4l8SYu6ffTf74=",
-        "owner": "rust-lang",
-        "repo": "rust-analyzer",
-        "rev": "db02cdc7fc8b0e0b9aa1be4110a74620bbac1f98",
-        "type": "github"
-      },
-      "original": {
-        "owner": "rust-lang",
-        "ref": "nightly",
-        "repo": "rust-analyzer",
-        "type": "github"
       }
     },
     "systems": {
@@ -344,24 +244,9 @@
         "type": "github"
       }
     },
-    "systems_3": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
     "topiary-nu": {
       "inputs": {
-        "flake-utils": "flake-utils_3",
+        "flake-utils": "flake-utils_2",
         "nixpkgs": [
           "nixpkgs"
         ],

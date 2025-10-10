@@ -15,6 +15,7 @@
       json
       jsonnet
       just
+      kcl
       kdl
       kotlin
       lua

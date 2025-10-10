@@ -21,28 +21,21 @@
       url = "github:olimorris/codecompanion.nvim";
       flake = false;
     };
-
     direnv-nvim = {
       url = "github:NotAShelf/direnv.nvim";
       flake = false;
     };
-
-    avante-nvim = {
-      url = "github:ck3mp3r/flakes?dir=avante";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {
-    avante-nvim,
     codecompanion,
     devshell,
     direnv-nvim,
+    flake-utils,
+    mcp-hub,
+    mcphub-nvim,
     nixpkgs,
     topiary-nu,
-    flake-utils,
-    mcphub-nvim,
-    mcp-hub,
     ...
   }:
     flake-utils.lib.eachDefaultSystem (
@@ -72,7 +65,6 @@
         overlays = [
           devshell.overlays.default
           topiary-nu.overlays.default
-          avante-nvim.overlays.default
           (final: next: {
             codecompanion-nvim = codecompanion';
             direnv-nvim = direnv-nvim';

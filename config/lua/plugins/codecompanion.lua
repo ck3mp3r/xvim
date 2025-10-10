@@ -2,7 +2,7 @@ return {
   {
     "olimorris/codecompanion.nvim",
     event = "VeryLazy",
-    config = function(_, _)
+    config = function()
       -- Configuration constants
       local config = {
         anthropic_version = "2023-06-01",
@@ -17,7 +17,7 @@ return {
 
         if not oauth_token or oauth_token == "" then
           vim.notify("✗ No Claude OAuth token found - make sure to use the wrapper script", vim.log.levels.ERROR)
-          return false, nil
+          return false
         end
 
         vim.notify("✓ Claude OAuth token configured", vim.log.levels.INFO)
@@ -32,7 +32,7 @@ return {
             cleaned_message[key] = value
           end
         end
-        return vim.tbl_extend("force", message, cleaned_message)
+        return cleaned_message
       end
 
       -- Add Claude Code system message at the beginning
@@ -75,12 +75,12 @@ return {
         -- Cache user messages
         for i = #messages, 1, -1 do
           local msgs = messages[i]
-          if msgs.role == self.roles.user then
+          if msgs.role == self.roles.user and msgs.content and type(msgs.content) == "table" then
             for _, msg in ipairs(msgs.content) do
-              if msg.type == "text" and msg.text ~= "" then
+              if msg.type == "text" and msg.text and msg.text ~= "" then
                 if
-                  tokens.calculate(msg.text) >= self.opts.cache_over
-                  and breakpoints_used < self.opts.cache_breakpoints
+                  tokens.calculate(msg.text) >= (self.opts.cache_over or 2048)
+                  and breakpoints_used < (self.opts.cache_breakpoints or 3)
                 then
                   msg.cache_control = { type = "ephemeral" }
                   breakpoints_used = breakpoints_used + 1
@@ -91,9 +91,9 @@ return {
         end
 
         -- Cache system messages
-        if system and breakpoints_used < self.opts.cache_breakpoints then
+        if system and breakpoints_used < (self.opts.cache_breakpoints or 3) then
           for _, prompt in ipairs(system) do
-            if breakpoints_used < self.opts.cache_breakpoints then
+            if breakpoints_used < (self.opts.cache_breakpoints or 3) then
               prompt.cache_control = { type = "ephemeral" }
               breakpoints_used = breakpoints_used + 1
             end
@@ -134,151 +134,168 @@ return {
 
       local adapters = {}
       if is_valid then
-        adapters = {
-          anthropic = function()
-            local utils = require("codecompanion.utils.adapters")
-            local tokens = require("codecompanion.utils.tokens")
+        local utils = require("codecompanion.utils.adapters")
+        local tokens = require("codecompanion.utils.tokens")
 
-            return require("codecompanion.adapters").extend("anthropic", {
-              env = {
-                bearer_token = "CLAUDE_CODE_OAUTH_TOKEN",
-              },
-              headers = {
-                ["content-type"] = "application/json",
-                ["authorization"] = "Bearer ${bearer_token}",
-                ["anthropic-version"] = config.anthropic_version,
-                ["anthropic-beta"] = config.anthropic_beta,
-              },
-              handlers = {
-                setup = function(self)
-                  -- Remove x-api-key header if it exists (from base adapter)
-                  if self.headers and self.headers["x-api-key"] then
-                    self.headers["x-api-key"] = nil
+        adapters.anthropic = require("codecompanion.adapters").extend("anthropic", {
+          env = {
+            bearer_token = "CLAUDE_CODE_OAUTH_TOKEN",
+          },
+          headers = {
+            ["content-type"] = "application/json",
+            ["authorization"] = "Bearer ${bearer_token}",
+            ["anthropic-version"] = config.anthropic_version,
+            ["anthropic-beta"] = config.anthropic_beta,
+          },
+          handlers = {
+            setup = function(self)
+              -- Remove x-api-key header if it exists (from base adapter)
+              if self.headers and self.headers["x-api-key"] then
+                self.headers["x-api-key"] = nil
+              end
+
+              if self.opts and self.opts.stream then
+                self.parameters.stream = true
+              end
+
+              local model = self.schema and self.schema.model and self.schema.model.default
+              if model then
+                local model_opts = self.schema.model.choices and self.schema.model.choices[model]
+                if model_opts and model_opts.opts then
+                  self.opts = vim.tbl_deep_extend("force", self.opts or {}, model_opts.opts)
+                  if not model_opts.opts.has_vision then
+                    self.opts.vision = false
+                  end
+                end
+              end
+
+              return true
+            end,
+
+            form_messages = function(self, messages)
+              local has_tools = false
+
+              -- Extract and format system messages
+              ---@type table|nil
+              local system = vim
+                .iter(messages)
+                :filter(function(msg)
+                  return msg.role == "system"
+                end)
+                :map(function(msg)
+                  return {
+                    type = "text",
+                    text = msg.content,
+                    cache_control = nil,
+                  }
+                end)
+                :totable()
+
+              -- Add Claude Code system message
+              system = add_claude_code_system_message(system)
+              -- Ensure system is nil if empty to satisfy type checker
+              if #system == 0 then
+                system = nil
+              end
+
+              -- Filter out system messages from main message list
+              messages = vim
+                .iter(messages)
+                :filter(function(msg)
+                  return msg.role ~= "system"
+                end)
+                :totable()
+
+              -- Process each message
+              messages = vim.tbl_map(function(message)
+                -- Handle image content
+                message = process_image_content(message, self)
+                if message == nil then
+                  return nil
+                end
+
+                -- Clean message fields
+                message = keep_allowed_message_fields(message, config.allowed_message_fields)
+
+                -- Handle user and LLM roles
+                if message.role == self.roles.user or message.role == self.roles.llm then
+                  if message.role == self.roles.user and message.content == "" then
+                    message.content = "<prompt></prompt>"
                   end
 
-                  if self.opts and self.opts.stream then
-                    self.parameters.stream = true
+                  if type(message.content) == "string" then
+                    message.content = {
+                      { type = "text", text = message.content },
+                    }
+                  end
+                end
+
+                -- Track tools usage
+                if message.tool_calls and vim.tbl_count(message.tool_calls) > 0 then
+                  has_tools = true
+                end
+
+                -- Convert tool role to user role
+                if message.role == "tool" then
+                  message.role = self.roles.user
+                end
+
+                -- Handle tool calls in LLM messages
+                if has_tools and message.role == self.roles.llm and message.tool_calls then
+                  -- Ensure content is always a table when handling tool calls
+                  local content = message.content
+                  if type(content) ~= "table" then
+                    content = {}
+                    message.content = content
                   end
 
-                  local model = self.schema.model.default
-                  local model_opts = self.schema.model.choices[model]
-                  if model_opts and model_opts.opts then
-                    self.opts = vim.tbl_deep_extend("force", self.opts, model_opts.opts)
-                    if not model_opts.opts.has_vision then
-                      self.opts.vision = false
-                    end
+                  for _, call in ipairs(message.tool_calls) do
+                    local success, decoded_args = pcall(vim.json.decode, call["function"].arguments)
+                    table.insert(content, {
+                      type = "tool_use",
+                      id = call.id,
+                      name = call["function"].name,
+                      input = success and decoded_args or {},
+                    })
                   end
+                  message.tool_calls = nil
+                end
 
-                  return true
-                end,
-
-                form_messages = function(self, messages)
-                  local has_tools = false
-
-                  -- Extract and format system messages
-                  local system = vim
-                    .iter(messages)
-                    :filter(function(msg)
-                      return msg.role == "system"
-                    end)
-                    :map(function(msg)
-                      return {
-                        type = "text",
-                        text = msg.content,
-                        cache_control = nil,
-                      }
-                    end)
-                    :totable()
-
-                  -- Add Claude Code system message
-                  system = add_claude_code_system_message(system)
-                  system = next(system) and system or nil
-
-                  -- Filter out system messages from main message list
-                  messages = vim
-                    .iter(messages)
-                    :filter(function(msg)
-                      return msg.role ~= "system"
-                    end)
-                    :totable()
-
-                  -- Process each message
-                  messages = vim.tbl_map(function(message)
-                    -- Handle image content
-                    message = process_image_content(message, self)
-                    if message == nil then
-                      return nil
-                    end
-
-                    -- Clean message fields
-                    message = keep_allowed_message_fields(message, config.allowed_message_fields)
-
-                    -- Handle user and LLM roles
-                    if message.role == self.roles.user or message.role == self.roles.llm then
-                      if message.role == self.roles.user and message.content == "" then
-                        message.content = "<prompt></prompt>"
-                      end
-
-                      if type(message.content) == "string" then
-                        message.content = {
-                          { type = "text", text = message.content },
-                        }
-                      end
-                    end
-
-                    -- Track tools usage
-                    if message.tool_calls and vim.tbl_count(message.tool_calls) > 0 then
-                      has_tools = true
-                    end
-
-                    -- Convert tool role to user role
-                    if message.role == "tool" then
-                      message.role = self.roles.user
-                    end
-
-                    -- Handle tool calls in LLM messages
-                    if has_tools and message.role == self.roles.llm and message.tool_calls then
-                      message.content = message.content or {}
-                      for _, call in ipairs(message.tool_calls) do
-                        table.insert(message.content, {
-                          type = "tool_use",
-                          id = call.id,
-                          name = call["function"].name,
-                          input = vim.json.decode(call["function"].arguments),
-                        })
-                      end
-                      message.tool_calls = nil
-                    end
-
-                    -- Handle reasoning/thinking content
-                    if message.reasoning and type(message.content) == "table" then
-                      table.insert(message.content, 1, {
-                        type = "thinking",
-                        thinking = message.reasoning.content,
-                        signature = message.reasoning._data.signature,
-                      })
-                    end
-
-                    return message
-                  end, messages)
-
-                  -- Merge consecutive messages
-                  messages = utils.merge_messages(messages)
-
-                  -- Consolidate tool results if tools are being used
-                  if has_tools then
-                    consolidate_tool_results(messages, self)
+                -- Handle reasoning/thinking content
+                if message.reasoning then
+                  local content = message.content
+                  if type(content) == "table" then
+                    table.insert(content, 1, {
+                      type = "thinking",
+                      thinking = message.reasoning.content,
+                      signature = message.reasoning._data and message.reasoning._data.signature,
+                    })
                   end
+                end
 
-                  -- Apply caching to messages
-                  apply_message_caching(messages, system, self, tokens)
+                return message
+              end, messages)
 
-                  return { system = system, messages = messages }
-                end,
-              },
-            })
-          end,
-        }
+              -- Filter out nil values from the mapped table
+              messages = vim.tbl_filter(function(msg)
+                return msg ~= nil
+              end, messages)
+
+              -- Merge consecutive messages
+              messages = utils.merge_messages(messages)
+
+              -- Consolidate tool results if tools are being used
+              if has_tools then
+                consolidate_tool_results(messages, self)
+              end
+
+              -- Apply caching to messages
+              apply_message_caching(messages, system, self, tokens)
+
+              return { system = system, messages = messages }
+            end,
+          },
+        })
       end
 
       require("codecompanion").setup({
