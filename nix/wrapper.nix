@@ -27,33 +27,34 @@
     black
     cue
     dockerfile-language-server
+    gopls
     hadolint
     helm-ls
-    jq # For reliable JSON parsing in the wrapper script
+    jq
+    jsonnet-language-server
     kubernetes-helm
     lldb
     lua
     lua-language-server
+    marksman
     nixd
-    nodePackages.bash-language-server
     nodePackages.prettier
     nodePackages.vscode-json-languageserver
-    nodejs_24
     pyright
     python3
     python312Packages.pip
     ruff
+    rust-analyzer
     shellcheck
     shfmt
     sourcekit-lsp
     stylua
     swift-format
+    taplo
     terraform-ls
     tflint
     topiary
     vscode-extensions.vadimcn.vscode-lldb.adapter
-    vscode-js-debug
-    vtsls
     yaml-language-server
   ];
 
