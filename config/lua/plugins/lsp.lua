@@ -22,6 +22,15 @@ return {
             },
           },
         },
+        rust_analyzer = {
+          settings = {
+            ["rust-analyzer"] = {
+              files = {
+                excludeDirs = { ".devenv" },
+              },
+            },
+          },
+        },
         sourcekit = {
           cmd = {
             "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp",
