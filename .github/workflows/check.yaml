@@ -3,12 +3,6 @@ name: Check
 
 on:
   workflow_dispatch:
-    inputs:
-      push_to_cachix:
-        description: "Push to Cachix after successful checks"
-        required: false
-        default: false
-        type: boolean
   workflow_call:
   push:
 
@@ -28,20 +22,7 @@ jobs:
       - name: Setup Nix Cache
         uses: DeterminateSystems/magic-nix-cache-action@main
 
-      - name: Install Cachix (if pushing)
-        if: ${{ inputs.push_to_cachix }}
-        uses: cachix/cachix-action@v15
-        with:
-          name: ck3mp3r
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-
       - name: Running checks
         run: |
           nix flake check --no-pure-eval
           nix run . --no-pure-eval -- --headless +checkhealth +qa
-
-      - name: Push to Cachix
-        if: ${{ inputs.push_to_cachix }}
-        run: |
-          echo "🚀 Pushing filtered paths to Cachix..."
-          ./scripts/push-to-cachix.nu "mcp-hub" "nodejs" "vscode-json" "prettier" "typescript" "yaml-language-server" "bash-language-server"
