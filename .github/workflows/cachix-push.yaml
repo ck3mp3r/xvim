@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       cache_name:
-        description: 'Cachix cache name'
+        description: "Cachix cache name"
         required: false
         default: "ck3mp3r"
         type: string
@@ -18,9 +18,9 @@ on:
     branches:
       - main
     paths:
-      - 'flake.nix'
-      - 'flake.lock'
-      - 'nix/**'
+      - "flake.nix"
+      - "flake.lock"
+      - "nix/**"
 
 jobs:
   build-and-push:
@@ -39,7 +39,7 @@ jobs:
         uses: cachix/cachix-action@v15
         with:
           name: ${{ inputs.cache_name || 'ck3mp3r' }}
-          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
       - name: Build xvim
         run: |
@@ -53,3 +53,4 @@ jobs:
           ./scripts/push-to-cachix.nu \
             --cache-name "${{ inputs.cache_name || 'ck3mp3r' }}" \
             --filter "${{ inputs.filter || 'mcp-hub' }}"
+

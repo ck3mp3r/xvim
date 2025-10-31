@@ -1,4 +1,6 @@
 {pkgs, ...}: {
+  containers = {};
+
   packages = with pkgs; [
     alejandra
     lua-language-server

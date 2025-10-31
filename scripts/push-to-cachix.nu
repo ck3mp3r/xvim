@@ -39,4 +39,3 @@ def main [
   print "✅ Cachix push complete!"
   print $"Users can now use: cachix use ($cache_name)"
 }
-
