@@ -3,8 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    devshell.url = "github:numtide/devshell";
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    devenv.url = "github:cachix/devenv";
     mcphub-nvim = {
       url = "github:ravitemer/mcphub.nvim";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -27,23 +27,24 @@
     };
   };
 
-  outputs = {
-    codecompanion,
-    devshell,
-    direnv-nvim,
-    flake-utils,
-    mcp-hub,
-    mcphub-nvim,
-    nixpkgs,
-    topiary-nu,
-    ...
-  }:
-    flake-utils.lib.eachDefaultSystem (
-      system: let
+  outputs = inputs @ {flake-parts, ...}:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      imports = [
+        inputs.devenv.flakeModule
+      ];
+
+      systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin"];
+
+      perSystem = {
+        lib,
+        pkgs,
+        system,
+        ...
+      }: let
         codecompanion' = pkgs.vimUtils.buildVimPlugin {
           pname = "codecompanion.nvim";
           version = "custom";
-          src = codecompanion;
+          src = inputs.codecompanion;
           dependencies = [pkgs.vimPlugins.plenary-nvim];
           nvimSkipModule = [
             "codecompanion.providers.completion.blink.setup"
@@ -58,48 +59,49 @@
 
         direnv-nvim' = pkgs.vimUtils.buildVimPlugin {
           pname = "direnv.nvim";
-          src = direnv-nvim;
+          src = inputs.direnv-nvim;
           version = "custom";
         };
 
         overlays = [
-          devshell.overlays.default
-          topiary-nu.overlays.default
+          inputs.topiary-nu.overlays.default
           (final: next: {
             codecompanion-nvim = codecompanion';
             direnv-nvim = direnv-nvim';
-            mcphub-nvim = mcphub-nvim.packages."${system}".default;
-            mcp-hub = mcp-hub.packages."${system}".default;
+            mcphub-nvim = inputs.mcphub-nvim.packages."${system}".default;
+            mcp-hub = inputs.mcp-hub.packages."${system}".default;
           })
         ];
 
-        pkgs = import nixpkgs {
+        pkgs' = import inputs.nixpkgs {
           inherit system overlays;
           config = {allowUnfree = true;};
         };
 
-        config = pkgs.callPackage ./nix/config.nix {};
+        nvimConfig = pkgs'.callPackage ./nix/config.nix {};
 
-        plugins = pkgs.callPackage ./nix/plugins.nix {};
+        plugins = pkgs'.callPackage ./nix/plugins.nix {};
 
-        nvim = pkgs.callPackage ./nix/wrapper.nix {
+        nvim = pkgs'.callPackage ./nix/wrapper.nix {
           appName = "nvim";
-          configPath = "${config}";
+          configPath = "${nvimConfig}";
           runtimePaths = [
-            pkgs.vimPlugins.lazy-nvim
+            pkgs'.vimPlugins.lazy-nvim
           ];
           extraVars = plugins.extraVars;
         };
       in {
-        formatter = pkgs.alejandra;
+        _module.args.pkgs = pkgs';
+
+        formatter = pkgs'.alejandra;
+
         packages.default = nvim;
 
-        devShells.default = pkgs.devshell.mkShell {
-          imports = [
-            "${devshell}/extra/git/hooks.nix"
-            (pkgs.devshell.importTOML ./devshell.toml)
-          ];
+        devenv.shells.default = {
+          imports = [./devenv.nix];
+          containers = lib.mkForce {};
+          devenv.flakesIntegration = true;
         };
-      }
-    );
+      };
+    };
 }

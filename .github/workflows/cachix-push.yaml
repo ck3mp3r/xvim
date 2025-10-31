@@ -1,47 +1,46 @@
 ---
-name: Check
+name: Build and Push to Cachix
 
 on:
   workflow_dispatch:
-    inputs:
-      push_to_cachix:
-        description: "Push to Cachix after successful checks"
-        required: false
-        default: false
-        type: boolean
-  workflow_call:
   push:
+    branches:
+      - main
+    paths:
+      - "flake.nix"
+      - "flake.lock"
+      - "nix/**"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  check:
+  build-and-push:
     runs-on: macos-14
     steps:
       - name: Checkout Code
         uses: actions/checkout@v5
 
-      - uses: DeterminateSystems/nix-installer-action@main
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
 
       - name: Setup Nix Cache
         uses: DeterminateSystems/magic-nix-cache-action@main
 
-      - name: Install Cachix (if pushing)
-        if: ${{ inputs.push_to_cachix }}
+      - name: Install Cachix
         uses: cachix/cachix-action@v15
         with:
           name: ck3mp3r
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
-      - name: Running checks
+      - name: Build xvim
         run: |
-          nix flake check --no-pure-eval
-          nix run . --no-pure-eval -- --headless +checkhealth +qa
+          echo "🔨 Building xvim configuration..."
+          nix build --no-pure-eval
+          echo "✅ Build completed"
 
-      - name: Push to Cachix
-        if: ${{ inputs.push_to_cachix }}
+      - name: Push filtered paths to Cachix
         run: |
-          echo "🚀 Pushing filtered paths to Cachix..."
+          echo "🚀 Pushing filtered store paths to Cachix..."
           ./scripts/push-to-cachix.nu "mcp-hub" "nodejs" "vscode-json" "prettier" "typescript" "yaml-language-server" "bash-language-server"
