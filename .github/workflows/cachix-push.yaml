@@ -11,6 +11,10 @@ on:
       - "flake.lock"
       - "nix/**"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-and-push:
     runs-on: macos-14
