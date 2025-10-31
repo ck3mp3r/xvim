@@ -1,5 +1,4 @@
 {pkgs, ...}: {
-  containers = {};
   devcontainer.enable = false;
   devenv.warnOnNewVersion = false;
 

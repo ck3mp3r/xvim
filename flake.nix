@@ -36,6 +36,7 @@
       systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin"];
 
       perSystem = {
+        config,
         pkgs,
         system,
         ...
@@ -98,6 +99,7 @@
 
         devenv.shells.default = {
           imports = [./devenv.nix];
+          containers = config.lib.mkForce {};
         };
       };
     };
