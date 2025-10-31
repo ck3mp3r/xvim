@@ -3,17 +3,6 @@ name: Build and Push to Cachix
 
 on:
   workflow_dispatch:
-    inputs:
-      cache_name:
-        description: "Cachix cache name"
-        required: false
-        default: "ck3mp3r"
-        type: string
-      filter:
-        description: 'Filter for store paths to push (e.g., "mcp-hub")'
-        required: true
-        default: "mcp-hub"
-        type: string
   push:
     branches:
       - main
@@ -38,19 +27,16 @@ jobs:
       - name: Install Cachix
         uses: cachix/cachix-action@v15
         with:
-          name: ${{ inputs.cache_name || 'ck3mp3r' }}
+          name: ck3mp3r
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
       - name: Build xvim
         run: |
           echo "🔨 Building xvim configuration..."
-          nix build
+          nix build --no-pure-eval
           echo "✅ Build completed"
 
       - name: Push filtered paths to Cachix
         run: |
           echo "🚀 Pushing filtered store paths to Cachix..."
-          ./scripts/push-to-cachix.nu \
-            --cache-name "${{ inputs.cache_name || 'ck3mp3r' }}" \
-            --filter "${{ inputs.filter || 'mcp-hub' }}"
-
+          ./scripts/push-to-cachix.nu "mcp-hub" "nodejs" "vscode-json" "prettier" "typescript" "yaml-language-server" "bash-language-server"
