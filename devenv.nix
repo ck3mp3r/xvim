@@ -1,5 +1,7 @@
 {pkgs, ...}: {
   containers = {};
+  devcontainer.enable = false;
+  devenv.warnOnNewVersion = false;
 
   packages = with pkgs; [
     alejandra
