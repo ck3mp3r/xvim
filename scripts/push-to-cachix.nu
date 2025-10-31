@@ -10,7 +10,7 @@ def main [
   print $"🔍 Identifying store paths matching filter: ($filter)"
 
   # Get all store paths
-  let all_paths = (^nix-store --query --requisites $result_path | lines)
+  let all_paths = (^nix path-info --recursive $result_path | lines)
 
   # Apply filter to find matching paths
   let filtered_paths = ($all_paths | where ($it | str contains $filter))
