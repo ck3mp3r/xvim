@@ -1,5 +1,3 @@
-#!/usr/bin/env nu
-
 # Push filtered store paths to Cachix
 
 def main [

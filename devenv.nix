@@ -7,6 +7,7 @@
     lua-language-server
     nixd
     nodePackages_latest.bash-language-server
+    nushell
     pre-commit
     stylua
   ];

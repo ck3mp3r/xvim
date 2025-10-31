@@ -41,6 +41,5 @@ jobs:
           echo "✅ Build completed"
 
       - name: Push filtered paths to Cachix
-        run: |
-          echo "🚀 Pushing filtered store paths to Cachix..."
-          ./scripts/push-to-cachix.nu "mcp-hub" "nodejs" "vscode-json" "prettier" "typescript" "yaml-language-server" "bash-language-server"
+        shell: nix develop --no-pure-eval {0}
+        run: nu ./scripts/push-to-cachix.nu "mcp-hub" "nodejs" "vscode-json" "prettier" "typescript" "yaml-language-server" "bash-language-server"
