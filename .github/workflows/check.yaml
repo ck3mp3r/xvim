@@ -5,12 +5,12 @@ on:
   workflow_dispatch:
     inputs:
       push_to_cachix:
-        description: 'Push to Cachix after successful checks'
+        description: "Push to Cachix after successful checks"
         required: false
         default: false
         type: boolean
       cache_name:
-        description: 'Cachix cache name (if pushing)'
+        description: "Cachix cache name (if pushing)"
         required: false
         type: string
   workflow_call:
@@ -33,12 +33,12 @@ jobs:
         uses: cachix/cachix-action@v15
         with:
           name: ${{ inputs.cache_name }}
-          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
       - name: Running checks
         run: |
-          nix flake check
-          nix run . -- --headless +checkhealth +qa
+          nix flake check --no-pure-eval
+          nix run . --no-pure-eval -- --headless +checkhealth +qa
 
       - name: Push to Cachix
         if: ${{ inputs.push_to_cachix && inputs.cache_name }}
