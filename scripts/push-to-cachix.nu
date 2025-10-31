@@ -3,20 +3,24 @@
 # Push filtered store paths to Cachix
 
 def main [
-  --filter: string # Filter expression to match store paths (e.g., "mcp-hub", "prettier|vscode-json")
+  ...filters: string # Filter expressions to match store paths (e.g., "mcp-hub" "prettier" "vscode-json")
   --result-path: string = "./result"
 ] {
   let cache_name = "ck3mp3r"
-  print $"🔍 Identifying store paths matching filter: ($filter)"
+  print $"🔍 Identifying store paths matching filters: ($filters | str join ', ')"
 
   # Get all store paths
   let all_paths = (^nix path-info --recursive $result_path | lines)
 
-  # Apply filter to find matching paths
-  let filtered_paths = ($all_paths | where ($it | str contains $filter))
+  # Apply filters to find matching paths
+  let filtered_paths = (
+    $all_paths | where {|path|
+      $filters | any {|f| $path | str contains $f }
+    }
+  )
 
   if ($filtered_paths | is-empty) {
-    print $"ℹ️  No paths found matching filter: ($filter)"
+    print $"ℹ️  No paths found matching filters: ($filters | str join ', ')"
     return
   }
 

@@ -44,6 +44,4 @@ jobs:
         if: ${{ inputs.push_to_cachix && inputs.cache_name }}
         run: |
           echo "🚀 Pushing filtered paths to Cachix..."
-          ./scripts/push-to-cachix.nu \
-            --cache-name "${{ inputs.cache_name }}" \
-            --filter "mcp-hub"
+          ./scripts/push-to-cachix.nu "mcp-hub" "nodejs" "vscode-json" "prettier" "typescript" "yaml-language-server" "bash-language-server"
