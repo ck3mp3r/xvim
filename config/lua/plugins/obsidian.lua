@@ -2,13 +2,12 @@ local vault_location = vim.fn.expand(vim.env.OBSIDIAN_VAULT or "~/Documents/obsi
 return {
   "obsidian-nvim/obsidian.nvim",
   lazy = true,
-  -- ft = "markdown",
+  cmd = "Obsidian", -- Load plugin when any :Obsidian command is used
   event = {
     "BufReadPre " .. vault_location .. "/*.md",
     "BufNewFile " .. vault_location .. "/*.md",
   },
   dependencies = {
-    -- Required.
     "nvim-lua/plenary.nvim",
   },
   opts = {
