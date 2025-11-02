@@ -33,18 +33,18 @@ return {
           return os.date("%Y-%m-%d", os.time() - 86400)
         end,
       },
-      -- Automatic folder placement per template
+      -- Template customizations - key must match template filename WITHOUT .md
       customizations = {
-        ["meeting.md"] = {
+        meeting = {
           notes_subdir = "meetings",
         },
-        ["todo.md"] = {
+        todo = {
           notes_subdir = "todos",
         },
-        ["project.md"] = {
+        project = {
           notes_subdir = "projects",
         },
-        ["note.md"] = {
+        note = {
           notes_subdir = "notes",
         },
       },
