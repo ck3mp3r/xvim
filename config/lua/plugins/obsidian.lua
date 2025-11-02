@@ -12,18 +12,11 @@ return {
     "nvim-lua/plenary.nvim",
   },
   opts = {
-    completion = {
-      blink_cmp = true,
+    workspaces = {
+      {
+        name = "default",
+        path = vault_location,
+      },
     },
-    -- workspaces = {
-    --   {
-    --     name = "personal",
-    --     path = vault_location,
-    --   },
-    --   -- {
-    --   --   name = "work",
-    --   --   path = "~/vaults/work",
-    --   -- },
-    -- },
   },
 }
