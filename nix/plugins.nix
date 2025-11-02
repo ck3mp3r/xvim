@@ -69,7 +69,7 @@
     nvim-ts-context-commentstring
     nvim-web-devicons
     persistence-nvim
-    # obsidian-nvim
+    (obsidian-nvim.overrideAttrs {doCheck = false;})
     plenary-nvim
     rainbow-delimiters-nvim
     rustaceanvim
