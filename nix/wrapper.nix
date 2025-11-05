@@ -30,6 +30,8 @@
     gopls
     hadolint
     helm-ls
+    just
+    just-lsp
     jq
     jsonnet-language-server
     kubernetes-helm
@@ -65,6 +67,8 @@ in
     src = ./.;
 
     buildInputs = [pkgs.neovim] ++ extraPackages;
+    dontUnpack = true;
+    dontBuild = true;
 
     installPhase = ''
       mkdir -p $out/bin
