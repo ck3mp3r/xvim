@@ -35,12 +35,6 @@ jobs:
           name: ck3mp3r
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
-      - name: Build xvim
-        run: |
-          echo "🔨 Building xvim configuration..."
-          nix build --no-pure-eval
-          echo "✅ Build completed"
-
-      - name: Push filtered paths to Cachix
+      - name: Build and Push to Cachix
         shell: nix develop --no-pure-eval {0}
-        run: nu ./scripts/push-to-cachix.nu "mcp-hub" "nodejs" "vscode-json" "prettier" "typescript" "yaml-language-server" "bash-language-server"
+        run: nu ./scripts/push-uncached-to-cachix.nu
