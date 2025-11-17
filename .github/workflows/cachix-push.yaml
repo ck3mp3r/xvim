@@ -42,4 +42,11 @@ jobs:
         run: nix profile install nixpkgs#nushell
 
       - name: Build and Push to Cachix
-        run: ./scripts/push-uncached-to-cachix.nu
+        run: |
+          echo "GITHUB_STEP_SUMMARY is: $GITHUB_STEP_SUMMARY"
+          ls -la "$GITHUB_STEP_SUMMARY" || echo "Summary file doesn't exist yet"
+          ./scripts/push-uncached-to-cachix.nu
+          echo "After script run:"
+          ls -la "$GITHUB_STEP_SUMMARY"
+          echo "Summary file contents:"
+          cat "$GITHUB_STEP_SUMMARY"
