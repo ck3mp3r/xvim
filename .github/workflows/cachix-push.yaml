@@ -39,5 +39,5 @@ jobs:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
       - name: Build and Push to Cachix
-        shell: nix develop --no-pure-eval {0}
-        run: nu ./scripts/push-uncached-to-cachix.nu
+        run: |
+          nix run nixpkgs#nushell -- ./scripts/push-uncached-to-cachix.nu
