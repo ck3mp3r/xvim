@@ -28,6 +28,9 @@ jobs:
 
       - name: Setup Nix Cache
         uses: DeterminateSystems/magic-nix-cache-action@main
+        with:
+          use-github-cache: true
+          use-flakehub: false
 
       - name: Install Cachix
         uses: cachix/cachix-action@v15
