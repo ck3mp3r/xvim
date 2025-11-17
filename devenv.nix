@@ -4,6 +4,7 @@
 
   packages = with pkgs; [
     alejandra
+    cachix
     lua-language-server
     nixd
     nodePackages_latest.bash-language-server
@@ -38,6 +39,11 @@
     fi
 
     echo "✅ All checks passed!"
+  '';
+
+  scripts.push-cachix.exec = ''
+    #!/usr/bin/env nu
+    exec ${pkgs.nushell}/bin/nu ./scripts/push-uncached-to-cachix.nu $@
   '';
 
   git-hooks.hooks = {
