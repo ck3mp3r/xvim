@@ -38,6 +38,8 @@ jobs:
           name: ck3mp3r
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
+      - name: Install Nushell
+        run: nix profile install nixpkgs#nushell
+
       - name: Build and Push to Cachix
-        run: |
-          nix run nixpkgs#nushell -- ./scripts/push-uncached-to-cachix.nu
+        run: ./scripts/push-uncached-to-cachix.nu
