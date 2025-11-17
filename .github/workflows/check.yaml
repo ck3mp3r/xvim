@@ -21,6 +21,9 @@ jobs:
 
       - name: Setup Nix Cache
         uses: DeterminateSystems/magic-nix-cache-action@main
+        with:
+          use-github-cache: true
+          use-flakehub: false
 
       - name: Running checks
         run: |
