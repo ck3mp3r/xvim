@@ -18,28 +18,19 @@ concurrency:
 
 jobs:
   build-and-push:
-    runs-on: macos-14
+    runs-on: macos-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v6
 
-      - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@main
-
-      # - name: Setup Nix Cache
-      #   uses: DeterminateSystems/magic-nix-cache-action@main
-      #   with:
-      #     use-gha-cache: true
-      #     use-flakehub: false
-
-      - name: Install Cachix
-        uses: cachix/cachix-action@v16
-        with:
-          name: ck3mp3r
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-
-      - name: Install Nushell
-        run: nix profile install nixpkgs#nushell
+      - name: Setup Nu Tools
+        uses: ck3mp3r/actions/nu-tools@main
 
       - name: Build and Push to Cachix
-        run: ./scripts/push-uncached-to-cachix.nu
+        shell: nu {0}
+        env:
+          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+        run: |
+          use nu-tools *
+
+          publish-to-cachix ck3mp3r --flake ".#"
