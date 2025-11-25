@@ -29,14 +29,6 @@ return {
         mode = { "n", "x" },
       },
       {
-        "<leader>at",
-        function()
-          require("opencode").toggle()
-        end,
-        desc = "OpenCode: Toggle",
-        mode = { "n", "t" },
-      },
-      {
         "<leader>au",
         function()
           require("opencode").command("session.half.page.up")
@@ -59,6 +51,13 @@ return {
 
       -- Required for opts.events.reload
       vim.o.autoread = true
+
+      -- Create :OpenCode command
+      vim.api.nvim_create_user_command("oc", function()
+        require("opencode").toggle()
+      end, {
+        desc = "Toggle OpenCode",
+      })
     end,
   },
 }
