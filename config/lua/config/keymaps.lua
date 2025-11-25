@@ -13,3 +13,4 @@ vim.api.nvim_set_keymap("n", "<leader>MS", "<cmd>MarpStatus<cr>", { noremap = tr
 
 vim.cmd([[cab cc CodeCompanionChat]])
 vim.cmd([[cab ca CodeCompanionAction]])
+vim.cmd([[cab oc OpencodePrompt]])
