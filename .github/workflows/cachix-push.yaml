@@ -1,5 +1,5 @@
 ---
-name: Build and Push to Cachix
+name: build-and-cache
 
 on:
   workflow_dispatch:
@@ -7,31 +7,94 @@ on:
     branches:
       - main
     paths:
-      - "config"
+      - "config/**"
       - "flake.nix"
       - "flake.lock"
-      - "devenv.nix"
       - "nix/**"
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  XDG_CONFIG_HOME: /var/tmp/xdg-config-home
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build-and-push:
-    runs-on: macos-latest
+  build-and-cache:
+    runs-on: macos-15
     steps:
       - name: Checkout Code
         uses: actions/checkout@v6
 
-      - name: Setup Nu Tools
-        uses: ck3mp3r/actions/nu-tools@main
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+        with:
+          determinate: false
 
-      - name: Build and Push to Cachix
-        shell: nu {0}
+      - name: Setup CI Tools
+        uses: ck3mp3r/actions/ci-tools@main
+
+      - name: Build and cache
         env:
           CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+        shell: nu {0}
         run: |
-          use nu-tools *
+          use ci *
 
-          publish-to-cachix ck3mp3r --flake ".#"
+          # Build all packages (xvim has single flake at root)
+          let build_results = (ci nix build --impure)
+
+          # Process each successful build
+          let build_results_with_cache_info = ($build_results | each {|result|
+            if ($result.status == "success" and $result.path != null) {
+              # Get all closure paths (all dependencies)
+              let closure_paths = ($result.path | ci nix closure)
+
+              # Cache all paths
+              let cache_results = (
+                $closure_paths
+                | ci nix cache "https://ck3mp3r.cachix.org" --upstream "https://cache.nixos.org"
+              )
+
+              # Count stats
+              let total_paths = ($closure_paths | length)
+              let newly_cached = ($cache_results | where cached == false | length)
+
+              $result | merge {
+                path_count: $total_paths,
+                cached_count: $newly_cached
+              }
+            } else {
+              $result | merge {
+                path_count: 0,
+                cached_count: 0
+              }
+            }
+          })
+
+          # Calculate totals
+          let total_paths_count = ($build_results_with_cache_info | get path_count | math sum)
+          let total_cached_count = ($build_results_with_cache_info | get cached_count | math sum)
+
+          # Build summary
+          let package_table = ($build_results_with_cache_info | each {|pkg|
+            let status = if ($pkg.status == "success") { "✅" } else { "❌" }
+            {
+              Package: $pkg.package,
+              Status: $status,
+              "Store Paths": $pkg.path_count,
+              "Cached": $pkg.cached_count
+            }
+          })
+
+          # Output to GitHub step summary
+          [
+            "# Build and Cache Summary\n"
+            $"**Total store paths:** ($total_paths_count) | **Cached:** ($total_cached_count)\n"
+            "## xvim\n"
+            ($package_table | to md --pretty)
+          ] | ci github summary
