@@ -300,16 +300,6 @@ return {
 
       require("codecompanion").setup({
         adapters = adapters,
-        extensions = {
-          mcphub = {
-            callback = "mcphub.extensions.codecompanion",
-            opts = {
-              show_result_in_chat = true, -- Show mcp tool results in chat
-              make_vars = true, -- Convert resources to #variables
-              make_slash_commands = true, -- Add prompts as /slash commands
-            },
-          },
-        },
         display = {
           action_palette = {
             width = 95,
@@ -319,6 +309,18 @@ return {
             opts = {
               show_default_actions = true, -- Show the default actions in the action palette?
               show_default_prompt_library = true, -- Show the default prompt library in the action palette?
+            },
+          },
+        },
+        extensions = {
+          mcphub = {
+            callback = "mcphub.extensions.codecompanion",
+            opts = {
+              make_tools = true,
+              show_server_tools_in_chat = true,
+              make_vars = true,
+              make_slash_commands = true,
+              show_result_in_chat = true,
             },
           },
         },

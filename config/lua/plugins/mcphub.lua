@@ -1,10 +1,11 @@
 return {
   {
     "ravitemer/mcphub.nvim",
-    event = "VeryLazy",
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
+    -- mcphub must be loaded before codecompanion calls its extension
+    lazy = false,
     opts = {
       cmd = vim.g.mcp_cli,
     },

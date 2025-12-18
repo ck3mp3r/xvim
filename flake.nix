@@ -5,8 +5,8 @@
     base-nixpkgs.url = "github:ck3mp3r/flakes?dir=base-nixpkgs";
     nixpkgs.follows = "base-nixpkgs/unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    devenv = {
-      url = "github:cachix/devenv";
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     mcphub-nvim = {
@@ -34,13 +34,13 @@
   outputs = inputs @ {flake-parts, ...}:
     flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [
-        inputs.devenv.flakeModule
+        inputs.git-hooks.flakeModule
       ];
 
       systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin"];
 
       perSystem = {
-        lib,
+        config,
         pkgs,
         system,
         ...
@@ -94,6 +94,11 @@
           ];
           extraVars = plugins.extraVars;
         };
+
+        ci = import ./nix/ci.nix {
+          pkgs = pkgs';
+          inherit config;
+        };
       in {
         _module.args.pkgs = pkgs';
 
@@ -101,10 +106,11 @@
 
         packages.default = nvim;
 
-        devenv.shells.default = {
-          imports = [./devenv.nix];
-          containers = lib.mkForce {};
-          devenv.flakesIntegration = true;
+        pre-commit.settings.hooks = ci.pre-commit-hooks;
+
+        devShells.default = pkgs'.mkShell {
+          packages = ci.packages;
+          shellHook = ci.shellHook;
         };
       };
     };

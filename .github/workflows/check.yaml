@@ -19,11 +19,11 @@ jobs:
 
       - uses: DeterminateSystems/nix-installer-action@main
 
-      - name: Setup Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@main
-        with:
-          use-gha-cache: true
-          use-flakehub: false
+      # - name: Setup Nix Cache
+      #   uses: DeterminateSystems/magic-nix-cache-action@main
+      #   with:
+      #     use-gha-cache: true
+      #     use-flakehub: false
 
       - name: Running checks
         run: |
