@@ -41,7 +41,6 @@
 
       perSystem = {
         config,
-        lib,
         pkgs,
         system,
         ...
@@ -97,29 +96,36 @@
         };
 
         checks-script = pkgs'.writeShellScriptBin "checks" ''
+          #!/bin/bash
+
           set -e
 
-          echo "Running Neovim diagnostics..."
+          # Filter out terminal escape sequences
+          filter_escapes() {
+            ${pkgs'.gnused}/bin/sed 's/\x1b[^m]*m//g; s/\x1b[[][^a-zA-Z]*[a-zA-Z]//g; s/\x1bP[^\x1b]*\x1b\\//g'
+          }
+
+          echo "🔍 Running Neovim diagnostics..."
 
           echo "Testing configuration..."
-          startup_log=$(nix run .# -- --headless -V1 +quit 2>&1)
+          startup_log=$(nix run .# -- --headless -V1 +quit 2>&1 | filter_escapes)
 
           if echo "$startup_log" | grep -qi "error\|failed\|cannot load\|could not load\|cannot find"; then
-              echo "Configuration errors:"
+              echo "❌ Configuration errors:"
               echo "$startup_log" | grep -i -A2 -B1 "error\|failed\|cannot load\|could not load\|cannot find"
               exit 1
           fi
 
           echo "Running health check..."
-          health_log=$(nix run .# -- --headless +checkhealth +quit 2>&1)
+          health_log=$(nix run .# -- --headless +checkhealth +quit 2>&1 | filter_escapes)
           echo "$health_log"
 
           if echo "$health_log" | grep -qi "error\|failed"; then
-              echo "Health check failed"
+              echo "❌ Health check failed"
               exit 1
           fi
 
-          echo "All checks passed!"
+          echo "✅ All checks passed!"
         '';
 
         push-cachix-script = pkgs'.writeShellScriptBin "push-cachix" ''
