@@ -5,8 +5,8 @@
     base-nixpkgs.url = "github:ck3mp3r/flakes?dir=base-nixpkgs";
     nixpkgs.follows = "base-nixpkgs/unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    devenv = {
-      url = "github:cachix/devenv";
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     mcphub-nvim = {
@@ -34,12 +34,13 @@
   outputs = inputs @ {flake-parts, ...}:
     flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [
-        inputs.devenv.flakeModule
+        inputs.git-hooks.flakeModule
       ];
 
       systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin"];
 
       perSystem = {
+        config,
         lib,
         pkgs,
         system,
@@ -94,6 +95,36 @@
           ];
           extraVars = plugins.extraVars;
         };
+
+        checks-script = pkgs'.writeShellScriptBin "checks" ''
+          set -e
+
+          echo "Running Neovim diagnostics..."
+
+          echo "Testing configuration..."
+          startup_log=$(nix run .# -- --headless -V1 +quit 2>&1)
+
+          if echo "$startup_log" | grep -qi "error\|failed\|cannot load\|could not load\|cannot find"; then
+              echo "Configuration errors:"
+              echo "$startup_log" | grep -i -A2 -B1 "error\|failed\|cannot load\|could not load\|cannot find"
+              exit 1
+          fi
+
+          echo "Running health check..."
+          health_log=$(nix run .# -- --headless +checkhealth +quit 2>&1)
+          echo "$health_log"
+
+          if echo "$health_log" | grep -qi "error\|failed"; then
+              echo "Health check failed"
+              exit 1
+          fi
+
+          echo "All checks passed!"
+        '';
+
+        push-cachix-script = pkgs'.writeShellScriptBin "push-cachix" ''
+          exec ${pkgs'.nushell}/bin/nu ./scripts/push-uncached-to-cachix.nu "$@"
+        '';
       in {
         _module.args.pkgs = pkgs';
 
@@ -101,10 +132,34 @@
 
         packages.default = nvim;
 
-        devenv.shells.default = {
-          imports = [./devenv.nix];
-          containers = lib.mkForce {};
-          devenv.flakesIntegration = true;
+        pre-commit.settings.hooks = {
+          alejandra = {
+            enable = true;
+            stages = ["pre-push"];
+          };
+          stylua = {
+            enable = true;
+            stages = ["pre-push"];
+          };
+        };
+
+        devShells.default = pkgs'.mkShell {
+          packages = with pkgs'; [
+            alejandra
+            cachix
+            lua-language-server
+            nixd
+            nodePackages_latest.bash-language-server
+            nushell
+            pre-commit
+            stylua
+            checks-script
+            push-cachix-script
+          ];
+
+          shellHook = ''
+            ${config.pre-commit.installationScript}
+          '';
         };
       };
     };

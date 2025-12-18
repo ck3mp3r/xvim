@@ -2,3 +2,4 @@ result
 .direnv
 .devenv
 .crush/
+.pre-commit-config.yaml
