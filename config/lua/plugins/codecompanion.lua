@@ -190,7 +190,7 @@ return {
                     -- Add Claude Code system message
                     system = add_claude_code_system_message(system)
                     if #system == 0 then
-                      system = nil
+                      system = {}
                     end
 
                     -- Filter out system messages from main message list
@@ -253,7 +253,7 @@ return {
                         m.content = m.content or {}
                         for _, call in ipairs(m.tools.calls) do
                           local args = call["function"].arguments
-                          table.insert(m.content, {
+                          table.insert(m.content --[[@as table]], {
                             type = "tool_use",
                             id = call.id,
                             name = call["function"].name,
@@ -265,7 +265,7 @@ return {
 
                       -- Handle reasoning/thinking content
                       if m.reasoning and type(m.content) == "table" then
-                        table.insert(m.content, 1, {
+                        table.insert(m.content --[[@as table]], 1, {
                           type = "thinking",
                           thinking = m.reasoning.content,
                           signature = m.reasoning._data and m.reasoning._data.signature,
