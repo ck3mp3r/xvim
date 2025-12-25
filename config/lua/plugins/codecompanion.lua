@@ -6,22 +6,17 @@ return {
       -- Configuration constants
       local config = {
         anthropic_version = "2023-06-01",
-        anthropic_beta = "claude-code-20250219,oauth-2025-04-20,interleaved-thinking-2025-05-14,fine-grained-tool-streaming-2025-05-14",
+        anthropic_beta = "claude-code-20250219,oauth-2025-04-20,interleaved-thinking-2025-05-14,prompt-caching-2024-07-31,token-efficient-tools-2025-02-19",
         claude_code_system_message = "You are Claude Code, Anthropic's official CLI for Claude.",
-        allowed_message_fields = { "content", "role", "reasoning", "tool_calls" },
+        allowed_message_fields = { "content", "role", "reasoning", "tools" },
       }
 
-      -- Validate OAuth token setup
-      local function validate_oauth_setup()
-        local oauth_token = vim.env.CLAUDE_CODE_OAUTH_TOKEN
-
-        if not oauth_token or oauth_token == "" then
-          vim.notify("✗ No Claude OAuth token found - make sure to use the wrapper script", vim.log.levels.ERROR)
-          return false
+      -- Validate OAuth token setup (only warn in interactive sessions)
+      local oauth_token = vim.env.CLAUDE_CODE_OAUTH_TOKEN
+      if not oauth_token or oauth_token == "" then
+        if vim.fn.has("gui_running") == 1 or vim.env.TERM then
+          vim.notify("No Claude OAuth token found - ensure CLAUDE_CODE_OAUTH_TOKEN is set", vim.log.levels.WARN)
         end
-
-        vim.notify("✓ Claude OAuth token configured", vim.log.levels.INFO)
-        return true
       end
 
       -- Helper function to keep only allowed message fields
@@ -40,9 +35,7 @@ return {
         table.insert(system, 1, {
           type = "text",
           text = config.claude_code_system_message,
-          cache_control = {
-            type = "ephemeral",
-          },
+          cache_control = { type = "ephemeral" },
         })
         return system
       end
@@ -72,7 +65,6 @@ return {
       local function apply_message_caching(messages, system, self, tokens)
         local breakpoints_used = 0
 
-        -- Cache user messages
         for i = #messages, 1, -1 do
           local msgs = messages[i]
           if msgs.role == self.roles.user and msgs.content and type(msgs.content) == "table" then
@@ -90,7 +82,6 @@ return {
           end
         end
 
-        -- Cache system messages
         if system and breakpoints_used < (self.opts.cache_breakpoints or 3) then
           for _, prompt in ipairs(system) do
             if breakpoints_used < (self.opts.cache_breakpoints or 3) then
@@ -129,186 +120,194 @@ return {
         end
       end
 
-      -- Validate setup and get OAuth token
-      local is_valid = validate_oauth_setup()
-
-      local adapters = {}
-      if is_valid then
-        local utils = require("codecompanion.utils.adapters")
-        local tokens = require("codecompanion.utils.tokens")
-
-        adapters.anthropic = require("codecompanion.adapters").extend("anthropic", {
-          env = {
-            bearer_token = "CLAUDE_CODE_OAUTH_TOKEN",
-          },
-          headers = {
-            ["content-type"] = "application/json",
-            ["authorization"] = "Bearer ${bearer_token}",
-            ["anthropic-version"] = config.anthropic_version,
-            ["anthropic-beta"] = config.anthropic_beta,
-          },
-          handlers = {
-            setup = function(self)
-              -- Remove x-api-key header if it exists (from base adapter)
-              if self.headers and self.headers["x-api-key"] then
-                self.headers["x-api-key"] = nil
-              end
-
-              if self.opts and self.opts.stream then
-                self.parameters.stream = true
-              end
-
-              local model = self.schema and self.schema.model and self.schema.model.default
-              if model then
-                local model_opts = self.schema.model.choices and self.schema.model.choices[model]
-                if model_opts and model_opts.opts then
-                  self.opts = vim.tbl_deep_extend("force", self.opts or {}, model_opts.opts)
-                  if not model_opts.opts.has_vision then
-                    self.opts.vision = false
-                  end
-                end
-              end
-
-              return true
-            end,
-
-            form_messages = function(self, messages)
-              local has_tools = false
-
-              -- Extract and format system messages
-              ---@type table|nil
-              local system = vim
-                .iter(messages)
-                :filter(function(msg)
-                  return msg.role == "system"
-                end)
-                :map(function(msg)
-                  return {
-                    type = "text",
-                    text = msg.content,
-                    cache_control = nil,
-                  }
-                end)
-                :totable()
-
-              -- Add Claude Code system message
-              system = add_claude_code_system_message(system)
-              -- Ensure system is nil if empty to satisfy type checker
-              if #system == 0 then
-                system = nil
-              end
-
-              -- Filter out system messages from main message list
-              messages = vim
-                .iter(messages)
-                :filter(function(msg)
-                  return msg.role ~= "system"
-                end)
-                :totable()
-
-              -- Process each message
-              messages = vim.tbl_map(function(message)
-                -- Handle image content
-                message = process_image_content(message, self)
-                if message == nil then
-                  return nil
-                end
-
-                -- Clean message fields
-                message = keep_allowed_message_fields(message, config.allowed_message_fields)
-
-                -- Handle user and LLM roles
-                if message.role == self.roles.user or message.role == self.roles.llm then
-                  if message.role == self.roles.user and message.content == "" then
-                    message.content = "<prompt></prompt>"
-                  end
-
-                  if type(message.content) == "string" then
-                    message.content = {
-                      { type = "text", text = message.content },
-                    }
-                  end
-                end
-
-                -- Track tools usage
-                if message.tool_calls and vim.tbl_count(message.tool_calls) > 0 then
-                  has_tools = true
-                end
-
-                -- Convert tool role to user role
-                if message.role == "tool" then
-                  message.role = self.roles.user
-                end
-
-                -- Handle tool calls in LLM messages
-                if has_tools and message.role == self.roles.llm and message.tool_calls then
-                  -- Ensure content is always a table when handling tool calls
-                  local content = message.content
-                  if type(content) ~= "table" then
-                    content = {}
-                    message.content = content
-                  end
-
-                  for _, call in ipairs(message.tool_calls) do
-                    local success, decoded_args = pcall(vim.json.decode, call["function"].arguments)
-                    table.insert(content, {
-                      type = "tool_use",
-                      id = call.id,
-                      name = call["function"].name,
-                      input = success and decoded_args or {},
-                    })
-                  end
-                  message.tool_calls = nil
-                end
-
-                -- Handle reasoning/thinking content
-                if message.reasoning then
-                  local content = message.content
-                  if type(content) == "table" then
-                    table.insert(content, 1, {
-                      type = "thinking",
-                      thinking = message.reasoning.content,
-                      signature = message.reasoning._data and message.reasoning._data.signature,
-                    })
-                  end
-                end
-
-                return message
-              end, messages)
-
-              -- Filter out nil values from the mapped table
-              messages = vim.tbl_filter(function(msg)
-                return msg ~= nil
-              end, messages)
-
-              -- Merge consecutive messages
-              messages = utils.merge_messages(messages)
-
-              -- Consolidate tool results if tools are being used
-              if has_tools then
-                consolidate_tool_results(messages, self)
-              end
-
-              -- Apply caching to messages
-              apply_message_caching(messages, system, self, tokens)
-
-              return { system = system, messages = messages }
-            end,
-          },
-        })
-      end
+      local utils = require("codecompanion.utils.adapters")
+      local tokens = require("codecompanion.utils.tokens")
 
       require("codecompanion").setup({
-        adapters = adapters,
+        adapters = {
+          http = {
+            anthropic = function()
+              return require("codecompanion.adapters").extend("anthropic", {
+                env = {
+                  api_key = function()
+                    return vim.env.CLAUDE_CODE_OAUTH_TOKEN
+                  end,
+                },
+                schema = {
+                  extended_thinking = {
+                    default = false,
+                  },
+                },
+                headers = {
+                  ["content-type"] = "application/json",
+                  ["authorization"] = "Bearer ${api_key}",
+                  ["anthropic-version"] = config.anthropic_version,
+                  ["anthropic-beta"] = config.anthropic_beta,
+                },
+                handlers = {
+                  setup = function(self)
+                    -- Remove x-api-key header (we use Bearer token instead)
+                    if self.headers and self.headers["x-api-key"] then
+                      self.headers["x-api-key"] = nil
+                    end
+
+                    if self.opts and self.opts.stream then
+                      self.parameters.stream = true
+                    end
+
+                    local model = self.schema and self.schema.model and self.schema.model.default
+                    if model then
+                      local model_opts = self.schema.model.choices and self.schema.model.choices[model]
+                      if model_opts and model_opts.opts then
+                        self.opts = vim.tbl_deep_extend("force", self.opts or {}, model_opts.opts)
+                        if not model_opts.opts.has_vision then
+                          self.opts.vision = false
+                        end
+                      end
+                    end
+
+                    return true
+                  end,
+
+                  form_messages = function(self, messages)
+                    local has_tools = false
+
+                    -- Extract and format system messages
+                    local system = vim
+                      .iter(messages)
+                      :filter(function(msg)
+                        return msg.role == "system"
+                      end)
+                      :map(function(msg)
+                        return {
+                          type = "text",
+                          text = msg.content,
+                          cache_control = nil,
+                        }
+                      end)
+                      :totable()
+
+                    -- Add Claude Code system message
+                    system = add_claude_code_system_message(system)
+                    if #system == 0 then
+                      system = nil
+                    end
+
+                    -- Filter out system messages from main message list
+                    messages = vim
+                      .iter(messages)
+                      :filter(function(msg)
+                        return msg.role ~= "system"
+                      end)
+                      :totable()
+
+                    -- Process each message
+                    messages = vim.tbl_map(function(m)
+                      m = process_image_content(m, self)
+                      if m == nil then
+                        return nil
+                      end
+
+                      m = keep_allowed_message_fields(m, config.allowed_message_fields)
+
+                      -- Ensure content is properly formatted
+                      if m.role == self.roles.user or m.role == self.roles.llm then
+                        if m.role == self.roles.user and (m.content == "" or m.content == nil) then
+                          m.content = "<prompt></prompt>"
+                        end
+
+                        if type(m.content) == "string" then
+                          m.content = {
+                            { type = "text", text = m.content },
+                          }
+                        end
+                      end
+
+                      -- Track tools usage (new format uses m.tools.calls)
+                      if m.tools and m.tools.calls and vim.tbl_count(m.tools.calls) > 0 then
+                        has_tools = true
+                      end
+
+                      -- Handle tool role - convert tool results to Anthropic format
+                      if m.role == "tool" then
+                        m.role = self.roles.user
+                        if m.tools and m.tools.type == "tool_result" then
+                          if type(m.content) == "table" and m.content.type == "tool_result" then
+                            m.content = { m.content }
+                          else
+                            m.content = {
+                              {
+                                type = "tool_result",
+                                tool_use_id = m.tools.call_id,
+                                content = m.content,
+                                is_error = m.tools.is_error or false,
+                              },
+                            }
+                          end
+                          m.tools = nil
+                        end
+                      end
+
+                      -- Handle tool calls in LLM messages (new format)
+                      if has_tools and m.role == self.roles.llm and m.tools and m.tools.calls then
+                        m.content = m.content or {}
+                        for _, call in ipairs(m.tools.calls) do
+                          local args = call["function"].arguments
+                          table.insert(m.content, {
+                            type = "tool_use",
+                            id = call.id,
+                            name = call["function"].name,
+                            input = args ~= "" and vim.json.decode(args) or vim.empty_dict(),
+                          })
+                        end
+                        m.tools = nil
+                      end
+
+                      -- Handle reasoning/thinking content
+                      if m.reasoning and type(m.content) == "table" then
+                        table.insert(m.content, 1, {
+                          type = "thinking",
+                          thinking = m.reasoning.content,
+                          signature = m.reasoning._data and m.reasoning._data.signature,
+                        })
+                      end
+
+                      return m
+                    end, messages)
+
+                    messages = vim.tbl_filter(function(msg)
+                      return msg ~= nil
+                    end, messages)
+
+                    messages = utils.merge_messages(messages)
+
+                    if has_tools then
+                      consolidate_tool_results(messages, self)
+                    end
+
+                    apply_message_caching(messages, system, self, tokens)
+
+                    return { system = system, messages = messages }
+                  end,
+                },
+              })
+            end,
+          },
+        },
+        interactions = {
+          chat = {
+            adapter = "anthropic",
+          },
+        },
         display = {
           action_palette = {
             width = 95,
             height = 10,
-            prompt = "Prompt ", -- Prompt used for interactive LLM calls
-            provider = "default", -- Can be "default", "telescope", or "mini_pick". If not specified, the plugin will autodetect installed providers.
+            prompt = "Prompt ",
+            provider = "default",
             opts = {
-              show_default_actions = true, -- Show the default actions in the action palette?
-              show_default_prompt_library = true, -- Show the default prompt library in the action palette?
+              show_default_actions = true,
+              show_default_prompt_library = true,
             },
           },
         },
@@ -330,7 +329,6 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
       {
-        -- Make sure to set this up properly if you have lazy=true
         "MeanderingProgrammer/render-markdown.nvim",
         opts = {
           file_types = { "markdown", "codecompanion" },
