@@ -15,7 +15,7 @@ return {
     },
     config = function(_, opts)
       vim.opt.runtimepath:append(ts_parsers)
-      require("nvim-treesitter.configs").setup(opts)
+      require("nvim-treesitter.config").setup(opts)
     end,
   },
 }
