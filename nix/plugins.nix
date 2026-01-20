@@ -16,6 +16,7 @@
   codecompanion-nvim = pkgs.codecompanion-nvim;
   direnv-nvim = pkgs.direnv-nvim;
   mcphub-nvim = pkgs.mcphub-nvim;
+  opencode-nvim = pkgs.opencode-nvim;
 
   vimPlugins = with pkgs.vimPlugins; [
     LazyVimCustom

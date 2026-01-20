@@ -67,6 +67,17 @@
           version = "custom";
         };
 
+        opencode-nvim' = pkgs.vimUtils.buildVimPlugin {
+          pname = "opencode.nvim";
+          src = pkgs.fetchFromGitHub {
+            owner = "NickvanDyke";
+            repo = "opencode.nvim";
+            rev = "main";
+            hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+          };
+          version = "custom";
+        };
+
         overlays = [
           inputs.topiary-nu.overlays.default
           (final: next: {
@@ -74,6 +85,9 @@
             direnv-nvim = direnv-nvim';
             mcphub-nvim = inputs.mcphub-nvim.packages."${system}".default;
             mcp-hub = inputs.mcp-hub.packages."${system}".default;
+            opencode-nvim = next.vimPlugins.opencode-nvim.overrideAttrs (oldAttrs: {
+              runtimeDeps = [next.curl];
+            });
           })
         ];
 
