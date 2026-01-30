@@ -45,48 +45,33 @@
         system,
         ...
       }: let
-        codecompanion' = pkgs.vimUtils.buildVimPlugin {
-          pname = "codecompanion.nvim";
-          version = "custom";
-          src = inputs.codecompanion;
-          dependencies = [pkgs.vimPlugins.plenary-nvim];
-          nvimSkipModule = [
-            "codecompanion.providers.completion.blink.setup"
-            "codecompanion.providers.completion.cmp.setup"
-            "codecompanion.providers.actions.telescope"
-            "codecompanion.providers.actions.fzf_lua"
-            "codecompanion.providers.actions.mini_pick"
-            "codecompanion.providers.actions.snacks"
-            "minimal"
-          ];
-        };
-
-        direnv-nvim' = pkgs.vimUtils.buildVimPlugin {
-          pname = "direnv.nvim";
-          src = inputs.direnv-nvim;
-          version = "custom";
-        };
-
-        opencode-nvim' = pkgs.vimUtils.buildVimPlugin {
-          pname = "opencode.nvim";
-          src = pkgs.fetchFromGitHub {
-            owner = "NickvanDyke";
-            repo = "opencode.nvim";
-            rev = "main";
-            hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
-          };
-          version = "custom";
-        };
-
         overlays = [
           inputs.topiary-nu.overlays.default
-          (final: next: {
-            codecompanion-nvim = codecompanion';
-            direnv-nvim = direnv-nvim';
+          (final: prev: {
+            codecompanion-nvim = prev.vimUtils.buildVimPlugin {
+              pname = "codecompanion.nvim";
+              version = "custom";
+              src = inputs.codecompanion;
+              dependencies = [prev.vimPlugins.plenary-nvim];
+              nvimSkipModule = [
+                "codecompanion.providers.completion.blink.setup"
+                "codecompanion.providers.completion.cmp.setup"
+                "codecompanion.providers.actions.telescope"
+                "codecompanion.providers.actions.fzf_lua"
+                "codecompanion.providers.actions.mini_pick"
+                "codecompanion.providers.actions.snacks"
+                "minimal"
+              ];
+            };
+            direnv-nvim = prev.vimUtils.buildVimPlugin {
+              pname = "direnv.nvim";
+              src = inputs.direnv-nvim;
+              version = "custom";
+            };
             mcphub-nvim = inputs.mcphub-nvim.packages."${system}".default;
             mcp-hub = inputs.mcp-hub.packages."${system}".default;
-            opencode-nvim = next.vimPlugins.opencode-nvim.overrideAttrs (oldAttrs: {
-              runtimeDeps = [next.curl];
+            opencode-nvim = prev.vimPlugins.opencode-nvim.overrideAttrs (oldAttrs: {
+              runtimeDeps = [prev.curl];
             });
           })
         ];
