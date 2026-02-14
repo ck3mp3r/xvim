@@ -20,7 +20,6 @@
   # Generate the runtime path commands string in Nix
   runtimePathCommands = "--cmd \"set runtimepath=\" --cmd \"set runtimepath^=${lib.concatStringsSep "," ([configPath "${neovim}/share/nvim/runtime"] ++ runtimePaths)}\"";
 
-  topiary-nu = pkgs.topiary-nu;
   extraPackages = with pkgs; [
     alejandra
     bash-language-server
@@ -55,7 +54,7 @@
     taplo
     terraform-ls
     tflint
-    topiary
+    topiary-nu
     vscode-extensions.vadimcn.vscode-lldb.adapter
     yaml-language-server
   ];
@@ -76,8 +75,6 @@ in
       cat > $out/bin/${appName} <<EOF
       #!/usr/bin/env bash
 
-      export TOPIARY_CONFIG_FILE=${topiary-nu}/languages.ncl
-      export TOPIARY_LANGUAGE_DIR=${topiary-nu}/languages
       export PATH=${extraPath}:\$PATH
       exec ${neovim}/bin/nvim \
         ${varCommands} \
