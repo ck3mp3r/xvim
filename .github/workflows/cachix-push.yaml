@@ -74,9 +74,9 @@ jobs:
             }
           })
 
-          # Calculate totals
-          let total_paths_count = ($build_results_with_cache_info | get path_count | math sum)
-          let total_cached_count = ($build_results_with_cache_info | get cached_count | math sum)
+          # Calculate totals (default to 0 if empty)
+          let total_paths_count = ($build_results_with_cache_info | get path_count | default 0 | math sum)
+          let total_cached_count = ($build_results_with_cache_info | get cached_count | default 0 | math sum)
 
           # Build summary
           let package_table = ($build_results_with_cache_info | each {|pkg|
