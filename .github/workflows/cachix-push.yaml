@@ -75,9 +75,17 @@ jobs:
             }
           })
 
-          # Calculate totals (default to 0 if empty)
-          let total_paths_count = ($build_results_with_cache_info | get path_count | default 0 | math sum)
-          let total_cached_count = ($build_results_with_cache_info | get cached_count | default 0 | math sum)
+          # Calculate totals (handle empty results)
+          let total_paths_count = if ($build_results_with_cache_info | is-empty) { 
+            0 
+          } else { 
+            ($build_results_with_cache_info | get path_count | math sum) 
+          }
+          let total_cached_count = if ($build_results_with_cache_info | is-empty) { 
+            0 
+          } else { 
+            ($build_results_with_cache_info | get cached_count | math sum) 
+          }
 
           # Build summary
           let package_table = ($build_results_with_cache_info | each {|pkg|
