@@ -4,6 +4,11 @@ return {
     event = "VeryLazy",
     config = function()
       require("codecompanion").setup({
+        interactions = {
+          chat = {
+            variables = {}, -- Initialize empty variables table for mcphub extension
+          },
+        },
         extensions = {
           mcphub = {
             callback = "mcphub.extensions.codecompanion",
@@ -21,6 +26,7 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
+      "ravitemer/mcphub.nvim", -- Added: ensure mcphub loads before codecompanion
       {
         "MeanderingProgrammer/render-markdown.nvim",
         opts = {
