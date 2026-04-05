@@ -57,7 +57,7 @@ return {
           left = "",
           right = "",
         },
-        theme = "catppuccin",
+        theme = "catppuccin-nvim",
         disabled_filetypes = {
           statusline = { "alpha" },
           winbar = { "NvimTree", "alpha" },
