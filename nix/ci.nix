@@ -41,10 +41,10 @@
 
   packages = with pkgs; [
     alejandra
+    bash-language-server
     cachix
     lua-language-server
     nixd
-    nodePackages_latest.bash-language-server
     nushell
     pre-commit
     stylua

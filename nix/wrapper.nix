@@ -39,8 +39,8 @@
     lua-language-server
     marksman
     nixd
-    nodePackages.prettier
-    nodePackages.vscode-json-languageserver
+    prettier
+    vscode-langservers-extracted
     pyright
     python3
     python312Packages.pip
