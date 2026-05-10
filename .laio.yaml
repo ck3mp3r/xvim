@@ -5,8 +5,17 @@ path: .
 windows:
   - name: code
     panes:
-      - commands: # each pane/window can run commands
+      - flex: 5
+        commands: # each pane/window can run commands
           - command: nvim
+      - flex: 2
+        commands:
+          - command: agent
+            args:
+              - --session
+              - xvim
+              - --model
+              - github-copilot/anthropic/claude-opus-4.6
 
   - name: misc
     panes:
