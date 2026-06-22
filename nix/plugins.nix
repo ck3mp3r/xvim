@@ -13,9 +13,7 @@
     '';
   });
 
-  codecompanion-nvim = pkgs.codecompanion-nvim;
   direnv-nvim = pkgs.direnv-nvim;
-  mcphub-nvim = pkgs.mcphub-nvim;
   opencode-nvim = pkgs.opencode-nvim;
 
   vimPlugins = with pkgs.vimPlugins; [
@@ -26,7 +24,6 @@
     blink-cmp
     bufferline-nvim
     catppuccin-nvim
-    codecompanion-nvim
     conform-nvim
     copilot-lua
     crates-nvim
@@ -44,7 +41,6 @@
     opencode-nvim
     render-markdown-nvim
     markdown-preview-nvim
-    mcphub-nvim
     mini-ai
     mini-comment
     mini-diff
@@ -92,7 +88,6 @@
   ];
 
   extraVars = {
-    "mcp_cli" = "${pkgs.mcp-hub}/bin/mcp-hub";
     "ts_parsers" = ts_parsers;
     "plugin_path" = plugins;
   };

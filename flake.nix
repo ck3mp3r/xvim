@@ -9,21 +9,9 @@
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    mcphub-nvim = {
-      url = "github:ravitemer/mcphub.nvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    mcp-hub = {
-      url = "github:ravitemer/mcp-hub";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     topiary-nu = {
       url = "github:ck3mp3r/flakes?dir=topiary-nu";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    codecompanion = {
-      url = "github:olimorris/codecompanion.nvim";
-      flake = false;
     };
     direnv-nvim = {
       url = "github:NotAShelf/direnv.nvim";
@@ -47,47 +35,11 @@
         overlays = [
           inputs.topiary-nu.overlays.default
           (final: prev: {
-            codecompanion-nvim = prev.vimUtils.buildVimPlugin {
-              pname = "codecompanion.nvim";
-              version = "custom";
-              src = inputs.codecompanion;
-              dependencies = [prev.vimPlugins.plenary-nvim];
-              nvimSkipModule = [
-                "codecompanion.providers.completion.blink.setup"
-                "codecompanion.providers.completion.cmp.setup"
-                "codecompanion.providers.actions.telescope"
-                "codecompanion.providers.actions.fzf_lua"
-                "codecompanion.providers.actions.mini_pick"
-                "codecompanion.providers.actions.snacks"
-                "codecompanion.providers.action_palette.telescope"
-                "codecompanion.providers.action_palette.fzf_lua"
-                "codecompanion.providers.action_palette.mini_pick"
-                "codecompanion.providers.action_palette.snacks"
-                "codecompanion.adapters.acp.helpers"
-                "codecompanion.adapters.acp.cursor_cli"
-                "codecompanion.adapters.acp.codex"
-                "codecompanion._extensions.init"
-                "codecompanion.schema"
-                "codecompanion.types"
-                "codecompanion.helpers"
-                "codecompanion.helpers.code"
-                "codecompanion.commands.init"
-                "codecompanion.commands.diff"
-                "codecompanion.action_palette.static"
-                "codecompanion.action_palette.init"
-                "codecompanion.acp.init"
-                "codecompanion.acp.prompt_builder"
-                "codecompanion.acp.methods"
-                "minimal"
-              ];
-            };
             direnv-nvim = prev.vimUtils.buildVimPlugin {
               pname = "direnv.nvim";
               src = inputs.direnv-nvim;
               version = "custom";
             };
-            mcphub-nvim = inputs.mcphub-nvim.packages."${system}".default;
-            mcp-hub = inputs.mcp-hub.packages."${system}".default;
             opencode-nvim = prev.vimPlugins.opencode-nvim.overrideAttrs (oldAttrs: {
               runtimeDeps = [prev.curl];
             });
