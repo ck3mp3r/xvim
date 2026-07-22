@@ -12,6 +12,7 @@ return {
     config = function(_, opts)
       vim.opt.runtimepath:prepend(ts_parsers)
       require("nvim-treesitter").setup(opts)
+      vim.treesitter.language.register('starlark', 'tiltfile')
 
       -- Enable highlighting for all filetypes with tree-sitter parsers
       vim.api.nvim_create_autocmd("FileType", {
