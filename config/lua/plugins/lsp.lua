@@ -51,6 +51,7 @@ return {
       opts.servers.yamlls = {
         cmd = { "yaml-language-server", "--stdio" },
       }
+      opts.servers.tilt_ls = {}
 
       return opts
     end,
