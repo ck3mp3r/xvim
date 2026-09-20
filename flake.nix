@@ -5,10 +5,6 @@
     base-nixpkgs.url = "github:ck3mp3r/flakes?dir=base-nixpkgs";
     nixpkgs.follows = "base-nixpkgs/unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    git-hooks = {
-      url = "github:cachix/git-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     topiary-nu = {
       url = "github:ck3mp3r/flakes?dir=topiary-nu";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,10 +17,6 @@
 
   outputs = inputs @ {flake-parts, ...}:
     flake-parts.lib.mkFlake {inherit inputs;} {
-      imports = [
-        inputs.git-hooks.flakeModule
-      ];
-
       systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin"];
 
       perSystem = {
@@ -66,7 +58,6 @@
 
         ci = import ./nix/ci.nix {
           pkgs = pkgs';
-          inherit config;
         };
       in {
         _module.args.pkgs = pkgs';
@@ -74,8 +65,6 @@
         formatter = pkgs'.alejandra;
 
         packages.default = nvim;
-
-        pre-commit.settings.hooks = ci.pre-commit-hooks;
 
         devShells.default = pkgs'.mkShell {
           packages = ci.packages;

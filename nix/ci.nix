@@ -1,7 +1,4 @@
-{
-  pkgs,
-  config,
-}: let
+{pkgs}: let
   checks-script = pkgs.writeShellScriptBin "checks" ''
     #!/bin/bash
 
@@ -46,7 +43,7 @@
     lua-language-server
     nixd
     nushell
-    pre-commit
+    prek
     stylua
     checks-script
     push-cachix-script
@@ -54,18 +51,9 @@
 in {
   inherit packages checks-script push-cachix-script;
 
-  pre-commit-hooks = {
-    alejandra = {
-      enable = true;
-      stages = ["pre-push"];
-    };
-    stylua = {
-      enable = true;
-      stages = ["pre-push"];
-    };
-  };
-
   shellHook = ''
-    ${config.pre-commit.installationScript}
+    if [ -f prek.toml ]; then
+      ${pkgs.lib.getExe pkgs.prek} install
+    fi
   '';
 }

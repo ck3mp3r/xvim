@@ -1,0 +1,26 @@
+# Configuration file for `prek`, a git hook framework written in Rust.
+# See https://prek.j178.dev for more information.
+#:schema https://www.schemastore.org/prek.json
+
+default_install_hook_types = ["pre-push"]
+
+[[repos]]
+repo = "local"
+hooks = [
+  {
+    id = "alejandra",
+    name = "alejandra",
+    language = "system",
+    entry = "alejandra",
+    files = '\.nix$',
+    stages = ["pre-push"],
+  },
+  {
+    id = "stylua",
+    name = "stylua",
+    language = "system",
+    entry = "stylua --respect-ignores",
+    types = ["lua"],
+    stages = ["pre-push"],
+  },
+]
