@@ -52,6 +52,7 @@ return {
         cmd = { "yaml-language-server", "--stdio" },
       }
       opts.servers.tilt_ls = {}
+      opts.servers.markdown_oxide = {}
 
       return opts
     end,

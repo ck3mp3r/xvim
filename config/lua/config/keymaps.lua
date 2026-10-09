@@ -5,3 +5,5 @@ vim.api.nvim_set_keymap("n", "<leader>MT", "<cmd>MarpToggle<cr>", { noremap = tr
 vim.api.nvim_set_keymap("n", "<leader>MS", "<cmd>MarpStatus<cr>", { noremap = true, silent = true })
 
 vim.cmd([[cab oc OpencodePrompt]])
+vim.cmd([[cab cc CodeCompanionChat]])
+vim.cmd([[cab ca CodeCompanionActions]])

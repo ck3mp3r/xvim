@@ -4,6 +4,7 @@ return {
     opts = { latex = { enabled = false } },
     ft = {
       "markdown",
+      "codecompanion",
     },
     dependencies = {
       "nvim-treesitter/nvim-treesitter",

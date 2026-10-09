@@ -38,6 +38,7 @@
     kulala-nvim
     lazydev-nvim
     lualine-nvim
+    codecompanion-nvim
     opencode-nvim
     render-markdown-nvim
     markdown-preview-nvim

@@ -37,7 +37,7 @@
     lldb
     lua
     lua-language-server
-    marksman
+    markdown-oxide
     nixd
     prettier
     vscode-langservers-extracted
