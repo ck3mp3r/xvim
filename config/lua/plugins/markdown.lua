@@ -1,10 +1,11 @@
 return {
   {
     "MeanderingProgrammer/render-markdown.nvim",
-    opts = { latex = { enabled = false } },
+    opts = { latex = { enabled = false }, file_types = { "markdown", "codecompanion", "Avante" } },
     ft = {
       "markdown",
       "codecompanion",
+      "Avante",
     },
     dependencies = {
       "nvim-treesitter/nvim-treesitter",

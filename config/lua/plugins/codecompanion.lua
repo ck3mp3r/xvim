@@ -12,7 +12,7 @@ local nu_agent = {
   },
   commands = {
     default = {
-      "agent",
+      "target/release/agent",
       "acp",
     },
   },
@@ -111,6 +111,9 @@ return {
         },
       },
       display = {
+        diff = {
+          threshold_for_chat = 0,
+        },
         chat = {
           render_headers = false,
         },

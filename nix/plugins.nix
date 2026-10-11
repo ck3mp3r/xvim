@@ -20,6 +20,7 @@
     LazyVimCustom
     SchemaStore-nvim
     (aerial-nvim.overrideAttrs {doCheck = false;})
+    avante-nvim
     better-escape-nvim
     blink-cmp
     bufferline-nvim
@@ -34,6 +35,7 @@
     fzf-lua
     gitsigns-nvim
     grug-far-nvim
+    img-clip-nvim
     indent-blankline-nvim
     kulala-nvim
     lazydev-nvim
