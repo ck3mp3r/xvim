@@ -12,7 +12,7 @@ local nu_agent = {
   },
   commands = {
     default = {
-      "target/release/agent",
+      "agent",
       "acp",
     },
   },
