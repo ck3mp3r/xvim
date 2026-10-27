@@ -13,6 +13,14 @@
       url = "github:NotAShelf/direnv.nvim";
       flake = false;
     };
+    mega-cmdparse = {
+      url = "github:ColinKennedy/mega.cmdparse";
+      flake = false;
+    };
+    mega-logging = {
+      url = "github:ColinKennedy/mega.logging";
+      flake = false;
+    };
   };
 
   outputs = inputs @ {flake-parts, ...}:
@@ -32,6 +40,24 @@
               src = inputs.direnv-nvim;
               version = "custom";
             };
+            # avante.nvim 0.4 requires mega.cmdparse, which requires
+            # mega.logging. nixpkgs ships both only from recent revisions, so
+            # fall back to the pinned upstream sources.
+            mega-cmdparse =
+              prev.vimPlugins.mega-cmdparse
+              or (prev.vimUtils.buildVimPlugin {
+                pname = "mega.cmdparse";
+                src = inputs.mega-cmdparse;
+                version = "custom";
+                requiredLuaModules = [prev.neovim-unwrapped.lua.pkgs.mega-logging];
+              });
+            mega-logging =
+              prev.vimPlugins.mega-logging
+              or (prev.vimUtils.buildVimPlugin {
+                pname = "mega.logging";
+                src = inputs.mega-logging;
+                version = "custom";
+              });
             opencode-nvim = prev.vimPlugins.opencode-nvim.overrideAttrs (oldAttrs: {
               runtimeDeps = [prev.curl];
             });

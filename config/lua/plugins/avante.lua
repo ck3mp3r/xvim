@@ -9,6 +9,12 @@ return {
       "stevearc/dressing.nvim",
       "HakonHarnes/img-clip.nvim",
       "MeanderingProgrammer/render-markdown.nvim",
+      -- Required since avante 0.4 (:Avante rag/acp subcommands). Both are
+      -- symlinked into g:plugin_path by nix/plugins.nix under these names.
+      {
+        "ColinKennedy/mega.cmdparse",
+        dependencies = { "ColinKennedy/mega.logging" },
+      },
     },
     opts = {
       -- nu_agent is the verified default; opencode remains selectable

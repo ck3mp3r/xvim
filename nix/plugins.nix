@@ -16,6 +16,20 @@
   direnv-nvim = pkgs.direnv-nvim;
   opencode-nvim = pkgs.opencode-nvim;
 
+  # avante.nvim 0.4 loads mega.cmdparse (which loads mega.logging) at startup.
+  # Pin the directory names lazy.nvim resolves against: nixpkgs builds both from
+  # luarocks, so their derivation names are "luajit2.1-mega.*".
+  mega-nvim = [
+    {
+      name = "mega.cmdparse";
+      path = pkgs.mega-cmdparse;
+    }
+    {
+      name = "mega.logging";
+      path = pkgs.mega-logging;
+    }
+  ];
+
   vimPlugins = with pkgs.vimPlugins; [
     LazyVimCustom
     SchemaStore-nvim
@@ -84,7 +98,7 @@
   ];
 
   ts_parsers = pkgs.callPackage ./plugins/treesitter_parsers.nix {};
-  plugins = pkgs.linkFarm "lazy-plugins" (builtins.map mkEntryFromDrv vimPlugins);
+  plugins = pkgs.linkFarm "lazy-plugins" (builtins.map mkEntryFromDrv (vimPlugins ++ mega-nvim));
 
   runtimePaths = [
     plugins

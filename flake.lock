@@ -132,6 +132,38 @@
         "type": "github"
       }
     },
+    "mega-cmdparse": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1764372292,
+        "narHash": "sha256-RgRsHt1O6UQ/90JeAkHvdpgfjF+I25zg/oGV0cK7t6U=",
+        "owner": "ColinKennedy",
+        "repo": "mega.cmdparse",
+        "rev": "47ea5b1b23059fbb79a8e262002f32e7cd8aed90",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ColinKennedy",
+        "repo": "mega.cmdparse",
+        "type": "github"
+      }
+    },
+    "mega-logging": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1738921048,
+        "narHash": "sha256-hV7uJyu0XszGLOvcRcDNDE9P6d8GTxBX+la1lQVxx2s=",
+        "owner": "ColinKennedy",
+        "repo": "mega.logging",
+        "rev": "194ad8c300186e73c3eb1ebeb3ede42eb219be3b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ColinKennedy",
+        "repo": "mega.logging",
+        "type": "github"
+      }
+    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1790477367,
@@ -197,6 +229,8 @@
         "base-nixpkgs": "base-nixpkgs",
         "direnv-nvim": "direnv-nvim",
         "flake-parts": "flake-parts_2",
+        "mega-cmdparse": "mega-cmdparse",
+        "mega-logging": "mega-logging",
         "nixpkgs": [
           "base-nixpkgs",
           "unstable"
