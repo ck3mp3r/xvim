@@ -26,7 +26,7 @@ concurrency:
 
 jobs:
   build-and-cache:
-    runs-on: macos-15
+    runs-on: macos-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v7
@@ -50,18 +50,15 @@ jobs:
           # Process each successful build
           let build_results_with_cache_info = ($build_results | each {|result|
             if ($result.status == "success" and $result.path != null) {
-              # Get all closure paths (all dependencies)
-              let closure_paths = ($result.path | ci nix closure)
-
               # Cache all paths
-              let cache_results = (
-                $closure_paths
-                | ci nix cache "https://ck3mp3r.cachix.org" --upstream "https://cache.nixos.org"
+              let pub = (
+                [$result]
+                | ci nix publish "https://ck3mp3r.cachix.org"
               )
 
               # Count stats
-              let total_paths = ($closure_paths | length)
-              let newly_cached = ($cache_results | where cached == false | length)
+              let total_paths = ($pub | length)
+              let newly_cached = ($pub | where status == uploaded | length)
 
               $result | merge {
                 path_count: $total_paths,
@@ -81,7 +78,7 @@ jobs:
           } else { 
             ($build_results_with_cache_info | get path_count | math sum) 
           }
-          let total_cached_count = if ($build_results_with_cache_info | is-empty) { 
+          let total_uploaded_count = if ($build_results_with_cache_info | is-empty) { 
             0 
           } else { 
             ($build_results_with_cache_info | get cached_count | math sum) 
@@ -94,14 +91,14 @@ jobs:
               Package: $pkg.package,
               Status: $status,
               "Store Paths": $pkg.path_count,
-              "Cached": $pkg.cached_count
+              "Uploaded": $pkg.cached_count
             }
           })
 
           # Output to GitHub step summary
           [
             "# Build and Cache Summary\n"
-            $"**Total store paths:** ($total_paths_count) | **Cached:** ($total_cached_count)\n"
+            $"**Total store paths:** ($total_paths_count) | **Uploaded:** ($total_uploaded_count)\n"
             "## xvim\n"
             ($package_table | to md --pretty)
           ] | ci github summary
